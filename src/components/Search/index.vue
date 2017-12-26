@@ -1,7 +1,7 @@
 <template>
   <el-input placeholder="输入内容" v-model="input5" class="input-with-select">
     <el-select v-model="select" slot="prepend" :placeholder="message">
-      <el-option v-for="item in optionValue" :label="item.opti" :value="item.val"></el-option>
+      <el-option v-for="item in optionValue" :label="item.opti" :value="item.val" :key="item.opti"></el-option>
     </el-select>
     <el-button slot="append" icon="el-icon-search" @click="searchClick"></el-button>
   </el-input>
