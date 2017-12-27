@@ -24,3 +24,9 @@ Mock.mock(/..\/wb_and_gfb\/whistleBlowingL8list.json/, 'get', queryAPI.getReport
 
 //反馈信息相关
 Mock.mock(/..\/wb_and_gfb\/giveFeedbackL8list.json/, 'get', queryAPI.getTickingData)
+
+//日志信息相关
+//Mock.mock(/..\/wb_and_gfb\/giveFeedbackL8list.json/, 'get', queryAPI.getTickingData)
+
+//订单信息相关
+Mock.mock(/..\/game\/game_past_record.json/, 'get', queryAPI.getFightData)

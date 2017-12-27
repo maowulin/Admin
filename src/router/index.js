@@ -74,6 +74,12 @@ export const constantRouterMap = [
         meta: { title: '反馈&举报', icon: 'tree' }
       },
       {
+        path: 'log',
+        name: 'LogsInfo',
+        component: _import('query/LogsInfo'),
+        meta: { title: '日志信息', icon: 'tree' }
+      },
+      {
         path: 'fightinfo',
         name: 'FightInfo',
         component: _import('query/FightInfo'),

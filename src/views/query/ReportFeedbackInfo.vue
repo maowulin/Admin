@@ -22,6 +22,7 @@
 		  <el-tab-pane label="反馈">
 		  	<egrid class="egrid"
 		  		fit
+		  		show-overflow-tooltip
 		      :data="ticTableData"
 		      :columns="ticColumns"
 		      :columns-schema="ticColumnsSchema"

@@ -84,3 +84,17 @@ export function getTickingData(data) {
 		data: data
 	});
 }
+
+//获取日志信息
+export function getLogsData(data) {
+	
+}
+
+//获取订单信息
+export function getFightData(data) {
+	return request({
+		url: '../game/game_past_record.json',
+		method: 'get',
+		data: data
+	});
+}
