@@ -4,17 +4,26 @@
 			<el-tab-pane label="基础指标">
 				<basied></basied>
 			</el-tab-pane>
-			<el-tab-pane label="用户活跃度"></el-tab-pane>
-			<el-tab-pane label="用户存留率"></el-tab-pane>
+			<el-tab-pane label="用户活跃度">
+				<activi></activi>
+			</el-tab-pane>
+			<el-tab-pane label="用户存留率">
+				<reten></reten>
+			</el-tab-pane>
 		</el-tabs>
 	</section>
 </template>
 
 <script>
 	import Basied from './UserStatis/Basied'
+	import Activi from './UserStatis/Activi'
+	import Reten from './UserStatis/Reten'
+	import {getUserBasied} from '@/api/statis'
 	export default {
 		components: {
-			Basied
+			Basied,
+			Activi,
+			Reten
 		}
 	}
 </script>
@@ -31,5 +40,9 @@
 	.el-button {
 		width: auto;
 		margin-left: auto;
+	}
+	
+	.user_head2 {
+		line-height: 2;
 	}
 </style>

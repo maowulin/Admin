@@ -59,8 +59,11 @@ service.interceptors.response.use(
 					count++;
 				}
 			}
-	
-      return response.data
+			if(response.data){
+				return response.data;
+			}else {
+				return response;
+			}
 //  }
   },
   error => {

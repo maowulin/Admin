@@ -1,5 +1,6 @@
 import Mock from 'mockjs'
 import queryAPI from './query'
+import statisAPI from './statis'
 
 //获取用户信息相关
 Mock.mock(/..\/userL8\/userL8List.json/, 'post', queryAPI.getUserInfo)
@@ -30,3 +31,9 @@ Mock.mock(/..\/wb_and_gfb\/giveFeedbackL8list.json/, 'get', queryAPI.getTickingD
 
 //订单信息相关
 Mock.mock(/..\/game\/game_past_record.json/, 'get', queryAPI.getFightData)
+
+//用户统计，基础指标
+Mock.mock(/..\/userL8\/userL8_baseindicators.json/, 'get', statisAPI.getBasied)
+
+//用户统计，活跃度
+Mock.mock(/..\/userL8\/userL8_activitydegree.json/, 'get', statisAPI.getActivi)

@@ -43,18 +43,19 @@
 	import MyCheckbox from '@/components/Checkbox/CheckboxGroup'
 	import Paging from '@/components/Paging'
 	import LineChart from '@/components/Echarts/LineChart'
-	import {getStatis} from '@/api/statis'
+	
 	import {getDate, getChecked} from '@/method'
 	//默认表头
 	const defaultFormThead = ['新游客用户', '新普通会员', '新注册用户', '新注册并进入游戏数', '新VIP用户', '未续费用户', '购买金币数']
 	
 	export default {
+		name: 'StatisPage',
 		components: {
 			MyCheckbox,
 			Paging,
 			LineChart
 		},
-		props: [],
+		props: ['getUserBasied'],
 	  data() {
 	    return {
 	    	presentDate: '',
@@ -245,15 +246,28 @@
 	  },
 	  watch: {
 	    checkboxVal(valArr) {
+	    	
 	    }
 	  },
 	  created() {
 	  	this.boxChange(this.checkboxVal);
 	  	this.getData();
 	  },
+	  computed: {
+	  	defaultThed: function() {
+	  		let tempArray = [];
+	  		for(let i = 0; i < this.columns.length; i++) {
+	  			let list = this.columns[i];
+	  			if(list.isDefaultHead) {
+	  				tempArray.push(list.label);
+	  			}
+	  		}
+	  		return tempArray;
+	  	}
+	  },
 	  methods: {
 	  	getData() {
-	  		getStatis('../userL8/userL8_baseindicators.json', 'get', this.requestData).then(response => {
+	  		getUserBasied(this.requestData).then(response => {
 	  			this.tableData = response.items;
 	  			this.totalRecords = response.totalRecords;
 	  		}).catch(error => {
