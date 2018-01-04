@@ -1,12 +1,12 @@
 <template>
-	<div id="lineCharts" style="width: 100%; height: 500px;"></div>
+	<div :id="chartsId" style="width: 100%; height: 500px;"></div>
 </template>
 
 <script>
 	import echarts from 'echarts'
 	
 	export default {
-		props: [ 'chartsData', 'tableData', "chartTitle", "chartUnit"],
+		props: [ 'chartsData', 'tableData', "chartTitle", "chartUnit", "chartsId"],
 		data() {
 			return {
 				chart: null
@@ -43,6 +43,7 @@
 							let item = this.tableData[j];
 							tempData.push(item[list.prop]);
 						}
+						tempData.reverse();
 						
 						let tempObj = {
 		          name: list.label,
@@ -89,9 +90,13 @@
 				let tempArray = [];
 				for(let i = 0; i < this.tableData.length; i++) {
 					let list = this.tableData[i];
-					tempArray.push(list.datetime);
+					if(list.time){
+						tempArray.push(list.time);
+					}else if(list.datetime) {
+						tempArray.push(list.datetime);
+					}
 				}
-				
+				tempArray.reverse();
 				return tempArray;
 			},
 			
@@ -177,9 +182,8 @@
 		},
 		methods: {
 			initCharts() {
-				this.chart = echarts.init(document.getElementById('lineCharts'));
+				this.chart = echarts.init(document.getElementById(this.chartsId));
 				this.chart.setOption(this.optiVal);
-				console.log(this.optiVal);
 			}
 		}
 	}

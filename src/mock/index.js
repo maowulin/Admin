@@ -37,3 +37,15 @@ Mock.mock(/..\/userL8\/userL8_baseindicators.json/, 'get', statisAPI.getBasied)
 
 //用户统计，活跃度
 Mock.mock(/..\/userL8\/userL8_activitydegree.json/, 'get', statisAPI.getActivi)
+
+//用户统计，存留率
+Mock.mock(/..\/userL8\/userL8_retainnum.json/, 'get', statisAPI.getReten)
+
+//战队统计
+Mock.mock(/..\/circleL8\/circleL8_indicators.json/, 'get', statisAPI.getTribeData)
+
+//圈数据
+Mock.mock(/..\/postingsL8\/postings_exportall.json/, 'get', statisAPI.getInviData)
+
+//圈数据二级页面
+Mock.mock(/..\/postingsL8\/postings_circlestatisticinfo.json/, 'get', statisAPI.getInviSecData)

@@ -23,3 +23,11 @@ export function getStatis(_url, _type, _data) {
 		data: _data
 	});
 }
+
+export function getStatisCvs(_url, _startDate, _stopDate) {
+	window.open(_url + "?beginTime=" + _startDate + "&endTime=" + _stopDate);
+}
+
+export function getStatisSecCvs(_url, _time) {
+	window.open(_url + "?time=" + _time);
+}

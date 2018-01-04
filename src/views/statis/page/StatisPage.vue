@@ -18,7 +18,7 @@
 		</div>
     
     <div v-if="chartShow" class="chart-bord">
-    	<line-chart :chart-title="chartTitle" :chart-unit="chartUnit" :charts-data="columns" :table-data="tableData" ></line-chart>
+    	<line-chart v-for="item in chartsGroup" class="line-chart" :key="item.group" :charts-id="item.id" :chart-title="item.chartTitle" :chart-unit="item.hcartUnit" :charts-data="item.items" :table-data="tableData" ></line-chart>
     </div>
 		
     <div v-else>
@@ -32,10 +32,10 @@
 	      :columns="newColumns"
 	      :columns-schema="columnsSchema"
 	      :columns-props="columnsProps"
-	      :column-type="columnType">
+	      :column-type="columnType"
+	      :columns-handler="columnsHandler">
 	    </egrid>
     </div>
-    
 	</div>
 </template>
 
@@ -43,8 +43,20 @@
 	import MyCheckbox from '@/components/Checkbox/CheckboxGroup'
 	import Paging from '@/components/Paging'
 	import LineChart from '@/components/Echarts/LineChart'
-	import {getStatis} from '@/api/statis'
+	import {getStatis, getStatisCvs} from '@/api/statis'
 	import {getDate, getChecked} from '@/method'
+	
+	// 操作按钮
+	var Btn = {
+	  template: `<el-button class="click-btn" @click="todo" type="primary" icon="el-icon-view">查看</el-button>`,
+	  props: ['row'],
+	  methods: {
+	    todo () {
+	      this.$emit('row-check', this.row)
+	      this.$set(this.row, '_edit', !this.row._edit)
+	    }
+	  }
+	}
 	
 	export default {
 		components: {
@@ -52,7 +64,7 @@
 			Paging,
 			LineChart
 		},
-		props: ['columns', 'chartTitle', 'chartUnit', 'reUrl', 'reType'],
+		props: ['columns', 'chartGroup', 'reUrl', 'reType', 'cvsUrl', 'isSecond'],
 	  data() {
 	    return {
 	    	presentDate: '',
@@ -68,9 +80,15 @@
 	      },
 	      defaultDate: '2017-10-19',
 	      newColumns: [],
-	      columnsSchema: {},
+	      columnsSchema: {
+	      	'日期' : {
+	      		width: '120px'
+	      	}
+	      },
 	      columnsProps: {
-	      	align: "center"
+	      	align: "center",
+	      	sortable: true
+//	      	component: Editor
 	      },
 	      columnType: "",
 	      key: 1, // table key
@@ -90,13 +108,34 @@
 	  				tempArray.push(list.label);
 	  			}
 	  		}
-	  		
+	  		return tempArray;
+	  	},
+	  	chartsGroup: function() {
+	  		let tempArray = [];
+	  		for(let i = 0; i < this.chartGroup.length; i++) {
+	  			let item = this.chartGroup[i];
+	  			let tempObject = {};
+	  			tempObject.items = [];
+	  			for(let j = 0; j < this.columns.length; j++){
+	  				let list = this.columns[j];
+	  				if(item.group === list.chartGroup) {
+	  					tempObject.items.push(list);
+	  				}
+	  			}
+	  			tempObject.chartTitle = item.title;
+	  			tempObject.hcartUnit = item.unit;
+	  			tempObject.id = item.id;
+	  			tempArray.push(tempObject);
+	  		}
 	  		return tempArray;
 	  	}
 	  },
 	  methods: {
 	  	getData() {
 	  		getStatis(this.reUrl, this.reType, this.requestData).then(response => {
+	  			if(response.data) {
+	  				response = response.data;
+	  			}
 	  			this.tableData = response.items;
 	  			this.totalRecords = response.totalRecords;
 	  		}).catch(error => {
@@ -121,7 +160,7 @@
 	  		this.getData();
 	  	},
 	  	getCvs() {
-	  		
+	  		getStatisCvs(this.cvsUrl, this.requestData.beginTime, this.requestData.endTime);
 	  	},
 	  	isChart() {
 	  		this.chartShow = !this.chartShow;
@@ -130,6 +169,27 @@
 	  		}else {
 	  			this.buttonText = '图表'
 	  		}
+	  	},
+	  	columnsHandler(cols) {
+	  		let _isRowCheck = this.isRowCheck;
+				if(this.isSecond) {
+					return cols.concat({
+		        label: '操作',
+		        fixed: 'right',
+		        width: 80,
+		        component: Btn,
+		        listeners: {
+		          'row-check' (row) {
+								_isRowCheck(row);
+		          }
+		        }
+		      })
+				}else {
+					return "";
+				}
+	  	},
+	  	isRowCheck(row) {
+	  		this.$emit('is-check', row);
 	  	}
 	  }
 	}
@@ -147,5 +207,16 @@
 	}
 	.chart-bord {
 		margin-top: 10px;
+	}
+	
+	.line-chart {
+		margin-bottom: 10px;
+	}
+	
+	.click-btn {
+    width: 60px;
+    height: 32px;
+    padding: 7px 3px;
+    font-size: 14px;
 	}
 </style>

@@ -541,6 +541,302 @@ const basiedMap2 = {
 	"recordsPerPage": 10,
 	"totalRecords": 10
 }
+const retenMap = {
+	"currentPage": 0,
+	"items": [{
+		"monthRetainNum": 0,
+		"monthRetainPercent": 0,
+		"newUserNum": 6,
+		"oneDayRetaiNum": 0,
+		"oneRetainPercent": 0,
+		"sevenDayRetainNum": 0,
+		"sevenRetainPercent": 0,
+		"thirdDayRetainNum": 0,
+		"thirdRetainPercent": 0,
+		"time": "2018-01-02"
+	}, {
+		"monthRetainNum": 0,
+		"monthRetainPercent": 0,
+		"newUserNum": 13,
+		"oneDayRetaiNum": 0,
+		"oneRetainPercent": 0,
+		"sevenDayRetainNum": 0,
+		"sevenRetainPercent": 0,
+		"thirdDayRetainNum": 0,
+		"thirdRetainPercent": 0,
+		"time": "2018-01-01"
+	}, {
+		"monthRetainNum": 0,
+		"monthRetainPercent": 0,
+		"newUserNum": 7,
+		"oneDayRetaiNum": 1,
+		"oneRetainPercent": 14,
+		"sevenDayRetainNum": 0,
+		"sevenRetainPercent": 0,
+		"thirdDayRetainNum": 0,
+		"thirdRetainPercent": 0,
+		"time": "2017-12-31"
+	}, {
+		"monthRetainNum": 0,
+		"monthRetainPercent": 0,
+		"newUserNum": 7,
+		"oneDayRetaiNum": 0,
+		"oneRetainPercent": 0,
+		"sevenDayRetainNum": 0,
+		"sevenRetainPercent": 0,
+		"thirdDayRetainNum": 0,
+		"thirdRetainPercent": 0,
+		"time": "2017-12-30"
+	}, {
+		"monthRetainNum": 0,
+		"monthRetainPercent": 0,
+		"newUserNum": 10,
+		"oneDayRetaiNum": 1,
+		"oneRetainPercent": 10,
+		"sevenDayRetainNum": 0,
+		"sevenRetainPercent": 0,
+		"thirdDayRetainNum": 0,
+		"thirdRetainPercent": 0,
+		"time": "2017-12-29"
+	}, {
+		"monthRetainNum": 0,
+		"monthRetainPercent": 0,
+		"newUserNum": 11,
+		"oneDayRetaiNum": 1,
+		"oneRetainPercent": 9,
+		"sevenDayRetainNum": 0,
+		"sevenRetainPercent": 0,
+		"thirdDayRetainNum": 0,
+		"thirdRetainPercent": 0,
+		"time": "2017-12-28"
+	}, {
+		"monthRetainNum": 0,
+		"monthRetainPercent": 0,
+		"newUserNum": 6,
+		"oneDayRetaiNum": 1,
+		"oneRetainPercent": 16,
+		"sevenDayRetainNum": 0,
+		"sevenRetainPercent": 0,
+		"thirdDayRetainNum": 0,
+		"thirdRetainPercent": 0,
+		"time": "2017-12-27"
+	}, {
+		"monthRetainNum": 0,
+		"monthRetainPercent": 0,
+		"newUserNum": 5,
+		"oneDayRetaiNum": 0,
+		"oneRetainPercent": 0,
+		"sevenDayRetainNum": 0,
+		"sevenRetainPercent": 0,
+		"thirdDayRetainNum": 0,
+		"thirdRetainPercent": 0,
+		"time": "2017-12-26"
+	}, {
+		"monthRetainNum": 0,
+		"monthRetainPercent": 0,
+		"newUserNum": 10,
+		"oneDayRetaiNum": 0,
+		"oneRetainPercent": 0,
+		"sevenDayRetainNum": 0,
+		"sevenRetainPercent": 0,
+		"thirdDayRetainNum": 0,
+		"thirdRetainPercent": 0,
+		"time": "2017-12-25"
+	}, {
+		"monthRetainNum": 0,
+		"monthRetainPercent": 0,
+		"newUserNum": 12,
+		"oneDayRetaiNum": 0,
+		"oneRetainPercent": 0,
+		"sevenDayRetainNum": 0,
+		"sevenRetainPercent": 0,
+		"thirdDayRetainNum": 0,
+		"thirdRetainPercent": 0,
+		"time": "2017-12-24"
+	}],
+	"recordsPerPage": 10,
+	"totalRecords": 10
+}
+const tribeMap = {
+	"currentPage": 0,
+	"items": [{
+		"newCircleNum": 1,
+		"newRecruitNum": 0,
+		"resoledCircleNum": 0,
+		"time": "2018-01-02",
+		"totalCreatedCircleNum": 33,
+		"totalRecruitNum": 4,
+		"worldMessageNum": 0
+	}, {
+		"newCircleNum": 2,
+		"newRecruitNum": 0,
+		"resoledCircleNum": 0,
+		"time": "2018-01-01",
+		"totalCreatedCircleNum": 32,
+		"totalRecruitNum": 4,
+		"worldMessageNum": 0
+	}, {
+		"newCircleNum": 1,
+		"newRecruitNum": 0,
+		"resoledCircleNum": 0,
+		"time": "2017-12-31",
+		"totalCreatedCircleNum": 30,
+		"totalRecruitNum": 4,
+		"worldMessageNum": 0
+	}, {
+		"newCircleNum": 1,
+		"newRecruitNum": 0,
+		"resoledCircleNum": 0,
+		"time": "2017-12-30",
+		"totalCreatedCircleNum": 29,
+		"totalRecruitNum": 4,
+		"worldMessageNum": 0
+	}, {
+		"newCircleNum": 1,
+		"newRecruitNum": 0,
+		"resoledCircleNum": 0,
+		"time": "2017-12-29",
+		"totalCreatedCircleNum": 28,
+		"totalRecruitNum": 4,
+		"worldMessageNum": 0
+	}, {
+		"newCircleNum": 0,
+		"newRecruitNum": 0,
+		"resoledCircleNum": 0,
+		"time": "2017-12-28",
+		"totalCreatedCircleNum": 27,
+		"totalRecruitNum": 4,
+		"worldMessageNum": 1
+	}, {
+		"newCircleNum": 1,
+		"newRecruitNum": 0,
+		"resoledCircleNum": 0,
+		"time": "2017-12-27",
+		"totalCreatedCircleNum": 27,
+		"totalRecruitNum": 4,
+		"worldMessageNum": 0
+	}, {
+		"newCircleNum": 0,
+		"newRecruitNum": 0,
+		"resoledCircleNum": 0,
+		"time": "2017-12-26",
+		"totalCreatedCircleNum": 26,
+		"totalRecruitNum": 4,
+		"worldMessageNum": 0
+	}, {
+		"newCircleNum": 0,
+		"newRecruitNum": 0,
+		"resoledCircleNum": 0,
+		"time": "2017-12-25",
+		"totalCreatedCircleNum": 26,
+		"totalRecruitNum": 4,
+		"worldMessageNum": 0
+	}, {
+		"newCircleNum": 0,
+		"newRecruitNum": 0,
+		"resoledCircleNum": 0,
+		"time": "2017-12-24",
+		"totalCreatedCircleNum": 26,
+		"totalRecruitNum": 4,
+		"worldMessageNum": 0
+	}],
+	"recordsPerPage": 10,
+	"totalRecords": 10
+}
+const inviMap = {
+	"data": {
+		"currentPage": 0,
+		"items": [{
+			"allCreatedPostingsNum": 13,
+			"beyondCircleNum": 0,
+			"deletePostingsNum": 0,
+			"lockedPostingsNum": 0,
+			"newPostingsNum": 0,
+			"time": "2018-01-03"
+		}, {
+			"allCreatedPostingsNum": 13,
+			"beyondCircleNum": 1,
+			"deletePostingsNum": 0,
+			"lockedPostingsNum": 0,
+			"newPostingsNum": 1,
+			"time": "2018-01-02"
+		}, {
+			"allCreatedPostingsNum": 13,
+			"beyondCircleNum": 2,
+			"deletePostingsNum": 0,
+			"lockedPostingsNum": 0,
+			"newPostingsNum": 2,
+			"time": "2018-01-01"
+		}, {
+			"allCreatedPostingsNum": 12,
+			"beyondCircleNum": 1,
+			"deletePostingsNum": 0,
+			"lockedPostingsNum": 0,
+			"newPostingsNum": 1,
+			"time": "2017-12-31"
+		}, {
+			"allCreatedPostingsNum": 12,
+			"beyondCircleNum": 0,
+			"deletePostingsNum": 0,
+			"lockedPostingsNum": 0,
+			"newPostingsNum": 0,
+			"time": "2017-12-30"
+		}, {
+			"allCreatedPostingsNum": 12,
+			"beyondCircleNum": 0,
+			"deletePostingsNum": 0,
+			"lockedPostingsNum": 0,
+			"newPostingsNum": 0,
+			"time": "2017-12-29"
+		}, {
+			"allCreatedPostingsNum": 12,
+			"beyondCircleNum": 0,
+			"deletePostingsNum": 0,
+			"lockedPostingsNum": 0,
+			"newPostingsNum": 0,
+			"time": "2017-12-28"
+		}, {
+			"allCreatedPostingsNum": 12,
+			"beyondCircleNum": 1,
+			"deletePostingsNum": 0,
+			"lockedPostingsNum": 0,
+			"newPostingsNum": 1,
+			"time": "2017-12-27"
+		}, {
+			"allCreatedPostingsNum": 11,
+			"beyondCircleNum": 0,
+			"deletePostingsNum": 0,
+			"lockedPostingsNum": 0,
+			"newPostingsNum": 0,
+			"time": "2017-12-26"
+		}, {
+			"allCreatedPostingsNum": 11,
+			"beyondCircleNum": 0,
+			"deletePostingsNum": 0,
+			"lockedPostingsNum": 0,
+			"newPostingsNum": 0,
+			"time": "2017-12-25"
+		}],
+		"recordsPerPage": 10,
+		"totalRecords": 10
+	},
+	"error": 0,
+	"error_message": "",
+	"pid": 0,
+	"result": 1
+}
+const inviSecMap = {
+	"currentPage": 0,
+	"recordsPerPage": 10,
+	"totalRecords": 1,
+	"items": [{
+		"circleName": "默认战队",
+		"newCreateNum": 1,
+		"deleteNum": 0,
+		"lockNum": 0,
+		"allCreatedNum": 83
+	}]
+}
 export default {
 	getBasied: config => {
 		let body = JSON.parse(config.body);
@@ -552,5 +848,18 @@ export default {
 	},
 	getActivi: config => {
 		return activiMap;
+	},
+	getReten: config => {
+		return retenMap;
+	},
+	getTribeData: config => {
+		return tribeMap;
+	},
+	getInviData: config => {
+		return inviMap;
+	},
+	getInviSecData: config => {
+		console.log(config);
+		return inviSecMap;
 	}
 }

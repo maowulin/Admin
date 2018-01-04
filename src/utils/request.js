@@ -59,7 +59,8 @@ service.interceptors.response.use(
 					count++;
 				}
 			}
-			if(response.data){
+			
+			if(response.data) {
 				return response.data;
 			}else {
 				return response;
