@@ -39,7 +39,7 @@
 			Paging,
 			LineChart
 		},
-		props: ['columns', 'chartGroup', 'reUrl', 'reType', 'cvsUrl', 'columnsHandler', 'checkTime'],
+		props: ['columns', 'chartGroup', 'reUrl', 'reType', 'cvsUrl', 'columnsHandler', 'requestData'],
 	  data() {
 	    return {
 	    	presentDate: '',
@@ -47,11 +47,6 @@
 	      totalRecords: 0,
 	      chartShow: false,
 	      buttonText: '图表',
-	      requestData: {
-	      	time: getDate().dateLine,
-	      	pageNow: 0,
-	      	pageSize: 10
-	      },
 	      defaultDate: '2017-10-19',
 	      newColumns: [],
 	      columnsSchema: {
@@ -94,7 +89,6 @@
 	  },
 	  methods: {
 	  	getData() {
-	  		this.requestData.time = this.checkTime;
 	  		getStatis(this.reUrl, this.reType, this.requestData).then(response => {
 	  			if(response.data) {
 	  				response = response.data;

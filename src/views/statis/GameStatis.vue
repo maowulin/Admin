@@ -7,6 +7,7 @@
 			:cvs-url="gameCvs"
 			:re-type="gameType"
 			:is-second="isSecond"
+			:request-data="gameRequest"
 			v-on:is-check="getCheck">
 		</statis-page >
 	</section>
@@ -17,7 +18,7 @@
 			:re-url="gameSecUrl"
 			:cvs-url="gameSecCvs"
 			:re-type="gameSecType"
-			:check-time="chekcTime"
+			:request-data="gameSecRequest"
 			@second-back="secondBack">
 			
 		</statis-scond>
@@ -27,6 +28,7 @@
 <script>
 	import StatisPage from './page/StatisPage'
 	import StatisScond from './page/StatisSecond'
+	import {getDate} from '@/method'
 
 	export default {
 		components: {
@@ -43,7 +45,7 @@
 	      },
 	      {
 	        'label': '对局总场次', // 表头及复选框文字
-	        'prop': 'newCreateNum',  // 字段名
+	        'prop': 'totalGameAllNum',  // 字段名
 	        'isDefaultHead': true, // 是否默认显示
 	        'isChart': true,  // 是否显示到图表中
 	        'chartType': 'line', // 图表类型
@@ -54,7 +56,7 @@
 	        'itemColor2': 'rgba(137,189,2,0.27)' // rgba
 	      },{
 	        'label': '奖金赛',
-	        'prop': 'joinedUserNum',
+	        'prop': 'redpackGameNum',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -65,7 +67,7 @@
 	        'itemColor2': 'rgba(0,136,212,0.2)'
 	      },{
 	        'label': '金币赛',
-	        'prop': 'successedNum',
+	        'prop': 'goldGameNum',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -76,7 +78,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '免费赛',
-	        'prop': 'successPercent',
+	        'prop': 'freeGameNum',
 	        'isDefaultHead': true,
 	        'isChart': false,
 	        'chartType': 'line',
@@ -87,7 +89,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '金币赛（23分）',
-	        'prop': 'failureNum',
+	        'prop': 'gold23GameNum',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -98,7 +100,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '免费赛（23分）',
-	        'prop': 'failurePercent',
+	        'prop': 'free23GameNum',
 	        'isDefaultHead': true,
 	        'isChart': false,
 	        'chartType': 'line',
@@ -109,7 +111,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '好友赛',
-	        'prop': 'totalAboutgame',
+	        'prop': 'pkGameNum',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -120,7 +122,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '登录游戏数',
-	        'prop': 'totalAboutgame',
+	        'prop': 'loginGameNum',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -131,7 +133,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '游戏对战用户数',
-	        'prop': 'totalAboutgame',
+	        'prop': 'joinedUserNum',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -142,7 +144,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '主动创建数',
-	        'prop': 'totalAboutgame',
+	        'prop': 'createRoomNum',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -153,7 +155,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '主动创建并游戏数',
-	        'prop': 'totalAboutgame',
+	        'prop': 'createAndStartRoomNum',
 	        'isDefaultHead': false,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -164,18 +166,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '主动创建被拒绝数',
-	        'prop': 'totalAboutgame',
-	        'isDefaultHead': false,
-	        'isChart': true,
-	        'chartType': 'line',
-	        'chartGroup': '1',
-	        'areaColor1': 'rgba(219, 50, 51, 0.3)',
-	        'areaColor2': 'rgba(0, 0, 0, 0.1)',
-	        'itemColor1': 'rgb(219,50,51)',
-	        'itemColor2': 'rgba(219,50,51,0.2)'
-	      },{
-	        'label': '主动创建并游戏数',
-	        'prop': 'totalAboutgame',
+	        'prop': 'createAndRefuseRoomNum',
 	        'isDefaultHead': false,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -186,7 +177,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '主动创建但未操作',
-	        'prop': 'totalAboutgame',
+	        'prop': 'createAndTimeOutRoomNum',
 	        'isDefaultHead': false,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -197,7 +188,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '加入总数',
-	        'prop': 'totalAboutgame',
+	        'prop': 'joinRoomNum',
 	        'isDefaultHead': false,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -208,7 +199,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '加入且游戏总数',
-	        'prop': 'totalAboutgame',
+	        'prop': 'joinAndStartRoomNum',
 	        'isDefaultHead': false,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -219,7 +210,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '加入但被拒绝',
-	        'prop': 'totalAboutgame',
+	        'prop': 'joinAndRefuse',
 	        'isDefaultHead': false,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -230,7 +221,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '加入但等待超时',
-	        'prop': 'totalAboutgame',
+	        'prop': 'joinAndTimeout',
 	        'isDefaultHead': false,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -240,15 +231,21 @@
 	        'itemColor1': 'rgb(219,50,51)',
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      }],
-				gameUrl: '../aboutball/aboutball_allstatisticinfo.json',
+				gameUrl: '../game/game_allstatisticinfo.json',
 				gameType: 'get',
-				gameCvs: "../aboutball/aboutball_exportall.json",
+				gameCvs: "../game/game_exportall.json",
 				gameGroup: [{
 					group: '1',
 					id: 'gameChart1',
 					title: '约球数',
 					unit: '单位（数）'
 				}],
+				gameRequest: {
+					beginTime  : getDate().ten,
+					endTime    : getDate().dateLine,
+					pageNow    : 0,
+					pageSize   : 10
+				},
 				
 				gameSecColumns: [{
 	        'label': '序号', // 表头及复选框文字
@@ -258,9 +255,9 @@
 	      },
 	      {
 	        'label': '用户绰号', // 表头及复选框文字
-	        'prop': 'circleName',  // 字段名
+	        'prop': 'uname',  // 字段名
 	        'isDefaultHead': true, // 是否默认显示
-	        'isChart': true,  // 是否显示到图表中
+	        'isChart': false,  // 是否显示到图表中
 	        'chartType': 'line', // 图表类型
 	        'chartGroup': '1', // 图表的组
 	        'areaColor1': 'rgba(137,189,27,0.3)', // 图表填充色1, 使用rgba
@@ -269,7 +266,7 @@
 	        'itemColor2': 'rgba(137,189,2,0.27)' // rgba
 	      },{
 	        'label': '游戏总场次',
-	        'prop': 'circleCreateNum',
+	        'prop': 'totalGameNum',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -280,7 +277,7 @@
 	        'itemColor2': 'rgba(0,136,212,0.2)'
 	      },{
 	        'label': '奖金赛数',
-	        'prop': 'circleJoinedUserNum',
+	        'prop': 'userRedpackGameNum',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -291,7 +288,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '金币赛',
-	        'prop': 'circleUserJoinedPercent',
+	        'prop': 'userGoldGameNum',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -302,7 +299,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '免费赛',
-	        'prop': 'circleSuccessedNum',
+	        'prop': 'userFreeGameNum',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -313,12 +310,12 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '金币赛（23分）',
-	        'prop': 'circleSuccessPercent',
+	        'prop': 'userGold23GameNum',
 	        'isDefaultHead': true,
 	        'isChart': false,
 	      },{
 	        'label': '免费赛（23分）',
-	        'prop': 'circleFailureNum',
+	        'prop': 'userFree23GameNum',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -329,9 +326,9 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '好友pk场数',
-	        'prop': 'circleTotalAboutball',
+	        'prop': 'userPKGameNum',
 	        'isDefaultHead': true,
-	        'isChart': true,
+	        'isChart': false,
 	        'chartType': 'line',
 	        'chartGroup': '1',
 	        'areaColor1': 'rgba(219, 50, 51, 0.3)',
@@ -340,7 +337,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '主动创建数',
-	        'prop': 'circleTotalAboutball',
+	        'prop': 'userCreateRoom',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -351,9 +348,9 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '创建并游戏数',
-	        'prop': 'circleTotalAboutball',
+	        'prop': 'userCreateStartRoom',
 	        'isDefaultHead': true,
-	        'isChart': true,
+	        'isChart': false,
 	        'chartType': 'line',
 	        'chartGroup': '1',
 	        'areaColor1': 'rgba(219, 50, 51, 0.3)',
@@ -362,9 +359,9 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '主动创建但拒绝',
-	        'prop': 'circleTotalAboutball',
+	        'prop': 'userCreateRoomRefuse',
 	        'isDefaultHead': true,
-	        'isChart': true,
+	        'isChart': false,
 	        'chartType': 'line',
 	        'chartGroup': '1',
 	        'areaColor1': 'rgba(219, 50, 51, 0.3)',
@@ -373,9 +370,9 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '主动创建但未操作',
-	        'prop': 'circleTotalAboutball',
+	        'prop': 'userCreateRoomTimeOut',
 	        'isDefaultHead': true,
-	        'isChart': true,
+	        'isChart': false,
 	        'chartType': 'line',
 	        'chartGroup': '1',
 	        'areaColor1': 'rgba(219, 50, 51, 0.3)',
@@ -384,7 +381,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '加入总数',
-	        'prop': 'circleTotalAboutball',
+	        'prop': 'userJoinRoom',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -395,7 +392,7 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '加入且游戏总数',
-	        'prop': 'circleTotalAboutball',
+	        'prop': 'userJoinStartRoom',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -406,9 +403,9 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '加入但被拒绝',
-	        'prop': 'circleTotalAboutball',
+	        'prop': 'joinAndRefuse',
 	        'isDefaultHead': true,
-	        'isChart': true,
+	        'isChart': false,
 	        'chartType': 'line',
 	        'chartGroup': '1',
 	        'areaColor1': 'rgba(219, 50, 51, 0.3)',
@@ -417,9 +414,9 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      },{
 	        'label': '加入但等待超时',
-	        'prop': 'circleTotalAboutball',
+	        'prop': 'joinAndTimeout',
 	        'isDefaultHead': true,
-	        'isChart': true,
+	        'isChart': false,
 	        'chartType': 'line',
 	        'chartGroup': '1',
 	        'areaColor1': 'rgba(219, 50, 51, 0.3)',
@@ -427,15 +424,20 @@
 	        'itemColor1': 'rgb(219,50,51)',
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      }],
-				gameSecUrl: '../aboutball/aboutball_circlestatisticinfo.json',
+				gameSecUrl: '../game/game_userstatisticinfo.json',
 				gameSecType: 'get',
-				gameSecCvs: "../aboutball/aboutball_exportcircles.json",
+				gameSecCvs: "../game/game_exportusers.json",
 				gameSecGroup: [{
 					group: '1',
 					id: 'gameChart2',
 					title: '约球数',
 					unit: '单位（数）'
 				}],
+				gameSecRequest: {
+					time : getDate().ten,
+					pageNow   : 0,
+					pageSize  : 10
+				},
 				check: true,
 				isSecond: true,
 				chekcTime: ''
@@ -443,7 +445,7 @@
 		},
 		methods: {
 			getCheck(row) {
-				this.chekcTime = row.time;
+				this.gameSecRequest.time = row.time;
 				this.check = false;
 			},
 			

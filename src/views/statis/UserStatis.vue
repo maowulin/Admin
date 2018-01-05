@@ -9,6 +9,7 @@
 					:re-url="basiedUrl"
 					:cvs-url="basiedCvs"
 					:re-type="basiedType"
+					:request-data="basiedRequest"
 					:is-second="basiedSecond">
 				</statis-page >
 			</el-tab-pane>
@@ -20,6 +21,7 @@
 					:re-url="activiUrl"
 					:cvs-url="activiCvs"
 					:re-type="activiType"
+					:request-data="activiRequest"
 					:is-second="activiSecond">
 				</statis-page >
 			</el-tab-pane>
@@ -31,6 +33,7 @@
 					:re-url="retenUrl"
 					:cvs-url="retenCvs"
 					:re-type="retenType"
+					:request-data="retenRequest"
 					:is-second="retenSecond">
 				</statis-page >
 			</el-tab-pane>
@@ -40,6 +43,7 @@
 
 <script>
 	import StatisPage from './page/StatisPage'
+	import {getDate} from '@/method'
 	export default {
 		components: {
 			StatisPage
@@ -223,6 +227,12 @@
 					title: '用户数据',
 					unit: '单位（数）'
 				}],
+				basiedRequest: {
+					beginTime : getDate().ten,
+					endTime   : getDate().dateLine,
+					pageNow   : 0,
+					pageSize  : 10
+				},
 				
 				activiColumns: [{
 	        'label': '日期', // 表头及复选框文字
@@ -378,6 +388,12 @@
 					titel: '用户活跃度',
 					unit: '单位（数）'
 				}],
+				activiRequest: {
+					beginTime : getDate().ten,
+					endTime   : getDate().dateLine,
+					pageNow   : 0,
+					pageSize  : 10
+				},
 				
 				retenColumns: [{
 	        'label': '日期', // 表头及复选框文字
@@ -477,7 +493,13 @@
 	      		id: 'retenChart2',
 	      		title: "用户存留率",
 						unit: "单位（%）",
-	      	}],
+	      }],
+	      retenRequest: {
+					beginTime : getDate().ten,
+					endTime   : getDate().dateLine,
+					pageNow   : 0,
+					pageSize  : 10
+				},
 				retenUrl: '../userL8/userL8_retainnum.json',
 				retenCvs: '../userL8/userL8_exportretain.json',
 				retenType: 'get',

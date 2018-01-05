@@ -7,6 +7,7 @@
 			:cvs-url="ballCvs"
 			:re-type="ballType"
 			:is-second="isSecond"
+			:request-data="ballRequest"
 			v-on:is-check="getCheck">
 		</statis-page >
 	</section>
@@ -17,7 +18,7 @@
 			:re-url="ballSecUrl"
 			:cvs-url="ballSecCvs"
 			:re-type="ballSecType"
-			:check-time="chekcTime"
+			:request-data="ballSecRequest"
 			@second-back="secondBack">
 			
 		</statis-scond>
@@ -27,6 +28,7 @@
 <script>
 	import StatisPage from './page/StatisPage'
 	import StatisScond from './page/StatisSecond'
+	import {getDate} from '@/method'
 
 	export default {
 		components: {
@@ -128,6 +130,12 @@
 					title: '约球数',
 					unit: '单位（数）'
 				}],
+				ballRequest: {
+					beginTime : getDate().ten,
+					endTime   : getDate().dateLine,
+					pageNow   : 0,
+					pageSize  : 10
+				},
 				
 				ballSecColumns: [{
 	        'label': '序号', // 表头及复选框文字
@@ -227,6 +235,11 @@
 					title: '约球数',
 					unit: '单位（数）'
 				}],
+				ballSecRequest: {
+					time : getDate().ten,
+					pageNow   : 0,
+					pageSize  : 10
+				},
 				check: true,
 				isSecond: true,
 				chekcTime: ''
@@ -234,7 +247,7 @@
 		},
 		methods: {
 			getCheck(row) {
-				this.chekcTime = row.time;
+				this.ballSecRequest.time = row.time;
 				this.check = false;
 			},
 			

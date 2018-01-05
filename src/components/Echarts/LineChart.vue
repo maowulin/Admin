@@ -9,7 +9,8 @@
 		props: [ 'chartsData', 'tableData', "chartTitle", "chartUnit", "chartsId"],
 		data() {
 			return {
-				chart: null
+				chart: null,
+				isReverse: false
 			}
 		},
 		mounted() {
@@ -43,8 +44,9 @@
 							let item = this.tableData[j];
 							tempData.push(item[list.prop]);
 						}
-						tempData.reverse();
-						
+						if(this.isReverse) {
+							tempData.reverse();
+						}
 						let tempObj = {
 		          name: list.label,
 		          type: list.chartType,
@@ -94,9 +96,16 @@
 						tempArray.push(list.time);
 					}else if(list.datetime) {
 						tempArray.push(list.datetime);
+					}else if(list.create_date) {
+						tempArray.push(list.create_date);
+					}else {
+						tempArray.push(list.serial);
 					}
 				}
-				tempArray.reverse();
+				if(parseInt(tempArray[0].replace(/\-/g, "")) > parseInt(tempArray[1].replace(/\-/g, ""))) {
+					tempArray.reverse();
+					this.isReverse = true;
+				}
 				return tempArray;
 			},
 			

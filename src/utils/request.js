@@ -55,7 +55,7 @@ service.interceptors.response.use(
 			if(response.data.items !== undefined){
 				let count = 1;
 				for(let i = 0; i < response.data.items.length; i++){
-					response.data.items[i].serial = count;
+					response.data.items[i].serial = count+'';
 					count++;
 				}
 			}

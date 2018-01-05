@@ -7,6 +7,7 @@
 			:cvs-url="invitiCvs"
 			:re-type="invitiType"
 			:is-second="isSecond"
+			:request-data="invitiRequest"
 			v-on:is-check="getCheck">
 		</statis-page >
 	</section>
@@ -17,7 +18,7 @@
 			:re-url="invitiSecUrl"
 			:cvs-url="invitiSecCvs"
 			:re-type="invitiSecType"
-			:check-time="chekcTime"
+			:request-data="invitiSecRequest"
 			@second-back="secondBack">
 			
 		</statis-scond>
@@ -27,6 +28,7 @@
 <script>
 	import StatisPage from './page/StatisPage'
 	import StatisScond from './page/StatisSecond'
+	import {getDate} from '@/method'
 
 	export default {
 		components: {
@@ -106,6 +108,12 @@
 					title: '圈数据',
 					unit: '单位（数）'
 				}],
+				invitiRequest: {
+					beginTime : getDate().ten,
+					endTime   : getDate().dateLine,
+					pageNow   : 0,
+					pageSize  : 10
+				},
 				
 				invitiSecColumns: [{
 	        'label': '序号', // 表头及复选框文字
@@ -178,14 +186,18 @@
 					title: '圈数据',
 					unit: '单位（数）'
 				}],
+				invitiSecRequest: {
+					time     : '',
+					pageNow  : 0,
+					pageSize : 10
+				},
 				check: true,
-				isSecond: true,
-				chekcTime: ''
+				isSecond: true
 			}
 		},
 		methods: {
 			getCheck(row) {
-				this.chekcTime = row.time;
+				this.invitiSecRequest.time = row.time;
 				this.check = false;
 			},
 			

@@ -49,3 +49,9 @@ Mock.mock(/..\/postingsL8\/postings_exportall.json/, 'get', statisAPI.getInviDat
 
 //圈数据二级页面
 Mock.mock(/..\/postingsL8\/postings_circlestatisticinfo.json/, 'get', statisAPI.getInviSecData)
+
+//游戏数据
+Mock.mock(/..\/game\/game_allstatisticinfo.json/, 'get', statisAPI.getGameData)
+
+//游戏数据二级页面
+Mock.mock(/..\/game\/game_userstatisticinfo.json/, 'get', statisAPI.getGameSecData)

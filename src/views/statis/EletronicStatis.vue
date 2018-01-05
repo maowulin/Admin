@@ -7,6 +7,7 @@
 			:cvs-url="gameCvs"
 			:re-type="gameType"
 			:is-second="isSecond"
+			:request-data="eletronRequest"
 			v-on:is-check="getCheck">
 		</statis-page >
 	</section>
@@ -15,6 +16,7 @@
 <script>
 	import StatisPage from './page/StatisPage'
 	import StatisScond from './page/StatisSecond'
+	import {getDate} from '@/method'
 
 	export default {
 		components: {
@@ -83,6 +85,12 @@
 					title: '约球数',
 					unit: '单位（数）'
 				}],
+				eletronRequest: {
+					beginTime  : getDate().ten,
+					endTime    : getDate().dateLine,
+					pageNow    : 0,
+					pageSize   : 10
+				},
 				isSecond: false
 			}
 		},

@@ -7,6 +7,7 @@
 			:cvs-url="gameCvs"
 			:re-type="gameType"
 			:is-second="isSecond"
+			:request-data="gameRequest"
 			v-on:is-check="getCheck">
 		</statis-page >
 	</section>
@@ -17,7 +18,7 @@
 			:re-url="gameSecUrl"
 			:cvs-url="gameSecCvs"
 			:re-type="gameSecType"
-			:check-time="chekcTime"
+			:request-data="gameSecRequest"
 			@second-back="secondBack">
 			
 		</statis-scond>
@@ -27,7 +28,7 @@
 <script>
 	import StatisPage from './page/StatisPage'
 	import StatisScond from './page/StatisSecond'
-
+	import {getDate} from '@/method'
 	export default {
 		components: {
 			StatisPage,
@@ -84,6 +85,12 @@
 					title: '积分数',
 					unit: '单位（数）'
 				}],
+				gameRequest: {
+					beginTime  : getDate().ten,
+					endTime    : getDate().dateLine,
+					pageNow    : 0,
+					pageSize   : 10
+				},
 				
 				gameSecColumns: [{
 	        'label': '序号', // 表头及复选框文字
@@ -145,9 +152,13 @@
 					title: '积分数',
 					unit: '单位（数）'
 				}],
+				gameSecRequest: {
+					createDate : getDate().ten,
+					pageNow   : 0,
+					pageSize  : 10
+				},
 				check: true,
-				isSecond: true,
-				chekcTime: ''
+				isSecond: true
 			}
 		},
 		methods: {

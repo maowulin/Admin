@@ -5,13 +5,15 @@
 			:chart-group="tribeGroup"
 			:re-url="tribeUrl"
 			:cvs-url="tribeCvs"
-			:re-type="tribeType">
+			:re-type="tribeType"
+			:request-data="tribeRequest">
 		</statis-page >
 	</section>
 </template>
 
 <script>
 	import StatisPage from './page/StatisPage'
+	import {getDate} from '@/method'
 	export default {
 		components: {
 			StatisPage
@@ -99,7 +101,13 @@
 					id: 'basiedChart1',
 					title: '战队数据',
 					unit: '单位（数）'
-				}]
+				}],
+				tribeRequest: {
+					beginTime : getDate().ten,
+					endTime   : getDate().dateLine,
+					pageNow   : 0,
+					pageSize  : 10
+				}
 			}
 		}
 	}
