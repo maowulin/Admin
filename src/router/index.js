@@ -30,7 +30,7 @@ export const constantRouterMap = [
     hidden: true 
   },
 
-{
+  {
     path: '',
     component: Layout,
     redirect: 'dashboard',
@@ -40,7 +40,7 @@ export const constantRouterMap = [
       name: 'dashboard',
       meta: { title: 'dashboard', icon: 'example', noCache: true }
     }]
-},
+  },
 
   {
     path: '/query',
@@ -175,7 +175,13 @@ export const constantRouterMap = [
 	      name: 'UserManagement',
 	      component: _import('management/UserManagement'),
 	      meta: { title: '用户管理', icon: 'form' }
-	    },
+      },
+      {
+        path: 'tribemanagement',
+          name: 'TribeManagement',
+          component: _import('management/TribeManagement'),
+          meta: { title: '战队管理', icon: 'form' }
+      },
 	    {
 		  path: 'ordermanagement',
 	      name: 'OrderManagement',

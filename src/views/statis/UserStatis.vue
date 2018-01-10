@@ -512,11 +512,11 @@
 		methods: {
 			cutBord(e) {
 				if(e.label === '基础指标') {
-					this.bordShow = 1;
+					this.bordShow = 1
 				}else if(e.label === '用户活跃度') {
-					this.bordShow = 2;
+					this.bordShow = 2
 				}else if(e.label === '用户存留率') {
-					this.bordShow = 3;
+					this.bordShow = 3
 				}
 			}
 		}

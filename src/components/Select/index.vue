@@ -29,10 +29,13 @@ export default {
 
 <style>
   .el-dropdown-link {
-	cursor: pointer;
-	color: #409EFF;
+    cursor: pointer;
+    color: #409EFF;
   }
   .el-icon-arrow-down {
     font-size: 12px;
+  }
+  .el-select .el-input {
+    width: 104px;
   }
 </style>

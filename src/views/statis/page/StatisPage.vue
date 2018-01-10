@@ -24,7 +24,15 @@
 
 			<my-checkbox v-on:change="boxChange" :labeles="columns" :default-checked="defaultHead"></my-checkbox>
 
-			<egrid class="egrid" fit highlight-current-row :key="key" :data="tableData" :columns="newColumns" :columns-schema="columnsSchema" :columns-props="columnsProps" :column-type="columnType" :columns-handler="columnsHandler">
+			<egrid class="egrid" 
+				fit 
+				:key="key" 
+				:data="tableData" 
+				:columns="newColumns" 
+				:columns-schema="columnsSchema" 
+				:columns-props="columnsProps" 
+				:column-type="columnType" 
+				:columns-handler="columnsHandler">
 
 			</egrid>
 
@@ -96,13 +104,9 @@
 	      newColumns: [],
 
 	      columnsSchema: {
-
 	        '日期': {
-
 	          width: '120px'
-
 	        }
-
 	      },
 
 	      columnsProps: {
@@ -302,4 +306,5 @@
 		padding: 7px 3px;
 		font-size: 14px;
 	}
+
 </style>
