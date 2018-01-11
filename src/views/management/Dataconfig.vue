@@ -1,5 +1,5 @@
 <template>
-		<section>
+		<section class="data-bord">
 			<div class="user_head">
 				<el-button class="hede-btn" @click="dataInsert" plain>新增</el-button>
 			</div>
@@ -11,8 +11,7 @@
 				:columns-schema="columnsSchema"
 				:columns-props="columnsProps"
 				:column-type="columnType"
-				:columns-handler="columnsHandler"
-				@section-change="sectionChange">
+				:columns-handler="columnsHandler">
 			</egrid>
 		</section>
 	</template>
@@ -21,149 +20,220 @@
 		import Paging from '@/components/Paging/'
 		import MySelect from '@/components/Select/'
 		import MySearch from '@/components/Search/'
+		import { getDetaConfig } from '@/api/management'
 
 		var Btn = {
-			template: `<el-button-group>
-									<el-button type="primary" @click="edit" icon="el-icon-edit">编辑</el-button>
-									<el-button type="primary" @click="delete" icon="el-icon-delete">删除</el-button>
+		  template: `<el-button-group>
+									<el-button class="config-btn" type="primary" @click="edit" icon="el-icon-edit">{{ row._edit ? '提交' : '编辑' }}</el-button>
+									<el-button class="config-btn"  type="danger" @click="rowDelete" icon="el-icon-delete">删除</el-button>
+								</el-button-group>
+								<el-button-group>
+									<el-button class="config-btn" type="primary" @click="rowAdd" icon="el-icon-edit">提交</el-button>
 								</el-button-group>`,
 		  props: ['row'],
-			methods: {
-				edit() {
-					this.$emit('data-edit', this.row)
-				},
-				delete() {
-					this.$eimit('data-delete', this.row)
+		  methods: {
+		    edit() {
+		      this.$emit('data-edit', this.row)
+		      this.$set(this.row, '_edit', !this.row._edit)
+		    },
+		    rowDelete() {
+		      this.$emit('data-delete', this.row)
+		    },
+		    rowAdd() {
+		      this.$emit('row-add', this.row)
+		    }
+		  }
+		}
+
+		var Edit = {
+			template: `<div>
+									<el-input v-show="row._edit"  v-model="row[col.prop]" clearable> </el-input>
+									<span v-show="!row._edit">{{ text }}</span>
+								</div>`,
+			props: ['row', 'col'],
+			computed: {
+				text() {
+					return this.row[this.col.prop]
 				}
 			}
 		}
-	
+
 		export default {
-			components: {
-				Paging,
-				MySelect,
-				MySearch
-			},
-			data() {
-				return {
-					message1: '',
-					message2: '',
-					message3: '',
-					totalRecords: 0,
-					optionValue1: [{
-						'opti': '分配状态',
-						'val': ''
-					},{
-						'opti': '初始导入',
-						'val': '0'
-					},{
-						'opti': '已赠送',
-						'val': '1'
-					},{
-						'opti': '未出售',
-						'val': '2'
-					},{
-						'opti': '线下出售',
-						'val': '3'
-					},{
-						'opti': '线上出售',
-						'val': '4'
-					}],
-					optionValue2: [{
-						'opti': '绑定状态',
-						'val': ''
-					},{
-						'opti': '已绑定',
-						'val': '0'
-					},{
-						'opti': '未绑定',
-						'val': '1'
-					}],
-					optionValue3: [{
-						'opti': '请选择',
-						'val': ''
-					},{
-						'opti': '编号',
-						'val': '1'
-					},{
-						'opti': 'MAC地址',
-						'val': '2'
-					},{
-						'opti': '所属球房',
-						'val': '3'
-					},{
-						'opti': '用户昵称',
-						'val': '4'
-					}],
-					tableData: [],
-					columns: [{
-						"label": "序号",
-						"prop": "serial"
-					},{
-						"label": "设备地址",
-						"prop": "createTime"
-					},{
-						"label": "所属球房",
-						"prop": "name"
-					},{
-						"label": "分配状态",
-						"prop": "address"
-					},{
-						"label": "绑定状态",
-						"prop": "total"
-					},{
-						"label": "用户绰号",
-						"prop": "status"
-					},{
-						"label": "创建时间",
-						"prop": "time"
-					}],
-					columnsSchema: {
-						'序号': {
-							width: '70px'
-						}
+		  components: {
+		    Paging,
+		    MySelect,
+		    MySearch
+		  },
+		  data() {
+		    return {
+		      message1: '',
+		      message2: '',
+		      message3: '',
+		      totalRecords: 0,
+		      optionValue1: [{
+		        'opti': '分配状态',
+		        'val': ''
+		      }, {
+		        'opti': '初始导入',
+		        'val': '0'
+		      }, {
+		        'opti': '已赠送',
+		        'val': '1'
+		      }, {
+		        'opti': '未出售',
+		        'val': '2'
+		      }, {
+		        'opti': '线下出售',
+		        'val': '3'
+		      }, {
+		        'opti': '线上出售',
+		        'val': '4'
+		      }],
+		      optionValue2: [{
+		        'opti': '绑定状态',
+		        'val': ''
+		      }, {
+		        'opti': '已绑定',
+		        'val': '0'
+		      }, {
+		        'opti': '未绑定',
+		        'val': '1'
+		      }],
+		      optionValue3: [{
+		        'opti': '请选择',
+		        'val': ''
+		      }, {
+		        'opti': '编号',
+		        'val': '1'
+		      }, {
+		        'opti': 'MAC地址',
+		        'val': '2'
+		      }, {
+		        'opti': '所属球房',
+		        'val': '3'
+		      }, {
+		        'opti': '用户昵称',
+		        'val': '4'
+		      }],
+		      tableData: [],
+		      columns: [ {
+		        'label': '字段名',
+		        'prop': 'v_key'
+		      }, {
+		        'label': '字段说明',
+		        'prop': 'explain'
+		      }, {
+		        'label': '字段值',
+		        'prop': 'v_value'
+		      }, {
+		        'label': '上限',
+		        'prop': 'upper_limit'
+		      }],
+					getRequestData: {
+						'type': '1'
 					},
-					columnsProps: {
-						align: "center",
-						sortable: true
-					},
-					columnType: 'selection'
-				}
+		      columnsSchema: { },
+		      columnsProps: {
+		        align: 'center',
+						sortable: true,
+						component: Edit
+		      },
+		      columnType: ''
+		    }
 			},
-			methods: {
-				dataInsert() {
-	
-				},
-				dataEdit(row) {
-
-				},
-				dataDelete(row) {
-
-				},
-				columnsHandler(cols) {
-					let det = this.dataEdit
-					let dde = this.dataDelete
-					return cols.concat({
-					label: '操作',
-					fixed: 'right',
-					width: 170,
-					component: Btn,
-					listeners: {
-						'data-edit'(row) {
-							det(row)
-						},
-						'data-delete'(row) {
-							dde(row)
-						}
+			created() {
+				this.getData()
+			},
+		  methods: {
+		    getData() {
+		      getDetaConfig('get', this.getRequestData).then(response => {
+						console.log(response)
+						this.tableData = response.data
+		      }).catch(error => {
+		        console.log(response)
+		      })
+		    },
+		    dataInsert() {
+					const mainEle = document.getElementsByClassName('app-wrapper')[0]
+					const appEle = document.getElementsByClassName('main-container')[0]
+					window.scrollTo(0, appEle.scrollHeight - mainEle.clientHeight)
+		    },
+		    dataEdit(row) {
+		      console.log(row)
+					if(row._edit) {
+						this.$confirm('确认提交?', '提示', {
+							confirmButtonText: '确定',
+							cancelButtonText: '取消',
+							type: 'warning'
+						}).then(() => {
+							this.$message({
+								type: 'success',
+								message: '提交成功!'
+							})
+						}).catch(() => {
+							this.$message({
+								type: 'info',
+								message: '已取消提交'
+							})          
+						})
 					}
+		    },
+		    dataDelete(row) {
+		      this.$confirm('确认删除?', '提示', {
+						confirmButtonText: '确定',
+						cancelButtonText: '取消',
+						type: 'warning'
+					}).then(() => {
+						this.$message({
+							type: 'success',
+							message: '删除成功!'
+						})
+					}).catch(() => {
+						this.$message({
+							type: 'info',
+							message: '已取消删除'
+						})          
 					})
-				}
-			}
+		    },
+		    columnsHandler(cols) {
+		      const det = this.dataEdit
+		      const dde = this.dataDelete
+		      return cols.concat({
+		        label: '操作',
+		        fixed: 'right',
+		        width: 170,
+		        component: Btn,
+		        listeners: {
+		          'data-edit'(row) {
+		            det(row)
+		          },
+		          'data-delete'(row) {
+		            dde(row)
+		          }
+		        }
+		      })
+		    }
+		  }
 		}
 	</script>
 	
 	<style>
 		.el-select .el-input {
 			width: 104px;
+		}
+
+		.config-btn {
+			width: 60px;
+			padding: 9px 7px;
+		}
+
+		.user_head {
+			position: fixed;
+			top: 60px;
+			z-index: 999;
+		}
+
+		.data-bord {
+			padding-top: 90px;
 		}
 	</style>
