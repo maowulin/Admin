@@ -19,7 +19,7 @@ export default {
   },
   methods: {
   	searchClick() {
-  		this.$emit('searchClick',this.select, this.input5);
+  		this.$emit('searchClick', this.select, this.input5)
   	}
   }
 }

@@ -1,6 +1,6 @@
 <template>
 		<section class="data-bord">
-			<div class="user_head">
+			<div class="user_head data-head">
 				<el-button class="hede-btn" @click="dataInsert" plain>新增</el-button>
 			</div>
 	
@@ -23,13 +23,15 @@
 		import { getDetaConfig } from '@/api/management'
 
 		var Btn = {
-		  template: `<el-button-group>
-									<el-button class="config-btn" type="primary" @click="edit" icon="el-icon-edit">{{ row._edit ? '提交' : '编辑' }}</el-button>
-									<el-button class="config-btn"  type="danger" @click="rowDelete" icon="el-icon-delete">删除</el-button>
-								</el-button-group>
-								<el-button-group>
-									<el-button class="config-btn" type="primary" @click="rowAdd" icon="el-icon-edit">提交</el-button>
-								</el-button-group>`,
+			template: `<div>
+									<el-button-group v-if="row.isAdd">
+										<el-button class="config-btn" type="primary" @click="rowAdd" icon="el-icon-edit">提交</el-button>
+									</el-button-group>
+									<el-button-group v-else>
+										<el-button class="config-btn" type="primary" @click="edit" icon="el-icon-edit">{{ row._edit ? '提交' : '编辑' }}</el-button>
+										<el-button class="config-btn"  type="danger" @click="rowDelete" icon="el-icon-delete">删除</el-button>
+									</el-button-group>
+								</div>`,
 		  props: ['row'],
 		  methods: {
 		    edit() {
@@ -40,7 +42,8 @@
 		      this.$emit('data-delete', this.row)
 		    },
 		    rowAdd() {
-		      this.$emit('row-add', this.row)
+					this.$emit('row-add', this.row)
+					this.$set(this.row, '_edit', !this.row._edit)
 		    }
 		  }
 		}
@@ -157,6 +160,14 @@
 					const mainEle = document.getElementsByClassName('app-wrapper')[0]
 					const appEle = document.getElementsByClassName('main-container')[0]
 					window.scrollTo(0, appEle.scrollHeight - mainEle.clientHeight)
+					this.tableData.push({
+						'explain': '',
+						'upper_limit': '',
+						'v_key': '',
+						'v_value': '',
+						'isAdd': 'true',
+						"_edit": 'true'
+					})
 		    },
 		    dataEdit(row) {
 		      console.log(row)
@@ -194,10 +205,15 @@
 							message: '已取消删除'
 						})          
 					})
-		    },
+				},
+				rowAdd(row) {
+					console.log(row)
+					row.isAdd = false
+				},
 		    columnsHandler(cols) {
 		      const det = this.dataEdit
-		      const dde = this.dataDelete
+					const dde = this.dataDelete
+					const roa = this.rowAdd
 		      return cols.concat({
 		        label: '操作',
 		        fixed: 'right',
@@ -209,7 +225,10 @@
 		          },
 		          'data-delete'(row) {
 		            dde(row)
-		          }
+							},
+							'row-add'(row) {
+								roa(row)
+							}
 		        }
 		      })
 		    }
@@ -227,13 +246,13 @@
 			padding: 9px 7px;
 		}
 
-		.user_head {
+		.data-head {
 			position: fixed;
 			top: 60px;
 			z-index: 999;
 		}
 
 		.data-bord {
-			padding-top: 90px;
+			/* padding-top: 90px; */
 		}
 	</style>

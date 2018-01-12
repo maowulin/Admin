@@ -155,5 +155,5 @@
 <style>
 	.el-select .el-input {
     width: 104px;
-  }
+	}
 </style>

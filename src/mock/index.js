@@ -59,3 +59,12 @@ Mock.mock(/..\/game\/game_userstatisticinfo.json/, 'get', statisAPI.getGameSecDa
 
 // 数据配置
 Mock.mock(/..\/game\/game_configurationValue/, 'get', managementAPI.getConfig)
+
+// 奖金提现审核
+Mock.mock(/..\/userL8\/destoonFinanceCash_list/, 'get', managementAPI.getBounds)
+
+// 管理员列表
+Mock.mock(/..\/authority\/administrator_list/, 'get', managementAPI.getPremis)
+
+// 角色列表获取
+Mock.mock(/..\/authority\/role_all/, 'get', managementAPI.getRole)

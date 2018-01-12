@@ -367,10 +367,207 @@ const dataConfigMap = {
   pid: 0,
   result: 1
 }
-
+const boundsMap = {
+  currentPage: 0,
+  items: [
+    {
+      apply_for_date: "2017-11-10 00:56:11",
+      approver: "admin",
+      approverID: 1,
+      id: 3,
+      phone: 15829258626,
+      status: 1,
+      sum: 1,
+      userID: 12,
+      userName: "8626nt"
+    },
+    {
+      apply_for_date: "2017-12-02 13:02:21",
+      approver: "admin",
+      approverID: 1,
+      id: 4,
+      phone: 15829258626,
+      status: 1,
+      sum: 1,
+      userID: 12,
+      userName: "8626nt"
+    },
+    {
+      apply_for_date: "2017-12-26 17:54:39",
+      approver: "admin",
+      approverID: 1,
+      id: 5,
+      phone: 18035909806,
+      status: 1,
+      sum: 9,
+      userID: 6,
+      userName: "馒头"
+    }
+  ],
+  recordsPerPage: 10,
+  totalRecords: 3
+}
+const premisMap = {
+  currentPage: 0,
+  items: [
+    {
+      deptName: "财务部",
+      id: 1,
+      createTime: "2017-06-12 14:10:55",
+      lastLoginIp: "1.85.217.245",
+      phone: "18000000000",
+      status: 0,
+      uname: "admin",
+      name: "林紫华",
+      lastLoginTime: "2018-01-12 09:12:32",
+      roleNames: "管理员"
+    },
+    {
+      deptName: "产品部",
+      id: 2,
+      createTime: "2017-08-11 14:17:53",
+      lastLoginIp: "1.85.219.3",
+      phone: "17789194209",
+      status: 0,
+      uname: "dengjuan",
+      name: "邓娟",
+      lastLoginTime: "2017-12-18 11:46:30",
+      roleNames: "产品管理员"
+    },
+    {
+      deptName: "市场",
+      id: 3,
+      createTime: "2017-08-11 14:19:38",
+      lastLoginIp: "1.85.217.245",
+      phone: "18516214029",
+      status: 0,
+      uname: "yinle",
+      name: "尹乐",
+      lastLoginTime: "2018-01-12 09:35:06",
+      roleNames: "市场管理员"
+    },
+    {
+      deptName: "产品部",
+      id: 4,
+      createTime: "2017-08-11 14:20:37",
+      lastLoginIp: "36.46.48.235",
+      phone: "18035909806",
+      status: 0,
+      uname: "薛亚伟",
+      name: "薛亚伟",
+      lastLoginTime: "2017-10-02 19:09:12",
+      roleNames: "产品管理员"
+    },
+    {
+      deptName: "技术部",
+      id: 5,
+      createTime: "2017-08-11 14:53:27",
+      lastLoginIp: "1.83.125.52",
+      phone: "17792816009",
+      status: 0,
+      uname: "fengruilong",
+      name: "冯瑞龙",
+      lastLoginTime: "2017-12-28 20:22:23",
+      roleNames: "技术管理员"
+    },
+    {
+      deptName: "CEO",
+      id: 6,
+      createTime: "2017-08-12 12:55:02",
+      lastLoginIp: "1.83.125.52",
+      phone: "18066666066",
+      status: 0,
+      uname: "石延明",
+      name: "石延明",
+      lastLoginTime: "2018-01-06 12:37:29",
+      roleNames: "管理员"
+    },
+    {
+      deptName: "行政",
+      id: 8,
+      createTime: "2017-08-29 14:54:40",
+      lastLoginIp: "1.83.125.52",
+      phone: "18035909806",
+      status: 0,
+      uname: "李文雅",
+      name: "李文雅",
+      lastLoginTime: "2018-01-08 11:25:11",
+      roleNames: "行政管理"
+    },
+    {
+      deptName: "市场",
+      id: 9,
+      createTime: "2017-12-25 09:04:59",
+      lastLoginIp: "1.80.71.7",
+      phone: "13609161336",
+      status: 0,
+      uname: "梁晶",
+      name: "梁晶",
+      lastLoginTime: "2018-01-10 09:03:09",
+      roleNames: "假期公用,市场管理员"
+    }
+  ],
+  recordsPerPage: 10,
+  totalRecords: 8
+}
+const roleMap = [
+  {
+    createTime: "2017-08-11 14:11:16",
+    id: 1,
+    isInner: 0,
+    roleDesc: "产品管理员",
+    roleName: "产品管理员"
+  },
+  {
+    createTime: "2017-08-11 14:11:50",
+    id: 2,
+    isInner: 0,
+    roleDesc: "市场管理员",
+    roleName: "市场管理员"
+  },
+  {
+    createTime: "2017-08-11 14:12:49",
+    id: 3,
+    isInner: 0,
+    roleDesc: "技术管理员",
+    roleName: "技术管理员"
+  },
+  {
+    createTime: "2017-08-12 12:53:04",
+    id: 4,
+    isInner: 0,
+    roleDesc: "最高权限",
+    roleName: "管理员"
+  },
+  {
+    createTime: "2017-08-14 09:18:37",
+    id: 5,
+    isInner: 0,
+    roleDesc: "主要用户设备发货",
+    roleName: "行政管理"
+  },
+  {
+    createTime: "2017-09-29 15:33:41",
+    id: 6,
+    isInner: 0,
+    roleDesc: "假期公用",
+    roleName: "假期公用"
+  }
+];
 export default {
   getConfig: config => {
     console.log(config)
     return dataConfigMap
+  },
+  getBounds: config => {
+    console.log(config)
+    return boundsMap
+  },
+  getPremis: config => {
+    console.log(config)
+    return premisMap
+  },
+  getRole: config => {
+    return roleMap
   }
 }

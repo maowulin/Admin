@@ -22,7 +22,7 @@ service.interceptors.request.use(config => {
   // Do something with request error
   console.log(error) // for debug
   Promise.reject(error)
-});
+})
 
 // respone拦截器
 service.interceptors.response.use(
@@ -52,7 +52,7 @@ service.interceptors.response.use(
 //    }
 //    return Promise.reject('error')
 //  } else {
-			if(response.data.items !== undefined){
+			if(response.data.items !== undefined) {
 				let count = 1;
 				for(let i = 0; i < response.data.items.length; i++){
 					response.data.items[i].serial = count+'';
