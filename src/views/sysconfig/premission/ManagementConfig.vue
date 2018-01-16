@@ -85,13 +85,7 @@
             this.form.department = response.deptName
             this.form.phone = response.phone
             this.form.status = response.status
-            // ( { name: (this.form.uname),
-            //   password: (this.form.password),
-            //   comfirmPassword: (this.form.comfirmPassword),
-            //   deptName: (this.form.department),
-            //   phone: (this.form.phone),
-            //   status: (this.form.status)
-            // } = response)
+
             // 获取当前管理员角色
             for (let i = 0; i < response.roleList.length; i++) {
               this.roleId.push(response.roleList[i].id)
@@ -103,7 +97,7 @@
         }
       },
       getPreToken() {
-        getToken().then(response => {
+				getToken().then(response => {
 					this.form.token = response.data
 				}).catch(error => {
           console.log(error)

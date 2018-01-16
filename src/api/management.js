@@ -23,3 +23,11 @@ export function getPremis(_url, _type, _data) {
     data: _data
   })
 }
+
+export function getToken() {
+  return request({
+    url: '../authority/get_token',
+    method: 'get',
+    data: {}
+  })
+}

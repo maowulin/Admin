@@ -68,3 +68,18 @@ Mock.mock(/..\/authority\/administrator_list/, 'get', managementAPI.getPremis)
 
 // 角色列表获取
 Mock.mock(/..\/authority\/role_all/, 'get', managementAPI.getRole)
+
+// 获取可编辑管理员信息
+Mock.mock(/..\/authority\/administrator_edit/, 'get', managementAPI.getRoleList)
+
+// 获取token
+Mock.mock(/..\/authority\/get_token/, 'get', managementAPI.getToken)
+
+// 获取token
+Mock.mock(/..\/authority\/role_list/, 'get', managementAPI.getManager)
+
+// 版本信息列表
+Mock.mock(/..\/version\/version_list/, 'get', managementAPI.getVersion)
+
+// 版本信息
+Mock.mock(/..\/version\/version_edit/, 'get', managementAPI.getVerionInfo)

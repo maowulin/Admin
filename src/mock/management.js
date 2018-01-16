@@ -371,37 +371,37 @@ const boundsMap = {
   currentPage: 0,
   items: [
     {
-      apply_for_date: "2017-11-10 00:56:11",
-      approver: "admin",
+      apply_for_date: '2017-11-10 00:56:11',
+      approver: 'admin',
       approverID: 1,
       id: 3,
       phone: 15829258626,
       status: 1,
       sum: 1,
       userID: 12,
-      userName: "8626nt"
+      userName: '8626nt'
     },
     {
-      apply_for_date: "2017-12-02 13:02:21",
-      approver: "admin",
+      apply_for_date: '2017-12-02 13:02:21',
+      approver: 'admin',
       approverID: 1,
       id: 4,
       phone: 15829258626,
       status: 1,
       sum: 1,
       userID: 12,
-      userName: "8626nt"
+      userName: '8626nt'
     },
     {
-      apply_for_date: "2017-12-26 17:54:39",
-      approver: "admin",
+      apply_for_date: '2017-12-26 17:54:39',
+      approver: 'admin',
       approverID: 1,
       id: 5,
       phone: 18035909806,
       status: 1,
       sum: 9,
       userID: 6,
-      userName: "馒头"
+      userName: '馒头'
     }
   ],
   recordsPerPage: 10,
@@ -411,100 +411,100 @@ const premisMap = {
   currentPage: 0,
   items: [
     {
-      deptName: "财务部",
+      deptName: '财务部',
       id: 1,
-      createTime: "2017-06-12 14:10:55",
-      lastLoginIp: "1.85.217.245",
-      phone: "18000000000",
+      createTime: '2017-06-12 14:10:55',
+      lastLoginIp: '1.85.217.245',
+      phone: '18000000000',
       status: 0,
-      uname: "admin",
-      name: "林紫华",
-      lastLoginTime: "2018-01-12 09:12:32",
-      roleNames: "管理员"
+      uname: 'admin',
+      name: '林紫华',
+      lastLoginTime: '2018-01-12 09:12:32',
+      roleNames: '管理员'
     },
     {
-      deptName: "产品部",
+      deptName: '产品部',
       id: 2,
-      createTime: "2017-08-11 14:17:53",
-      lastLoginIp: "1.85.219.3",
-      phone: "17789194209",
+      createTime: '2017-08-11 14:17:53',
+      lastLoginIp: '1.85.219.3',
+      phone: '17789194209',
       status: 0,
-      uname: "dengjuan",
-      name: "邓娟",
-      lastLoginTime: "2017-12-18 11:46:30",
-      roleNames: "产品管理员"
+      uname: 'dengjuan',
+      name: '邓娟',
+      lastLoginTime: '2017-12-18 11:46:30',
+      roleNames: '产品管理员'
     },
     {
-      deptName: "市场",
+      deptName: '市场',
       id: 3,
-      createTime: "2017-08-11 14:19:38",
-      lastLoginIp: "1.85.217.245",
-      phone: "18516214029",
+      createTime: '2017-08-11 14:19:38',
+      lastLoginIp: '1.85.217.245',
+      phone: '18516214029',
       status: 0,
-      uname: "yinle",
-      name: "尹乐",
-      lastLoginTime: "2018-01-12 09:35:06",
-      roleNames: "市场管理员"
+      uname: 'yinle',
+      name: '尹乐',
+      lastLoginTime: '2018-01-12 09:35:06',
+      roleNames: '市场管理员'
     },
     {
-      deptName: "产品部",
+      deptName: '产品部',
       id: 4,
-      createTime: "2017-08-11 14:20:37",
-      lastLoginIp: "36.46.48.235",
-      phone: "18035909806",
+      createTime: '2017-08-11 14:20:37',
+      lastLoginIp: '36.46.48.235',
+      phone: '18035909806',
       status: 0,
-      uname: "薛亚伟",
-      name: "薛亚伟",
-      lastLoginTime: "2017-10-02 19:09:12",
-      roleNames: "产品管理员"
+      uname: '薛亚伟',
+      name: '薛亚伟',
+      lastLoginTime: '2017-10-02 19:09:12',
+      roleNames: '产品管理员'
     },
     {
-      deptName: "技术部",
+      deptName: '技术部',
       id: 5,
-      createTime: "2017-08-11 14:53:27",
-      lastLoginIp: "1.83.125.52",
-      phone: "17792816009",
+      createTime: '2017-08-11 14:53:27',
+      lastLoginIp: '1.83.125.52',
+      phone: '17792816009',
       status: 0,
-      uname: "fengruilong",
-      name: "冯瑞龙",
-      lastLoginTime: "2017-12-28 20:22:23",
-      roleNames: "技术管理员"
+      uname: 'fengruilong',
+      name: '冯瑞龙',
+      lastLoginTime: '2017-12-28 20:22:23',
+      roleNames: '技术管理员'
     },
     {
-      deptName: "CEO",
+      deptName: 'CEO',
       id: 6,
-      createTime: "2017-08-12 12:55:02",
-      lastLoginIp: "1.83.125.52",
-      phone: "18066666066",
+      createTime: '2017-08-12 12:55:02',
+      lastLoginIp: '1.83.125.52',
+      phone: '18066666066',
       status: 0,
-      uname: "石延明",
-      name: "石延明",
-      lastLoginTime: "2018-01-06 12:37:29",
-      roleNames: "管理员"
+      uname: '石延明',
+      name: '石延明',
+      lastLoginTime: '2018-01-06 12:37:29',
+      roleNames: '管理员'
     },
     {
-      deptName: "行政",
+      deptName: '行政',
       id: 8,
-      createTime: "2017-08-29 14:54:40",
-      lastLoginIp: "1.83.125.52",
-      phone: "18035909806",
+      createTime: '2017-08-29 14:54:40',
+      lastLoginIp: '1.83.125.52',
+      phone: '18035909806',
       status: 0,
-      uname: "李文雅",
-      name: "李文雅",
-      lastLoginTime: "2018-01-08 11:25:11",
-      roleNames: "行政管理"
+      uname: '李文雅',
+      name: '李文雅',
+      lastLoginTime: '2018-01-08 11:25:11',
+      roleNames: '行政管理'
     },
     {
-      deptName: "市场",
+      deptName: '市场',
       id: 9,
-      createTime: "2017-12-25 09:04:59",
-      lastLoginIp: "1.80.71.7",
-      phone: "13609161336",
+      createTime: '2017-12-25 09:04:59',
+      lastLoginIp: '1.80.71.7',
+      phone: '13609161336',
       status: 0,
-      uname: "梁晶",
-      name: "梁晶",
-      lastLoginTime: "2018-01-10 09:03:09",
-      roleNames: "假期公用,市场管理员"
+      uname: '梁晶',
+      name: '梁晶',
+      lastLoginTime: '2018-01-10 09:03:09',
+      roleNames: '假期公用,市场管理员'
     }
   ],
   recordsPerPage: 10,
@@ -512,48 +512,294 @@ const premisMap = {
 }
 const roleMap = [
   {
-    createTime: "2017-08-11 14:11:16",
+    createTime: '2017-08-11 14:11:16',
     id: 1,
     isInner: 0,
-    roleDesc: "产品管理员",
-    roleName: "产品管理员"
+    roleDesc: '产品管理员',
+    roleName: '产品管理员'
   },
   {
-    createTime: "2017-08-11 14:11:50",
+    createTime: '2017-08-11 14:11:50',
     id: 2,
     isInner: 0,
-    roleDesc: "市场管理员",
-    roleName: "市场管理员"
+    roleDesc: '市场管理员',
+    roleName: '市场管理员'
   },
   {
-    createTime: "2017-08-11 14:12:49",
+    createTime: '2017-08-11 14:12:49',
     id: 3,
     isInner: 0,
-    roleDesc: "技术管理员",
-    roleName: "技术管理员"
+    roleDesc: '技术管理员',
+    roleName: '技术管理员'
   },
   {
-    createTime: "2017-08-12 12:53:04",
+    createTime: '2017-08-12 12:53:04',
     id: 4,
     isInner: 0,
-    roleDesc: "最高权限",
-    roleName: "管理员"
+    roleDesc: '最高权限',
+    roleName: '管理员'
   },
   {
-    createTime: "2017-08-14 09:18:37",
+    createTime: '2017-08-14 09:18:37',
     id: 5,
     isInner: 0,
-    roleDesc: "主要用户设备发货",
-    roleName: "行政管理"
+    roleDesc: '主要用户设备发货',
+    roleName: '行政管理'
   },
   {
-    createTime: "2017-09-29 15:33:41",
+    createTime: '2017-09-29 15:33:41',
     id: 6,
     isInner: 0,
-    roleDesc: "假期公用",
-    roleName: "假期公用"
+    roleDesc: '假期公用',
+    roleName: '假期公用'
   }
-];
+]
+const roleListMap = {
+  roleList: [
+    {
+      createTime: '2017-08-11 14:11:16',
+      id: 1,
+      isInner: 0,
+      roleDesc: '产品管理员',
+      roleName: '产品管理员'
+    }
+  ],
+  deptName: '产品部',
+  createTime: '2017-08-11 14:17:53',
+  lastLoginIp: '1.85.219.3',
+  phone: '17789194209',
+  status: 0,
+  uname: 'dengjuan',
+  name: '邓娟',
+  comfirmPassword: '******',
+  password: '******',
+  lastLoginTime: '2017-12-18 11:46:30'
+}
+const tokenMap = {
+  data: 'Yjz+zvHjtCiDSwcj8GtH2g==',
+  error: 0,
+  error_message: '',
+  pid: 0,
+  result: 1
+}
+const managerMap = {
+  currentPage: 0,
+  items: [
+    {
+      createTime: '2017-08-11 14:11:16',
+      id: 1,
+      isInner: 0,
+      roleDesc: '产品管理员',
+      roleName: '产品管理员'
+    },
+    {
+      createTime: '2017-08-11 14:11:50',
+      id: 2,
+      isInner: 0,
+      roleDesc: '市场管理员',
+      roleName: '市场管理员'
+    },
+    {
+      createTime: '2017-08-11 14:12:49',
+      id: 3,
+      isInner: 0,
+      roleDesc: '技术管理员',
+      roleName: '技术管理员'
+    },
+    {
+      createTime: '2017-08-12 12:53:04',
+      id: 4,
+      isInner: 0,
+      roleDesc: '最高权限',
+      roleName: '管理员'
+    },
+    {
+      createTime: '2017-08-14 09:18:37',
+      id: 5,
+      isInner: 0,
+      roleDesc: '主要用户设备发货',
+      roleName: '行政管理'
+    },
+    {
+      createTime: '2017-09-29 15:33:41',
+      id: 6,
+      isInner: 0,
+      roleDesc: '假期公用',
+      roleName: '假期公用'
+    }
+  ],
+  recordsPerPage: 10,
+  totalRecords: 6
+}
+const versionMap = {
+  currentPage: 0,
+  items: [
+    {
+      apkUrl:
+        'http://www.butterfly-8.com/version/file_version_20171228203246779.apk',
+      id: 20,
+      minimumVersion: '16',
+      newFileName: 'file_version_20171228203246779.apk',
+      number: 0,
+      oriFileName: 'app-butterfly-release_115_jiagu_sign.apk',
+      releaseTime: '2017-12-28 20:32:46',
+      releaseUser: 'fengruilong',
+      type: '2',
+      updateContent: '1:修复一些bug，提高用户体验\r\n',
+      version: '16'
+    },
+    {
+      apkUrl:
+        'http://www.butterfly-8.com/version/file_version_20171221021742788.apk',
+      id: 19,
+      minimumVersion: '15',
+      newFileName: 'file_version_20171221021742788.apk',
+      number: 0,
+      oriFileName: 'app-butterfly-release_114_jiagu_sign.apk',
+      releaseTime: '2017-12-21 02:17:42',
+      releaseUser: 'fengruilong',
+      type: '2',
+      updateContent:
+        '1、优化游戏模式\r\n2、游戏新增23分模式（2人）\r\n3、新手引导优化，增加每步点击记录及统计\r\n4、游戏中增加聊天\r\n5、游戏操作方式优化及增加手机滑动击打',
+      version: '15'
+    },
+    {
+      apkUrl:
+        'http://www.butterfly-8.com/version/file_version_20171207181555426.apk',
+      id: 18,
+      minimumVersion: '14',
+      newFileName: 'file_version_20171207181555426.apk',
+      number: 0,
+      oriFileName: 'app-butterfly-release_113_jiagu_sign.apk',
+      releaseTime: '2017-12-07 18:15:55',
+      releaseUser: 'fengruilong',
+      type: '2',
+      updateContent:
+        '更新内容\r\n1：优化击球力度\r\n2：修复创建房间bug\r\n3：游客增加退出功能',
+      version: '14'
+    },
+    {
+      apkUrl:
+        'http://www.butterfly-8.com/version/file_version_20171202180859226.apk',
+      id: 17,
+      minimumVersion: '13',
+      newFileName: 'file_version_20171202180859226.apk',
+      number: 0,
+      oriFileName: 'app-butterfly-release_112_jiagu_sign.apk',
+      releaseTime: '2017-12-02 18:08:59',
+      releaseUser: 'fengruilong',
+      type: '2',
+      updateContent:
+        '1、游戏取消【断线判输】规则，启用断线自动重连\r\n2、房主拒绝或者不接受，自动为加入者创建房间\r\n3、游客权限增加\r\n4、抽奖功能重做\r\n5、优化观战内容\r\n6、优化界面展示\r\n7、开放战队创建功能',
+      version: '13'
+    },
+    {
+      apkUrl:
+        'http://www.butterfly-8.com/version/file_version_20171110023012929.apk',
+      id: 15,
+      minimumVersion: '12',
+      newFileName: 'file_version_20171110023012929.apk',
+      number: 0,
+      oriFileName: 'app-butterfly-release_111_jiagu_sign.apk',
+      releaseTime: '2017-11-10 02:30:12',
+      releaseUser: 'fengruilong',
+      type: '2',
+      updateContent:
+        '1、增加游客模式，无需账号也可登录进行匹配\r\n2、增加【观战】功能，可实时观看正在进行的比赛\r\n3、增加更多排行：积分增量排行、财富榜、收益榜、战绩榜、胜率榜\r\n4、增加每日抽奖功能，只有每日积分增量排名的前10名才有抽奖机会\r\n5、新增积分赛与奖金赛，奖金高达10元，人人都有机会赢取\r\n6、新增官方公告，关于版本最新的动态，更新内容，功能等都可以在这里查看\r\n7、取消银币内容\r\n',
+      version: '12'
+    },
+    {
+      apkUrl:
+        'http://www.butterfly-8.com/version/file_version_20170930223408457.apk',
+      id: 14,
+      minimumVersion: '11',
+      newFileName: 'file_version_20170930223408457.apk',
+      number: 0,
+      oriFileName: 'app-butterfly-release_110_jiagu_sign.apk',
+      releaseTime: '2017-09-30 22:34:08',
+      releaseUser: 'fengruilong',
+      type: '2',
+      updateContent:
+        '1.增加擂主模式，千元红包等你拿；\r\n2.优化游戏主界面的布局及其他页面；\r\n3.开放红包赛的权限，所有人都可打比赛，赢红包；\r\n4.优化游戏中操作逻辑；\r\n5.修复其他bug并优化体验;',
+      version: '11'
+    },
+    {
+      apkUrl:
+        'http://www.butterfly-8.com/version/file_version_20170905232041103.apk',
+      id: 13,
+      minimumVersion: '10',
+      newFileName: 'file_version_20170905232041103.apk',
+      number: 0,
+      oriFileName: 'ball正式正式.apk',
+      releaseTime: '2017-09-05 23:20:41',
+      releaseUser: 'admin',
+      type: '4',
+      updateContent:
+        '游戏资源包又有更新啦~\r\n1、新增按钮点击效果，再也不用懵懵的了~\r\n2、新增加入房间通知，再也不用担心与对手擦肩而过啦~\r\n3、优化同步问题以及其他bug，可以开心的与好友决战到天亮~\r\n(*^__^*) 嘻嘻……',
+      version: '10'
+    },
+    {
+      apkUrl:
+        'http://www.butterfly-8.com/version/file_version_20170902190243001.apk',
+      id: 12,
+      minimumVersion: '10',
+      newFileName: 'file_version_20170902190243001.apk',
+      number: 0,
+      oriFileName: '游戏包正式版V1.0.9.apk',
+      releaseTime: '2017-09-02 19:02:43',
+      releaseUser: 'admin',
+      type: '1',
+      updateContent:
+        '1、好友PK赛限时免费啦。\r\n2、修复网络异常及提示。\r\n3、修复无金币时不能参与赢金币赛。\r\n4、修复关注问题。\r\n5、修复及优化其他bug',
+      version: '10'
+    },
+    {
+      apkUrl:
+        'http://www.butterfly-8.com/version/file_version_20170929235028777.apk',
+      id: 11,
+      minimumVersion: '10',
+      newFileName: 'file_version_20170929235028777.apk',
+      number: 0,
+      oriFileName: 'app-taptap-release.apk',
+      releaseTime: '2017-09-02 18:13:31',
+      releaseUser: 'fengruilong',
+      type: '2',
+      updateContent:
+        '1、增加游戏通知，当有人进入房间时，您可以及时收到通知。\r\n2、优化及统一主界面。\r\n3、优化竞技页面与招募页面。\r\n4、调整战队人员上限。',
+      version: '10'
+    },
+    {
+      apkUrl:
+        'http://www.butterfly-8.com/version/file_version_20170831182941177.apk',
+      id: 10,
+      minimumVersion: '8',
+      newFileName: 'file_version_20170831182941177.apk',
+      number: 0,
+      oriFileName: 'butterfly_app_v1.0.8.apk',
+      releaseTime: '2017-08-31 18:29:41',
+      releaseUser: 'fengruilong',
+      type: '2',
+      updateContent:
+        '1、优化游戏入口，增加宣传视频\r\n2、新增最新战报列表\r\n3、优化用户体验，修复其他bug',
+      version: '9'
+    }
+  ],
+  recordsPerPage: 10,
+  totalRecords: 19
+}
+const versionInfoMap = {
+  apkUrl: 'http://113.141.64.53:80/version/file_version_20171228203246779.apk',
+  id: 20,
+  minimumVersion: '16',
+  newFileName: 'file_version_20171228203246779.apk',
+  number: 0,
+  oriFileName: 'app-butterfly-release_115_jiagu_sign.apk',
+  releaseTime: '2017-12-28 20:32:46',
+  releaseUser: 'fengruilong',
+  type: '2',
+  updateContent: '1:修复一些bug，提高用户体验\r\n',
+  version: '16'
+}
 export default {
   getConfig: config => {
     console.log(config)
@@ -569,5 +815,21 @@ export default {
   },
   getRole: config => {
     return roleMap
+  },
+  getRoleList: config => {
+    console.log(config)
+    return roleListMap
+  },
+  getToken: config => {
+    return tokenMap
+  },
+  getManager: config => {
+    return managerMap
+  },
+  getVersion: config => {
+    return versionMap
+  },
+  getVerionInfo: config => {
+    return versionInfoMap
   }
 }

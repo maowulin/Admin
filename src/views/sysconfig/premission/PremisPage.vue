@@ -1,6 +1,6 @@
 <template>
 	<section>
-    <div v-show="isSecond">
+    <div v-if="isSecond">
       <div class="user_head">
         <el-button class="hede-btn" @click="premisAdd" plain>添加</el-button>
         <el-button class="hede-btn" @click="premisDelete" plain>删除</el-button>
@@ -55,8 +55,8 @@
         </el-table-column>
       </el-table>
     </div>
-    <div v-show="!isSecond">
-      <premis-config v-model="isSecond"></premis-config>
+    <div v-else>
+      <premis-config v-model="isSecond" :is-add="isAdd" :premis-id="premisId" :roles="roles"></premis-config>
     </div>
   </section>
 </template>
@@ -76,6 +76,9 @@
 			return {
         tableData: [],
         isSecond: true,
+        isAdd: true,
+        premisId: {},
+        roles: [],
 				requestData: {
 					type: '',
 					like: '',
@@ -101,7 +104,8 @@
 			}
 		},
 		created() {
-			this.getData()
+      this.getData()
+      this.getRoles()
 		},
 		methods: {
 			getData() {
@@ -110,8 +114,19 @@
 				}).catch(error => {
 					console.log(console.error)
 				})
-			},
-			premisAdd() {},
+      },
+      getRoles() {
+        getPremis('../authority/role_all', 'get', '').then(response => {
+          console.log(response)
+          this.roles = response
+        }).catch(error => {
+          console.log(error)
+        })
+      },
+			premisAdd() {
+        this.isAdd = true
+        this.isSecond = false
+      },
 			premisDelete() {},
 			premisSarch(val, input) {
 				this.requestData.type = val
@@ -120,15 +135,16 @@
 			},
 			handleSelectionChange(index) {},
 			isChecked(row) {
-				if(row.id === 1) {
+				if (row.id === 1) {
 					return false
-				}else {
+				} else {
 					return true
 				}
 			},
 			primEdit(row) {
-        console.log(row)
+        this.isAdd = false
         this.isSecond = false
+        this.premisId.id = row.id
 			}
 		}
 	}

@@ -1,11 +1,13 @@
 <template>
 		<section>
 			<div class="user_head">
-				<el-button @click="noticeAdd" >添加</el-button>
+				<el-button @click="versionAdd" >添加</el-button>
 
-				<my-search :message="message" :option-value="optionValue" @searchClick="noticeSear"></my-search>
+				<my-select :message="message1" :option-value="optionValue1" v-on:selectChange="versionWay"></my-select>
+
+				<my-search :message="message3" :option-value="optionValue3" v-on:searchClick="versionSear"></my-search>
 				
-				<paging :total="totalRecords" @getSize="getFightSize" @getPage="getFightPage"></paging>
+				<paging :total="totalRecords" v-on:getSize="getFightSize" v-on:getPage="getFightPage"></paging>
 			</div>
 			
 			<egrid class="egrid"
@@ -72,17 +74,25 @@
 		import MySearch from '@/components/Search/'
 
 		const Btn = {
-		  template: `<div><el-button class="click-btn" @click="rowCheck" type="primary" icon="el-icon-view">查看</el-button>
-							  <el-button class="click-btn" @click="rowDelete" type="primary" icon="el-icon-delete">删除</el-button></div>`,
+		  template: `<div><el-button class="click-btn" @click="rowDownload" type="primary" icon="el-icon-download">下载</el-button>
+							  <el-button class="click-btn" @click="rowEdit" type="primary" icon="el-icon-edit">编辑</el-button></div>`,
 		  props: ['row'],
 		  methods: {
-		    rowCheck() {
-		      this.$emit('row-check', this.row)
+		    rowEdit() {
+		      this.$emit('row-edit', this.row)
+		      // this.$set(this.row, '_edit', !this.row._edit)
 		    },
-		    rowDelete() {
-		      this.$emit('row-delete', this.row)
+		    rowDownload() {
+		      this.$emit('row-download', this.row)
 		    }
 		  }
+		}
+
+		const Tooltip = {
+		  template: `<div style="overflow:hidden; text-overflow:ellipsis; white-space: nowrap; cursor: pointer;">
+										<span :title="row.updateContent">{{ row.updateContent }}</span>	
+								</div>`,
+		  props: ['row']
 		}
 		
 		export default {
@@ -93,7 +103,8 @@
 		  },
 		  data() {
 		    return {
-		      message: '输入搜索',
+		      message1: '',
+					message3: '功能描述',
 		      totalRecords: 0,
 		      tableData: [],
 		      versionInfo: {
@@ -111,25 +122,60 @@
 		        pageNow: 0,
 		        pageSize: 10
 		      },
-		      optionValue: [],
+		      optionValue1: [{
+		        'opti': '请选择',
+		        'val': ''
+		      }, {
+		        'opti': 'ios',
+		        'val': '1'
+		      }, {
+		        'opti': 'android',
+		        'val': '2'
+		      }, {
+		        'opti': 'ios游戏端',
+		        'val': '3'
+		      }, {
+		        'opti': 'android游戏端',
+		        'val': '4'
+		      }],
+		      optionValue3: [],
 		      columns: [{
 		        'label': '序号',
 		        'prop': 'serial'
 		      }, {
-		        'label': '时间',
-		        'prop': 'time'
+		        'label': '类型',
+		        'prop': 'type'
 		      }, {
-		        'label': '标题',
-		        'prop': 'title'
+		        'label': '发布时间',
+		        'prop': 'releaseTime'
 		      }, {
-		        'label': '浏览数量',
-		        'prop': 'pv'
+		        'label': '发布人',
+		        'prop': 'releaseUser'
+		      }, {
+		        'label': '更新内容',
+		        'prop': 'updateContent'
+		      }, {
+		        'label': '最低版本',
+		        'prop': 'minimumVersion'
+		      }, {
+		        'label': '最高版本',
+		        'prop': 'version'
+		      }, {
+		        'label': '安装包下载地址',
+		        'prop': 'apkUrl'
 		      }],
 		      columnsProps: {
 		        align: 'center',
 		        sortable: true
 		      },
-		      columnsSchema: {},
+		      columnsSchema: {
+		        '更新内容': {
+							component: Tooltip
+		        },
+		        '安装包下载地址': {
+		          'show-overflow-tooltip': true
+		        }
+		      },
 		      columnType: ''
 		    }
 		  },
@@ -138,15 +184,19 @@
 		  },
 		  methods: {
 		    getData() {
-		      // getPremis('../version/version_list', 'get', this.requestData).then(response => {
-		      //   console.log(response)
-		      //   this.tableData = response.items
-		      //   this.totalRecords = response.totalRecords
-		      // }).catch(error => {
-		      //   console.log(error)
-		      // })
+		      getPremis('../version/version_list', 'get', this.requestData).then(response => {
+		        console.log(response)
+		        this.tableData = response.items
+		        this.totalRecords = response.totalRecords
+		      }).catch(error => {
+		        console.log(error)
+		      })
 		    },
-		    noticeSear(select, input) {
+		    versionWay(val) {
+		      this.requestData.game_over_type = val
+		      this.getData()
+		    },
+		    versionSear(select, input) {
 		      this.requestData.uname = input
 		      this.getData()
 		    },
@@ -158,14 +208,31 @@
 		      this.requestData.pageNow = pageNow
 		      this.getData()
 		    },
-		    noticeChcek(row) {
-					console.log('查看')
+		    versionEdit(row) {
+					this.dialogVisible = false
+					getPremis('../version/version_edit', 'get', row.id).then(response => {
+						( {	type: (this.versionInfo.type), 
+								minimumVersion: (this.versionInfo.minVersion), 
+								version: (this.versionInfo.maxVersion), 
+								updateContent: (this.versionInfo.desc) 
+							} = response)
+					}).catch(error => {
+						console.log(error)
+					})
+
+					this.dialogVisible = true
 		    },
-		    noticeDelete(row) {
-		      console.log('删除')
+		    versionDownload(row) {
+		      console.log(row)
 		    },
-		    noticeAdd(formName) {
-					
+		    versionAdd(formName) {
+					this.dialogVisible = true
+					this.versionInfo.type = ''
+					this.versionInfo.minVersion = ''
+					this.versionInfo.maxVersion = ''
+					this.versionInfo.desc = ''
+					this.file = ''
+					this.token = ''
 		    },
 		    versionSubmit() {
 					console.log('信息提交')
@@ -176,19 +243,19 @@
 		      console.log(this.orderInfo)
 		    },
 		    columnsHandler(cols) {
-		      const nck = this.noticeChcek
-		      const ntd = this.noticeDelete
+		      const ved = this.versionEdit
+		      const vdl = this.versionDownload
 		      return cols.concat({
 		        label: '操作',
 		        fixed: 'right',
 		        width: 170,
 		        component: Btn,
 		        listeners: {
-		          'row-check'(row) {
-		            nck(row)
+		          'row-edit'(row) {
+		            ved(row)
 		          },
-		          'row-delete'(row) {
-		            ntd(row)
+		          'row-download'(row) {
+		            vdl(row)
 		          }
 		        }
 		      })

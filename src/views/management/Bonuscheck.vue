@@ -11,16 +11,7 @@
 		
 			<paging :total="totalRecords" @getSize="getSize" @getPage="getPage"></paging>
 		</div>
-
-		<!-- <egrid class="egrid"
-			fit
-			:data="tableData"
-			:columns="columns"
-			:columns-schema="columnsSchema"
-			:columns-props="columnsProps"
-			:column-type="columnType"
-			@selection-change="selectionChange">
-		</egrid> -->
+		
 		<el-table
 			fit
 			:data="tableData"

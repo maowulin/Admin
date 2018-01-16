@@ -263,6 +263,12 @@ export const constantRouterMap = [
         meta: { title: 'banner配置', icon: 'table' }
       },
       {
+        path: 'version',
+        name: 'Version',
+        component: _import('sysconfig/Version'),
+        meta: { title: '版本管理', icon: 'table' }
+      },
+      {
         path: 'shareconfig',
         name: 'Shareconfig',
         component: _import('sysconfig/Shareconfig'),

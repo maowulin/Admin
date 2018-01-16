@@ -25,3 +25,11 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function getMenu(_data) {
+  return request({
+    url: '../adminMenu/getAllMenu.json',
+    method: 'get',
+    data: _data
+  })
+}
