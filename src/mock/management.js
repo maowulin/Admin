@@ -800,6 +800,156 @@ const versionInfoMap = {
   updateContent: '1:修复一些bug，提高用户体验\r\n',
   version: '16'
 }
+const impUserMap = {
+  currentPage: 0,
+  items: [
+    {
+      average_online_number: 0,
+      dayActiveNum: 75,
+      max_online_number: 0,
+      monthActiveNum: 4092,
+      time: '2018-01-11',
+      visitor_convert_register_number: 3,
+      visitor_number: 52,
+      weekActiveNum: 1136
+    },
+    {
+      average_online_number: 0,
+      dayActiveNum: 142,
+      max_online_number: 4,
+      monthActiveNum: 4148,
+      time: '2018-01-10',
+      visitor_convert_register_number: 4,
+      visitor_number: 116,
+      weekActiveNum: 1199
+    },
+    {
+      average_online_number: 1,
+      dayActiveNum: 181,
+      max_online_number: 6,
+      monthActiveNum: 4144,
+      time: '2018-01-09',
+      visitor_convert_register_number: 11,
+      visitor_number: 134,
+      weekActiveNum: 1190
+    },
+    {
+      average_online_number: 2,
+      dayActiveNum: 184,
+      max_online_number: 7,
+      monthActiveNum: 4100,
+      time: '2018-01-08',
+      visitor_convert_register_number: 11,
+      visitor_number: 159,
+      weekActiveNum: 1199
+    }
+  ],
+  recordsPerPage: 10,
+  totalRecords: 4
+}
+const impBounMap = {
+  currentPage: 0,
+  items: [
+    {
+      buy_gold_num: 0,
+      buy_gold_sum: 0,
+      consume_gold_sum: 0,
+      consume_integral_sum: 0,
+      extract_bonus_num: 0,
+      extract_bonus_sum: 0,
+      get_bonus_num: 0,
+      get_bonus_sum: 0,
+      get_gold_sum: 0,
+      get_integral_num: 0,
+      get_integral_sum: 0,
+      time: '2018-01-16',
+      topUp_vip_num: 0,
+      topUp_vip_sum: 0
+    },
+    {
+      buy_gold_num: 0,
+      buy_gold_sum: 0,
+      consume_gold_sum: 0,
+      consume_integral_sum: 0,
+      extract_bonus_num: 0,
+      extract_bonus_sum: 0,
+      get_bonus_num: 0,
+      get_bonus_sum: 0,
+      get_gold_sum: 0,
+      get_integral_num: 0,
+      get_integral_sum: 0,
+      time: '2018-01-15',
+      topUp_vip_num: 0,
+      topUp_vip_sum: 0
+    },
+    {
+      buy_gold_num: 2,
+      buy_gold_sum: 12,
+      consume_gold_sum: 0,
+      consume_integral_sum: 0,
+      extract_bonus_num: 0,
+      extract_bonus_sum: 0,
+      get_bonus_num: 32,
+      get_bonus_sum: 28,
+      get_gold_sum: 160,
+      get_integral_num: 0,
+      get_integral_sum: 0,
+      time: '2018-01-11',
+      topUp_vip_num: 1,
+      topUp_vip_sum: 10
+    },
+    {
+      buy_gold_num: 0,
+      buy_gold_sum: 0,
+      consume_gold_sum: 0,
+      consume_integral_sum: 0,
+      extract_bonus_num: 0,
+      extract_bonus_sum: 0,
+      get_bonus_num: 59,
+      get_bonus_sum: 51,
+      get_gold_sum: 305,
+      get_integral_num: 0,
+      get_integral_sum: 0,
+      time: '2018-01-10',
+      topUp_vip_num: 0,
+      topUp_vip_sum: 0
+    },
+    {
+      buy_gold_num: 0,
+      buy_gold_sum: 0,
+      consume_gold_sum: 0,
+      consume_integral_sum: -140,
+      extract_bonus_num: 0,
+      extract_bonus_sum: 0,
+      get_bonus_num: 71,
+      get_bonus_sum: 62,
+      get_gold_sum: 350,
+      get_integral_num: 0,
+      get_integral_sum: 0,
+      time: '2018-01-09',
+      topUp_vip_num: 0,
+      topUp_vip_sum: 0
+    },
+    {
+      buy_gold_num: 0,
+      buy_gold_sum: 0,
+      consume_gold_sum: 0,
+      consume_integral_sum: 0,
+      extract_bonus_num: 0,
+      extract_bonus_sum: 0,
+      get_bonus_num: 80,
+      get_bonus_sum: 70,
+      get_gold_sum: 415,
+      get_integral_num: 0,
+      get_integral_sum: 0,
+      time: '2018-01-08',
+      topUp_vip_num: 0,
+      topUp_vip_sum: 0
+    }
+  ],
+  recordsPerPage: 10,
+  totalRecords: 6
+}
 export default {
   getConfig: config => {
     console.log(config)
@@ -831,5 +981,13 @@ export default {
   },
   getVerionInfo: config => {
     return versionInfoMap
+  },
+  getImportUser: config => {
+    config = JSON.parse(config.body)
+    if (config.type === 1) {
+      return impUserMap
+    } else {
+      return impBounMap
+    }
   }
 }

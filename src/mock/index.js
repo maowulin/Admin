@@ -83,3 +83,7 @@ Mock.mock(/..\/version\/version_list/, 'get', managementAPI.getVersion)
 
 // 版本信息
 Mock.mock(/..\/version\/version_edit/, 'get', managementAPI.getVerionInfo)
+
+// 用户重要信心
+Mock.mock(/..\/userL8\/getUserBasicInfo_list/, 'get', managementAPI.getImportUser)
+

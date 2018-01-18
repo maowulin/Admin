@@ -19,15 +19,15 @@ import Layout from '../views/layout/Layout'
   }
 **/
 export const constantRouterMap = [
-  { 
-    path: '/login', 
+  {
+    path: '/login',
     component: _import('login/index'),
-    hidden: true 
+    hidden: true
   },
-  { 
-    path: '/404', 
-    component: _import('404'), 
-    hidden: true 
+  {
+    path: '/404',
+    component: _import('404'),
+    hidden: true
   },
 
   {
@@ -38,7 +38,7 @@ export const constantRouterMap = [
       path: 'dashboard',
       component: _import('dashboard/index'),
       name: 'dashboard',
-      meta: { title: 'dashboard', icon: 'example', noCache: true }
+      meta: { title: '首页', icon: 'example', noCache: true }
     }]
   },
 
@@ -163,7 +163,7 @@ export const constantRouterMap = [
       }
     ]
   },
-  
+
   {
     path: '/management',
     component: Layout,
@@ -175,13 +175,13 @@ export const constantRouterMap = [
 	      name: 'UserManagement',
 	      component: _import('management/UserManagement'),
 	      meta: { title: '用户管理', icon: 'form' }
-      },
-      {
-        path: 'tribemanagement',
-          name: 'TribeManagement',
-          component: _import('management/TribeManagement'),
-          meta: { title: '战队管理', icon: 'form' }
-      },
+    },
+    {
+      path: 'tribemanagement',
+      name: 'TribeManagement',
+      component: _import('management/TribeManagement'),
+      meta: { title: '战队管理', icon: 'form' }
+    },
 	    {
 		  path: 'ordermanagement',
 	      name: 'OrderManagement',
@@ -226,7 +226,7 @@ export const constantRouterMap = [
 	    }
     ]
   },
-  
+
   {
     path: '/activity',
     component: Layout,
@@ -242,7 +242,7 @@ export const constantRouterMap = [
       }
     ]
   },
-  
+
   {
     path: '/sysconfig',
     component: Layout,
@@ -288,10 +288,10 @@ export const constantRouterMap = [
       }
     ]
   },
-  { 
-    path: '*', 
-    redirect: '/404', 
-    hidden: true 
+  {
+    path: '*',
+    redirect: '/404',
+    hidden: true
   }
 ]
 
