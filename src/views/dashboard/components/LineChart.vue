@@ -5,6 +5,7 @@
 <script>
 require('echarts/theme/macarons')
 import echarts from 'echarts'
+import { debounce } from '@/method'
 
 export default {
   props: ['chartData', 'lineConf', 'lineId'],
@@ -12,7 +13,7 @@ export default {
     return {
       chart: null,
       isResver: false,
-      autoRisze: true
+      autoResize: true
     }
   },
   mounted() {
@@ -27,8 +28,23 @@ export default {
       window.addEventListener('resize', this.__resizeHanlder)
     }
 
-    const mainContainer = document.getElementsByClassName('main-container')[0]
-    mainContainer.addEventListener('resize', this.initChart)
+    // 监听侧边栏的变化
+    const sidebarElm = document.getElementsByClassName('sidebar-container')[0]
+    sidebarElm.addEventListener('transitionend', this.__resizeHanlder)
+  },
+  beforeDestroy() {
+    if (!this.chart) {
+      return
+    }
+    if (this.autoResize) {
+      window.removeEventListener('resize', this.__resizeHanlder)
+    }
+
+    const sidebarElm = document.getElementsByClassName('sidebar-container')[0]
+    sidebarElm.removeEventListener('transitionend', this.__resizeHanlder)
+
+    this.chart.dispose()
+    this.chart = null
   },
   computed: {
     legend: function() {

@@ -58,50 +58,50 @@ export default {
       userLineConf: [{
         'label': '新游客用户数',
         'prop': 'visitor_number',
-        'lineColor': '',
-        'renderColor': '',
+        'lineColor': '#82dedf',
+        'renderColor': '#eeffff',
         'isChart': true
       }, {
         'label': '游客转注册用户',
         'prop': 'visitor_convert_register_number',
-        'lineColor': '',
-        'renderColor': '',
+        'lineColor': '#c2b1e3',
+        'renderColor': '#f9f6ff',
         'isChart': true
       }, {
         'label': '最高在线人数',
         'prop': 'max_online_number',
-        'lineColor': '',
-        'renderColor': '',
+        'lineColor': '#6ebbf1',
+        'renderColor': '#eaf6ff',
         'isChart': true
       }, {
         'label': '平均在线人数',
         'prop': 'average_online_number',
-        'lineColor': '',
-        'renderColor': '',
+        'lineColor': '#ffc18e',
+        'renderColor': '#fbf6f2',
         'isChart': true
       }, {
         'label': '日活跃用户数',
         'prop': 'dayActiveNum',
-        'lineColor': '',
-        'renderColor': '',
+        'lineColor': '#e8afb3',
+        'renderColor': '#fdf4f5',
         'isChart': true
       }, {
         'label': '周活跃用户数',
         'prop': 'weekActiveNum',
-        'lineColor': '',
-        'renderColor': '',
+        'lineColor': '#ead83b',
+        'renderColor': '#fffef2',
         'isChart': true
       }, {
         'label': '月活跃用户数',
         'prop': 'monthActiveNum',
-        'lineColor': '',
-        'renderColor': '',
+        'lineColor': '#959fb9',
+        'renderColor': '#f9fafb',
         'isChart': true
       }],
       boundsConfig: [{
         'label': '充值VIP用户数',
         'prop': 'topUp_vip_num',
-        'lineColor': '',
+        'lineColor': '#ebda3f',
         'renderColor': '',
         'isChart': true
       }, {

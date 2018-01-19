@@ -4,7 +4,7 @@
 			<el-tab-pane label="用户管理">
 				<premis-page></premis-page>
 			</el-tab-pane>
-			<el-tab-pane label="配置管理">
+			<el-tab-pane label="角色管理">
 				<management-page></management-page>
 			</el-tab-pane>
 		</el-tabs>

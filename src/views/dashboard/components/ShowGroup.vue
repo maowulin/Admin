@@ -8,7 +8,7 @@
           </div>
           <div class="right-text">
             <span class="text-t">总用户数</span>
-            <span class="text-d">11111</span>
+            <span class="text-d">{{userNum}}</span>
           </div>
         </div>
       </el-col>
@@ -20,7 +20,7 @@
           </div>
           <div class="right-text">
             <span class="text-t">在线用户数</span>
-            <span class="text-d">11111</span>
+            <span class="text-d">{{onlineNum}}</span>
           </div>
         </div>
       </el-col>
@@ -32,7 +32,7 @@
           </div>
           <div class="right-text">
             <span class="text-t">待处理消息</span>
-            <span class="text-d">11111</span>
+            <span class="text-d">{{messageNum}}</span>
           </div>
         </div>
       </el-col>
@@ -43,8 +43,8 @@
               <svg-icon class="group-svg" icon-class="peoples"/>
           </div>
           <div class="right-text">
-            <span class="text-t">admin</span>
-            <span class="text-d">管理员</span>
+            <span class="text-t">{{adminUser}}</span>
+            <span class="text-d">{{adminName}}</span>
           </div>
         </div>
       </el-col>
@@ -54,7 +54,16 @@
 
 <script>
   export default {
-    name: 'ShowGroup'
+    name: 'ShowGroup',
+    data() {
+      return {
+        userNum: 0,
+        onlineNum: 0,
+        messageNum: 0,
+        adminName: '----',
+        adminUser: '----'
+      }
+    }
   }
 </script>
 
@@ -62,6 +71,7 @@
 
 .el-row {
   margin-bottom: 20px;
+
   &:last-child {
     margin-bottom: 0;
   }
