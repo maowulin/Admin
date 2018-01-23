@@ -7,7 +7,7 @@ import router from './router'
 import store from './store'
 import '@/icons' // icon
 import '@/permission' // 权限
-import './mock'
+// import './mock'
 
 Vue.use(ElementUI)
 Vue.use(Egrid)

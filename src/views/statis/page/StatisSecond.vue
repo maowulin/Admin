@@ -3,10 +3,10 @@
 		<div class="user_head2">
 	    <el-button @click="getCvs">导出cvs</el-button>
 	    <el-button @click="isChart">{{buttonText}}</el-button>
-	    
-	    <paging :total="totalRecords" v-on:getSize="getBasiedSize" v-on:getPage="getBasiedPage"></paging>
-		
 			<el-button type="primary" class="back-button" @click="back">返回</el-button>
+			
+	    <paging :total="totalRecords" v-on:getSize="getBasiedSize" v-on:getPage="getBasiedPage"></paging>
+			
 		</div>
     
     <div v-if="chartShow" class="chart-bord">
@@ -31,8 +31,8 @@
 <script>
 	import Paging from '@/components/Paging'
 	import LineChart from '@/components/Echarts/LineChart'
-	import {getStatis, getStatisSecCvs} from '@/api/statis'
-	import {getDate, getChecked} from '@/method'
+	import { getStatis, getStatisSecCvs } from '@/api/statis'
+	// import { getDate, getChecked } from '@/method'
 
 	export default {
 		components: {

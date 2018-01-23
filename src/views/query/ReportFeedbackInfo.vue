@@ -112,8 +112,9 @@
   					width: "60px"
   				},
   				'内容': {
-  					width: "700px",
-  					sortable: false
+  					'width': '700px',
+						'sortable': false,
+						'show-overflow-tooltip': true
   				}
   			},
   			
@@ -140,7 +141,7 @@
   	},
   	methods: {
   		getRepData() {
-  			getReportData(this.repRequestData).then(response => {
+				getReportData(this.repRequestData).then(response => {
   				console.log(response);
   				this.repTotalRecords = response.recordsPerPage;
   				this.repTableData = response.items;

@@ -1,3 +1,5 @@
+
+import { menu } from '@/api/login'
 // 获取日期
 export function getDate() {
   var days = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
@@ -137,4 +139,39 @@ export function debounce(func, wait, immediate) {
 
     return result
   }
+}
+
+// 获取menu
+
+export function getMenu() {
+  const reData = {
+    level: 1,
+    menu_parent: 0
+  }
+  const tempObject = {
+    path: '/query',
+    component: Layout,
+    redirect: '/query/UserInfo',
+    name: 'Query',
+    meta: { title: '信息查询', icon: 'example' },
+    children: [{
+      path: 'userinfo',
+      name: 'UserInfo',
+      component: _import('query/UserInfo'),
+      meta: { title: '用户信息', icon: 'table' }
+    }]
+  }
+  menu(reData).then(response => {
+    for (let i = 0; i < response.length; i++) {
+      const reTempData = {
+        level: '2',
+        menu_parent: response[i].id
+      }
+      menu(reTempData).then(menu => {
+        console.log(menu)
+      })
+    }
+  }).catch(error => {
+    console.log(error)
+  })
 }

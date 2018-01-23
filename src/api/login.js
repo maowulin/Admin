@@ -1,12 +1,16 @@
 import request from '@/utils/request'
 
-export function login(username, password) {
+export function login(_name, _password, _code) {
+  const formData = new FormData()
+  formData.append('username', _name)
+  formData.append('password', _password)
+  formData.append('code', _code)
   return request({
-    url: '/user/login',
-    method: 'post',
-    data: {
-      username,
-      password
+    url: '../authority/admin_user_login',
+    method: 'POST',
+    data: formData,
+    headers: {
+      'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
     }
   })
 }
@@ -26,7 +30,7 @@ export function logout() {
   })
 }
 
-export function getMenu(_data) {
+export function menu(_data) {
   return request({
     url: '../adminMenu/getAllMenu.json',
     method: 'get',

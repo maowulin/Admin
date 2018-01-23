@@ -21,7 +21,7 @@
 </template>
 
 <script>
-	import {getFightData} from '@/api/query'
+	import { getFightData } from '@/api/query'
 	import Paging from '@/components/Paging/'
 	import MySelect from '@/components/Select/'
 	import MySearch from '@/components/Search/'
@@ -92,33 +92,33 @@
 			}
 		},
 		created() {
-			this.getData();
+			this.getData()
 		},
 		methods: {
 			getData() {
 				getFightData(this.requestData).then(response => {
-					console.log(response);
-					this.tableData = response.items;
-					this.totalRecords = response.totalRecords;
+					console.log(response)
+					this.tableData = response.items
+					this.totalRecords = response.totalRecords
 				}).catch(error => {
-					console.log(error);
+					console.log(error)
 				});
 			},
 			userFightChange(val) {
-				this.requestData.game_over_type = val;
-				this.getData();
+				this.requestData.game_over_type = val
+				this.getData()
 			},
 			FightSearch(select, input) {
-				this.requestData.uname = input;
-				this.getData();
+				this.requestData.uname = input
+				this.getData()
 			},
 			getFightSize(pageSize) {
-				this.requestData.pageSize = pageSize;
-				this.getData();
+				this.requestData.pageSize = pageSize
+				this.getData()
 			},
 			getFightPage(pageNow) {
-				this.requestData.pageNow = pageNow;
-				this.getData();
+				this.requestData.pageNow = pageNow
+				this.getData()
 			}
 		}
 	}

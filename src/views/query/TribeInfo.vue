@@ -26,22 +26,22 @@
 </template>
 
 <script>
-  import {getTribeData, getTribeDetail} from '@/api/query'
+  import { getTribeData, getTribeDetail } from '@/api/query'
   import Paging from '@/components/Paging/'
   import MySelect from '@/components/Select/'
   import MySearch from '@/components/Search/'
   
-  //战队头像显示
+  // 战队头像显示
   var tribeIcon = {
   	template: '<img :src="row.iconUrl" alt="暂无" style="width:40px;" />',
   	props: ['row']
   }
   
-  //战队状态
+  // 战队状态
   var tribeStaus = {
   	template: `<span v-if="row.status == 0">正常</span>
 		 		<span v-else style="color:red;">解散</span>`,
-	props: ['row']
+	  props: ['row']
   }
   
   
@@ -53,7 +53,7 @@
   	},
   	data() {
   	  return {
-  		tribeMessage: "状态",
+  		tribeMessage: '状态',
   		totalRecords: 0,
   		tableData: [],
   		tribeDetailData: {},
@@ -65,13 +65,13 @@
   		},
   		tribeValue: [{
   		  'opti': '状态',
-          'val' : ''
+        'val' : ''
   		},{
   		  'opti': '正常',
-          'val' : '0'
+        'val' : '0'
   		},{
   		  'opti': '解散',
-          'val' : '1'
+        'val' : '1'
   		}],
   		tribeValue2: [{
           'opti': '战队名称',
@@ -79,8 +79,8 @@
         },{
           'opti': '队长名称',
           'val' : '1'
-        }],
-        columns: [{
+      }],
+      columns: [{
           'label': "序号",
           'prop': 'serial'
         },{
@@ -169,39 +169,39 @@
   	  this.getData();	
   	},
   	methods: {
-  	  getData() {
-  	  	getTribeData(this.tribeData).then(response => {
-  	  	  console.log(response);
-  	  	  this.tableData = response.items;
-  	  	  this.totalRecords = response.totalRecords;
-  	  	}).catch(error => {
-  	  	  console.log(error);
-  	  	});
-  	  },
-  	  expandChange(row, expandedRows){
+    getData() {
+      getTribeData(this.tribeData).then(response => {
+        console.log(response);
+        this.tableData = response.items
+        this.totalRecords = response.totalRecords
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    expandChange(row, expandedRows){
   	  	if(expandedRows){
   	  	  getTribeDetail(row.circleID).then(response => {
-  	  	    this.tribeDetailData = response;
+  	  	    this.tribeDetailData = response
   	  	  }).catch(error => {
-  	  	    console.log(error);
+  	  	    console.log(error)
   	  	  });
   	  	}
   	  },
-  	  tribeStatusChange(command) {
-		this.tribeData.status = command;
-		this.getData();
+    tribeStatusChange(command) {
+		  this.tribeData.status = command
+		  this.getData()
   	  },
   	  tribeInfoSearch(select, input) {
-  	  	this.tribeData.like = input;
-  	  	this.getData();
+  	  	this.tribeData.like = input
+  	  	this.getData()
   	  },
   	  getTribeSize(pageSize) {
-  	  	this.tribeData.pageSize = pageSize;
-  	  	this.getData();
+  	  	this.tribeData.pageSize = pageSize
+  	  	this.getData()
   	  },
   	  getTribePage(pageNow) {
-  	  	this.tribeData.pageNow = pageNow;
-  	  	this.getData();
+  	  	this.tribeData.pageNow = pageNow
+  	  	this.getData()
   	  }
   	}
   }

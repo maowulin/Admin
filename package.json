@@ -8,6 +8,7 @@
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "node build/build.js",
+    "build:sit": "cross-env NODE_ENV=production env_config=sit node build/build.js",
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
@@ -15,6 +16,7 @@
     "echarts": "^3.8.5",
     "egrid": "^1.0.6",
     "element-ui": "2.0.5",
+    "jquery": "^3.3.1",
     "js-cookie": "2.2.0",
     "mockjs": "1.0.1-beta3",
     "normalize.css": "7.0.0",

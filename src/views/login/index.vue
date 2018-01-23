@@ -7,16 +7,28 @@
         <span class="svg-container svg-container_login">
           <svg-icon class="menu-svg" icon-class="user" />
         </span>
-        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
+        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="用户名" />
       </el-form-item>
+
       <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon class="menu-svg" icon-class="password"></svg-icon>
         </span>
-        <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
-          placeholder="password"></el-input>
+        <el-input name="password" :type="pwdType" v-model="loginForm.password" autoComplete="on" placeholder="密码"></el-input>
           <span class="show-pwd" @click="showPwd"><svg-icon class="menu-svg" icon-class="eye" /></span>
       </el-form-item>
+
+      <div style="height: 55px; margin-bottom: 16px;">
+        <el-form-item prop="password" class="authcode">
+          <span class="svg-container">
+            <svg-icon class="menu-svg" style="width: 17px; height: 17px;" icon-class="auth-code"></svg-icon>
+          </span>
+          <el-input name="authimg" class="authimage" type="text"  v-model="loginForm.code" autoComplete="on" placeholder="验证码"></el-input>
+        </el-form-item>
+  
+        <img class="auth-show" @click="authimgRquest">
+      </div>
+
       <el-form-item>
         <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
           登陆
@@ -28,6 +40,8 @@
 
 <script>
 import { isvalidUsername } from '@/utils/validate'
+import { login, authImage } from '@/api/login'
+import getMenu from '@/method'
 
 export default {
   name: 'login',
@@ -40,24 +54,29 @@ export default {
       }
     }
     const validatePass = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error('密码不能小于5位'))
+      if (value.length < 0) {
+        callback(new Error('密码不能为空'))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: 'admin'
+        username: '',
+        password: '',
+        code: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
       loading: false,
-      pwdType: 'password'
+      pwdType: 'password',
+      imgUrl: ''
     }
+  },
+  mounted() {
+    this.authimgRquest()
   },
   methods: {
     showPwd() {
@@ -67,20 +86,20 @@ export default {
         this.pwdType = 'password'
       }
     },
+    authimgRquest() {
+      document.getElementsByClassName('auth-show')[0].src = 'http://localhost:8090/authImage?date=' + new Date()
+    },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch('Login', this.loginForm).then(() => {
-            this.loading = false
-            this.$router.push({ path: '/' })
-          }).catch(() => {
-            this.loading = false
-          })
+      login(this.loginForm.username, this.loginForm.password, this.loginForm.code).then(response => {
+        console.log(response)
+        if (response.result === 1) {
+          this.$message.success('登陆成功')
+          getMenu()
         } else {
-          console.log('error submit!!')
-          return false
+          this.$message.error(response.error_message)
         }
+      }).catch(error => {
+        this.$message.error("登陆失败")
       })
     }
   }
@@ -166,5 +185,23 @@ export default {
       right: 35px;
       bottom: 28px;
     }
+  }
+
+  .login-container .authimage {
+    width: 120px;
+  }
+
+  .login-container .auth-show {
+    width: 120px;
+    height: 47px;
+    float: right;
+    border: none;
+  }
+
+  .authcode {
+    width: 190px;
+    display: inline-block;
+    height: 47px;
+    cursor: pointer;
   }
 </style>
