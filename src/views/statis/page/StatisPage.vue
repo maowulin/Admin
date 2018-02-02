@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div v-loading="loading">
 
 		<div class="user_head2">
 
@@ -32,7 +32,8 @@
 				:columns-schema="columnsSchema" 
 				:columns-props="columnsProps" 
 				:column-type="columnType" 
-				:columns-handler="columnsHandler">
+				:columns-handler="columnsHandler"
+				>
 
 			</egrid>
 
@@ -50,7 +51,7 @@
 
 	import { getStatis, getStatisCvs } from '@/api/statis'
 
-	import { getChecked } from '@/method'
+	import { getChecked, getDate } from '@/method'
 
 	// 操作按钮
 
@@ -95,11 +96,13 @@
 
 	      totalRecords: 0,
 
-	      chartShow: false,
+				chartShow: false,
+				
+				loading: false,
 
 	      buttonText: '图表',
 
-	      defaultDate: '2017-10-19',
+	      defaultDate: getDate().ten,
 
 	      newColumns: [],
 
@@ -183,7 +186,9 @@
 	  methods: {
 
 	    getData() {
+				this.loading = true
 	      getStatis(this.reUrl, this.reType, this.requestData).then(response => {
+					this.loading = false
 	        if (response.data) {
 	          response = response.data
 	        }

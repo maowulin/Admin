@@ -20,7 +20,7 @@ export function getPremis(_url, _type, _data) {
   return request({
     url: _url,
     method: _type,
-    data: _data
+    params: _data
   })
 }
 

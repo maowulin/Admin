@@ -1,5 +1,5 @@
 <template>
-	<el-select v-model="value" :placeholder="message" @change="handleCommand">
+	<el-select v-model="value" clearable no-data-text :placeholder="message" @change="handleCommand">
 		<el-option
 		  v-for="item in optionValue"
 		  :key="item.val"

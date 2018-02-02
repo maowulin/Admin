@@ -1,15 +1,15 @@
 <template>
   <section class="index-panel">
     <show-group></show-group>
-    <div class="index-line-chart">
+    <div class="index-line-chart" v-loading="userload">
       <line-chart v-if="userData.length !== 0" :chart-data="userData" :line-conf="userLineConf" :line-id="'imp-user-chart'"></line-chart>
     </div>
 
-    <div class="index-line-chart">
+    <div class="index-line-chart" v-loading="bounsload">
       <line-chart v-if="bounsData.length !== 0" :chart-data="bounsData" :line-conf="boundsConfig" :line-id="'imp-bouns-chart'"></line-chart>
     </div>
 
-    <div class="index-line-chart">
+    <div class="index-line-chart" v-loading="gameload">
       <line-chart v-if="gameData.length !== 0" :chart-data="gameData" :line-conf="gameConfig" :line-id="'imp-game-chart'"></line-chart>
     </div>
   </section>
@@ -35,6 +35,9 @@ export default {
       userData: [],
       bounsData: [],
       gameData: [],
+      userload: false,
+      bounsload: false,
+      gameload: false,
       userRequestData: {
         'beginTime': getDate().ten,
         'endTime': getDate().dateLine,
@@ -221,7 +224,11 @@ export default {
   },
   methods: {
     getData() {
+      this.userload = true
+      this.bounsload = true
+      this.gameload = true
       getPremis('../userL8/getUserBasicInfo_list.json', 'get', this.userRequestData).then(response => {
+        this.userload = false
         this.userData = response.items
         // console.log(this.userData)
       }).catch(error => {
@@ -229,6 +236,7 @@ export default {
       })
 
       getPremis('../userL8/getUserBasicInfo_list.json', 'get', this.bounsRequestData).then(response => {
+        this.bounsload = false
         this.bounsData = response.items
         // console.log(this.bounsData)
       }).catch(error => {
@@ -236,8 +244,9 @@ export default {
       })
 
       getPremis('../game/game_allstatisticinfo.json', 'get', this.gameRequestData).then(response => {
+        this.gameload = false
         this.gameData = response.items
-        console.log(this.gameData)
+        // console.log(this.gameData)
       }).catch(error => {
         console.log(error)
       })

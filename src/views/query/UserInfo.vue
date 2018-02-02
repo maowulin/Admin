@@ -17,21 +17,155 @@
       :columns="columns"
       :columns-schema="columnsSchema"
       :columns-props="columnsProps"
-      :column-type="columnType"
+			:column-type="columnType"
+			:expand-row-keys="expands"
+			row-key="user_id"
+			v-loading="loading"
       @expand="expandChange">
       <template slot="expand" slot-scope="{}">
-        <section class="expand-detail">
-          <div v-for="col in expansionConent" :key="col.expansionHead">
-            {{ col.expansionHead }}：{{ detailData[col.expansionData] }}
-          </div>
+        <section class="expand-detail userdateil-expand">
+					<ul class="user-detail">
+						<li class="head">账号信息</li>
+						<li class="conent">
+							<span class="conent-title">用户编码：</span>
+							<span class="conent-cent">{{ detailData.userCode }}</span>
+						</li>
+						<li class="conent">
+							<span class="conent-title">注册时间：</span>
+							<span class="conent-cent">{{ detailData.registerDate }}</span>
+						</li>
+						<li class="conent">
+							<span class="conent-title">最后登陆时间：</span>
+							<span class="conent-cent">{{ detailData.lastLoginTime }}</span>
+						</li>
+						<li class="conent">
+							<span class="conent-title">VIP到期时间：</span>
+							<span class="conent-cent">{{ detailData.vip_date_limit }}</span>
+						</li>
+					</ul>
+
+					<ul class="user-detail">
+						<li class="head">约球信息</li>
+						<li class="conent">
+							<span class="conent-title">发起约球：</span>
+							<span class="conent-cent">{{ detailData.myCreateYq }}</span>
+						</li>
+						<li class="conent">
+							<span class="conent-title">参与约球：</span>
+							<span class="conent-cent">{{ detailData.myJoinYq }}</span>
+						</li>
+					</ul>
+
+					<ul class="user-detail">
+						<li class="head">帖子信息</li>
+						<li class="conent">
+							<span class="conent-title">已发帖子：</span>
+							<span class="conent-cent">{{ detailData.myCreateTopic }}</span>
+						</li>
+						<li class="conent">
+							<span class="conent-title">参与帖子：</span>
+							<span class="conent-cent">{{ detailData.myjoinTopic }}</span>
+						</li>
+					</ul>
+
+					<ul class="user-detail">
+						<li class="head">游戏信息</li>
+						<li class="conent">
+							<span class="conent-title">游戏场次：</span>
+							<span class="conent-cent">{{ detailData.game_total_number }}</span>
+						</li>
+						<li class="conent">
+							<span class="conent-title">积分赛：</span>
+							<span class="conent-cent">{{ detailData.integral_game }}</span>
+						</li>
+						<li class="conent">
+							<span class="conent-title">金币积分赛：</span>
+							<span class="conent-cent">{{ detailData.gold_integral_game }}</span>
+						</li>
+						<li class="conent">
+							<span class="conent-title">免费积分赛：</span>
+							<span class="conent-cent">{{ detailData.free_integral_game }}</span>
+						</li>
+						<li class="conent">
+							<span class="conent-title">奖金赛：</span>
+							<span class="conent-cent">{{ detailData.bonus_game }}</span>
+						</li>
+						<li class="conent">
+							<span class="conent-title">23分赛：</span>
+							<span class="conent-cent">{{ detailData.score_23_game }}</span>
+						</li>
+						<li class="conent">
+							<span class="conent-title">游戏胜场：</span>
+							<span class="conent-cent">--</span>
+						</li>
+						<li class="conent">
+							<span class="conent-title">游戏排名：</span>
+							<span class="conent-cent">--</span>
+						</li>
+					</ul>
+
+					<ul class="user-detail">
+						<li class="head">设备绑定</li>
+						<li class="conent" v-for="item in detailData.facilityBindings">
+							<span class="conent-cent" v-if="item.facility_status === 1">{{ item.facility_code }}（使用中）</span>
+							<span class="conent-cent" v-else>{{ item.facility_code }}</span>
+						</li>
+					</ul>
+
+					<ul class="user-detail">
+						<li class="conent">
+							<span class="conent-title">总在线时长：</span>
+							<span class="conent-cent">{{ onlinetime }} （小时）</span>
+							<el-button type="primary" size="mini" icon="el-icon-view" @click="userOnlineCheck">查看</el-button>
+						</li>
+					</ul>
+					
         </section>
       </template>
-   </egrid>
+	  </egrid>
+	 
+		<el-dialog
+			title="在线时长列表"
+			:visible.sync="dialogVisible"
+			class="online-dialog"
+			width="25%">
+			<div>
+				<el-date-picker
+					v-model="onlineDate"
+					align="right"
+					type="date"
+					placeholder="选择日期"
+					@change="onlineDateChange"
+					:picker-options="pickerOptions1">
+				</el-date-picker>
+			</div>
+			<el-table
+				:data="onlineTableData"
+				style="width: 300px"
+				:default-sort = "{prop: 'date', order: 'descending'}"
+				>
+				<el-table-column
+					prop="dayTime"
+					label="日期"
+					sortable
+					width="120">
+				</el-table-column>
+				<el-table-column
+					prop="onlineHour"
+					label="在线时长（小时）"
+					sortable
+					width="180">
+				</el-table-column>
+			</el-table>
+			<span slot="footer" class="dialog-footer">
+				<el-button type="primary" @click="dialogVisible = false">返回</el-button>
+			</span>
+		</el-dialog>
   </div>
 </template>
   
 <script>
-	import { getUserInfoData, getUserDetailData } from '@/api/query'
+	import { getUserInfoData, getUserDetailData, getOnlineTime } from '@/api/query'
 	import Paging from '@/components/Paging/'
 	import MySelect from '@/components/Select/'
 	import MySearch from '@/components/Search/'
@@ -76,7 +210,10 @@ export default {
       message2: '用户类型',
       message3: '请选择',
       totalRecords: 0,
-      detailData: {},
+			detailData: {},
+			dialogVisible: false,
+			expands: [],
+			userId: '',
       optionValue1: [{
           'opti': '下载渠道',
         	'val': ''
@@ -338,65 +475,138 @@ export default {
 	        }
 	      },
 	      // columnType: 'selection',
-	      columnType: 'expand',
-	      downloadVal: '',
-	      userType: '',
-	      searchType: '',
-	      searchConent: '',
-	      pageNow: 0,
-	      pageSize: 10
+				columnType: 'expand',
+				loading: false,
+				onlinetime: '--',
+				onlineDate: '',
+				onlineTableData: [],
+	      requeseData: {
+					channel: '',
+					vip: '',
+					type: '',
+					user_type: '',
+					like: '',
+					pageNow: 0,
+					pageSize: 10
+				},
+				pickerOptions1: {
+          disabledDate(time) {
+            return time.getTime() > Date.now()
+          },
+          shortcuts: [{
+            text: '今天',
+            onClick(picker) {
+              picker.$emit('pick', new Date())
+            }
+          }, {
+            text: '昨天',
+            onClick(picker) {
+              const date = new Date()
+              date.setTime(date.getTime() - 3600 * 1000 * 24)
+              picker.$emit('pick', date)
+            }
+          }, {
+            text: '一周前',
+            onClick(picker) {
+              const date = new Date()
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', date)
+            }
+          }]
+        }
     }
   },
   created() {
-    	this.getData()
+    this.getData()
   },
-  //  watch: {
-  //  	tableData: function(){
-  //
-  //  	}
-  //  },
   methods: {
     formatter(row, column) {
       return row.address
       },
     getData() {
-			getUserInfoData('', '', this.searchType, this.searchConent, this.pageSize, this.pageNow).then(response => {
-	    		console.log(response)
+			this.loading = true
+			getUserInfoData(this.requeseData).then(response => {
+				this.loading = false
 				this.tableData = response.items
 				this.totalRecords = response.totalRecords
     	}).catch(error => {
-	    		console.log(error)
+				this.$message({
+          showClose: true,
+          message: '服务器错误',
+          type: 'error'
+        })
     	})
     },
-	 expandChange(row, expandedRows) {
-			if (expandedRows == true) {
-				getUserDetailData(row.user_id).then(response => {
-					this.detailData = response.data
-				console.log(response)
-			}).catch(error => {
-					console.log(error)
-			})
+		expandChange(row, expandedRows) {
+			if (expandedRows === true) {
+				this.onlinetime = row.onlinetime
+				this.userId = row.user_id
+				getUserDetailData(this.userId).then(response => {
+				this.detailData = response.data
+				}).catch(error => {
+					this.$message({
+						showClose: true,
+						message: '服务器错误',
+						type: 'error'
+					})
+				})
+			}
+
+			Array.prototype.remove = function (val) {
+					let index = this.indexOf(val)
+					if (index > -1) {
+							this.splice(index, 1)
+					}
+			};
+
+			if (this.expands.indexOf(row.user_id) < 0) {
+					this.expands = []
+					this.expands.push(row.user_id)
+			} else {
+					this.expands.remove(row.user_id)
 			}
 		},
 		downloadChange(command) {
-			this.downloadVal = command
+			// this.requeseData.downloadVal = command
     },
 		userTypeChange(command) {
-			this.userType = command
+			this.requeseData.user_type = command
+			this.getData()
     },
 		userInfoSearch(select, input) {
-			this.searchType = select
-    	this.searchConent = input
+			this.requeseData.type = select
+    	this.requeseData.like = input
     	this.getData()
     },
 		getUserSize(pageSize) {
-			this.pageSize = pageSize
+			this.requeseData.pageSize = pageSize
     	this.getData()
     },
 		getUserPage(pageNow) {
-			this.pageNow = pageNow
+			this.requeseData.pageNow = pageNow
     	this.getData()
-    }
+		},
+		userOnlineCheck() {
+			const requestData = {
+				'userID': this.userId,
+				'time': this.onlineDate,
+				'pageNow': 0,
+				'pageSize': 10
+			}
+			getOnlineTime(requestData).then(response => {
+				this.onlineTableData = response.data
+				this.dialogVisible = true
+			}).catch(error => {
+				this.$message({
+          showClose: true,
+          message: '服务器错误',
+          type: 'error'
+        })
+			})
+		},
+		onlineDateChange() {
+			this.userOnlineCheck()
+		} 
   }
 }
 </script>

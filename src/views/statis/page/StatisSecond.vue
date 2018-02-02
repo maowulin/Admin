@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div v-loading="loading">
 		<div class="user_head2">
 	    <el-button @click="getCvs">导出cvs</el-button>
 	    <el-button @click="isChart">{{buttonText}}</el-button>
@@ -32,7 +32,7 @@
 	import Paging from '@/components/Paging'
 	import LineChart from '@/components/Echarts/LineChart'
 	import { getStatis, getStatisSecCvs } from '@/api/statis'
-	// import { getDate, getChecked } from '@/method'
+	import { getDate } from '@/method'
 
 	export default {
 		components: {
@@ -47,7 +47,8 @@
 	      totalRecords: 0,
 	      chartShow: false,
 	      buttonText: '图表',
-	      defaultDate: '2017-10-19',
+				defaultDate: getDate().ten,
+				loading: false,
 	      newColumns: [],
 	      columnsSchema: {
 	      	'日期' : {
@@ -89,7 +90,9 @@
 	  },
 	  methods: {
 	  	getData() {
+				this.loading = true
 	  		getStatis(this.reUrl, this.reType, this.requestData).then(response => {
+					this.loading = false
 	  			if(response.data) {
 	  				response = response.data;
 	  			}

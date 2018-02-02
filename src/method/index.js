@@ -1,5 +1,5 @@
-
 import { menu } from '@/api/login'
+import jq from 'jquery'
 // 获取日期
 export function getDate() {
   var days = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
@@ -94,6 +94,7 @@ export function getSystem() {
   }
 }
 
+// 获取选中项
 export function getChecked(checkedVal, columns) {
   var tempArray = []
   for (var j = 0; j < columns.length; j++) {
@@ -106,6 +107,7 @@ export function getChecked(checkedVal, columns) {
   return tempArray
 }
 
+// 定时器
 export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result
 
@@ -136,42 +138,46 @@ export function debounce(func, wait, immediate) {
       result = func.apply(context, args)
       context = args = null
     }
-
     return result
   }
 }
 
 // 获取menu
+export function getMenuMain() {
+  return new Promise(function(resolve, reject) {
+    menu({ 'level': '1', 'menu_parent': 0 }).then(response => {
+      resolve(response)
+    }).catch(error => {
+      console.log(error)
+    })
+  })
+}
 
-export function getMenu() {
-  const reData = {
-    level: 1,
-    menu_parent: 0
-  }
-  const tempObject = {
-    path: '/query',
-    component: Layout,
-    redirect: '/query/UserInfo',
-    name: 'Query',
-    meta: { title: '信息查询', icon: 'example' },
-    children: [{
-      path: 'userinfo',
-      name: 'UserInfo',
-      component: _import('query/UserInfo'),
-      meta: { title: '用户信息', icon: 'table' }
-    }]
-  }
-  menu(reData).then(response => {
-    for (let i = 0; i < response.length; i++) {
-      const reTempData = {
-        level: '2',
-        menu_parent: response[i].id
+export async function getMenuSec() {
+  let me = []
+  return new Promise(function(resolve, reject) {
+    jq.ajax({
+      type: 'GET',
+      url: 'http://localhost:8090/adminMenu/getMenu.json',
+      data: { 'level': '1', 'menu_parent': 0 },
+      dataType: 'json',
+      async: false,
+      success: function(data) {
+        me = data
+        for (let i = 0; i < data.length; i++) {
+          jq.ajax({
+            type: 'GET',
+            url: 'http://localhost:8090/adminMenu/getMenu.json',
+            data: { 'level': '2', 'menu_parent': data[i].id },
+            dataType: 'json',
+            async: false,
+            success: function(response) {
+              me[i].children = response
+            }
+          })
+        }
+        resolve(me)
       }
-      menu(reTempData).then(menu => {
-        console.log(menu)
-      })
-    }
-  }).catch(error => {
-    console.log(error)
+    })
   })
 }

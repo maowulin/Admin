@@ -29,11 +29,19 @@ const user = {
     Login({ commit }, userInfo) {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
-        login(username, userInfo.password).then(response => {
-          const data = response.data
-          setToken(data.token)
-          commit('SET_TOKEN', data.token)
-          resolve()
+        login(username, userInfo.password, userInfo.code).then(response => {
+          if (response.result === 1) {
+            const data = {
+              'name': response.data.uname,
+              'id': response.data.id,
+              'rols': response.data.department
+            }
+            setToken(data)
+            commit('SET_TOKEN', data)
+            resolve({ type: 'success', message: '登陆成功' })
+          } else {
+            resolve({ type: 'error', message: response.error_message })
+          }
         }).catch(error => {
           reject(error)
         })

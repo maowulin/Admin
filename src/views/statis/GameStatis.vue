@@ -1,34 +1,35 @@
 <template>
-	<section v-if="check">
-		<statis-page
-			:columns="gameColumns" 
-			:chart-group="gameGroup"
-			:re-url="gameUrl"
-			:cvs-url="gameCvs"
-			:re-type="gameType"
-			:is-second="isSecond"
-			:request-data="gameRequest"
-			v-on:is-check="getCheck">
-		</statis-page >
-	</section>
-	<section v-else>
-		<statis-scond
-			:columns="gameSecColumns" 
-			:chart-group="gameSecGroup"
-			:re-url="gameSecUrl"
-			:cvs-url="gameSecCvs"
-			:re-type="gameSecType"
-			:request-data="gameSecRequest"
-			@second-back="secondBack">
-			
-		</statis-scond>
-	</section>
+	<div>
+		<section v-show="check">
+			<statis-page
+				:columns="gameColumns" 
+				:chart-group="gameGroup"
+				:re-url="gameUrl"
+				:cvs-url="gameCvs"
+				:re-type="gameType"
+				:is-second="isSecond"
+				:request-data="gameRequest"
+				v-on:is-check="getCheck">
+			</statis-page >
+		</section>
+		<section v-show="!check">
+			<statis-scond
+				:columns="gameSecColumns" 
+				:chart-group="gameSecGroup"
+				:re-url="gameSecUrl"
+				:cvs-url="gameSecCvs"
+				:re-type="gameSecType"
+				:request-data="gameSecRequest"
+				@second-back="secondBack">
+			</statis-scond>
+		</section>
+	</div>
 </template>
 
 <script>
 	import StatisPage from './page/StatisPage'
 	import StatisScond from './page/StatisSecond'
-	import {getDate} from '@/method'
+	import { getDate } from '@/method'
 
 	export default {
 		components: {

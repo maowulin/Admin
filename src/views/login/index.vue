@@ -39,15 +39,14 @@
 </template>
 
 <script>
-import { isvalidUsername } from '@/utils/validate'
-import { login, authImage } from '@/api/login'
-import getMenu from '@/method'
+
+// import Router from 'vue-router'
 
 export default {
   name: 'login',
   data() {
     const validateUsername = (rule, value, callback) => {
-      if (!isvalidUsername(value)) {
+      if (value === '') {
         callback(new Error('请输入正确的用户名'))
       } else {
         callback()
@@ -90,16 +89,25 @@ export default {
       document.getElementsByClassName('auth-show')[0].src = 'http://localhost:8090/authImage?date=' + new Date()
     },
     handleLogin() {
-      login(this.loginForm.username, this.loginForm.password, this.loginForm.code).then(response => {
-        console.log(response)
-        if (response.result === 1) {
-          this.$message.success('登陆成功')
-          getMenu()
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading = true
+          this.$store.dispatch('Login', this.loginForm).then(response => {
+            if (response.type === 'error') {
+              this.loading = false
+              this.$message.error('登陆失败')
+            } else {
+              this.loading = false
+              this.$router.push({ path: '/' })
+            }
+          }).catch(error => {
+            this.loading = false
+            this.$message.error('服务器错误')
+          })
         } else {
-          this.$message.error(response.error_message)
+          console.log('error submit!!')
+          return false
         }
-      }).catch(error => {
-        this.$message.error("登陆失败")
       })
     }
   }

@@ -23,6 +23,14 @@ export function getInfo(token) {
   })
 }
 
+export function getOnlineTime(_data) {
+  return request({
+    url: '../userL8/online_time_list.json',
+    method: 'get',
+    data: _data
+  })
+}
+
 export function logout() {
   return request({
     url: '/user/logout',
@@ -32,8 +40,8 @@ export function logout() {
 
 export function menu(_data) {
   return request({
-    url: '../adminMenu/getAllMenu.json',
+    url: 'http://localhost:8090/adminMenu/getMenu.json',
     method: 'get',
-    data: _data
+    params: _data
   })
 }
