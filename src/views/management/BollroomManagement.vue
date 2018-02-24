@@ -12,6 +12,7 @@
 		</div>
 		
 		<egrid class="egrid"
+		  v-loading="loading"
 			fit
 			:data="tableData"
 			:columns="columns"
@@ -88,7 +89,7 @@
 </template>
 
 <script>
-	import { getFightData } from '@/api/query'
+	import { getBallRoom } from '@/api/management'
 	import Paging from '@/components/Paging/'
 	import MySelect from '@/components/Select/'
 	import MySearch from '@/components/Search/'
@@ -121,11 +122,13 @@
 				message3: "球房名称",
 				totalRecords: 0,
 				tableData: [],
+				loading: false,
 				requestData: {
-					uname: "",
-					game_over_type: "",
-					pageNow: 0,
-					pageSize: 10
+					status   : '',
+					sort     : '',
+					like     : '',
+					pageNow  : 0,
+					pageSize : 10
 				},
 				ballInfo: {
 					'ballName': '----',
@@ -226,8 +229,9 @@
 		},
 		methods: {
 			getData() {
-				getFightData(this.requestData).then(response => {
-					console.log(response)
+				this.loading = true
+				getBallRoom(this.requestData).then(response => {
+					this.loading = false
 					this.tableData = response.items
 					this.totalRecords = response.totalRecords
 				}).catch(error => {

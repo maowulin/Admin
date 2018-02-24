@@ -8,31 +8,24 @@
 			<paging :total="totalRecords" v-on:getSize="getFightSize" v-on:getPage="getFightPage"></paging>
 		</div>
 
-		<egrid class="egrid" fit :data="tableData" :columns="columns" :columns-schema="columnsSchema" :columns-props="columnsProps"
-		 :column-type="columnType" :columns-handler="columnsHandler">
+		<egrid v-loading="loading" class="egrid" fit :data="tableData" :columns="columns" :columns-schema="columnsSchema" :columns-props="columnsProps"
+		 :column-type="columnType" >
 		</egrid>
 	</section>
 </template>
 
 <script>
-	import { getFightData } from '@/api/query'
+	import { getCircle } from '@/api/management'
 	import Paging from '@/components/Paging/'
 	import MySelect from '@/components/Select/'
 	import MySearch from '@/components/Search/'
 
-	var Btn = {
-		template: `<div><el-button class="click-btn" @click="rowEdit" type="primary" icon="el-icon-edit">查看</el-button>
-							<el-button class="click-btn" @click="rowDelete" type="danger" icon="el-icon-delete">删除</el-button></div>`,
-		props: ['row'],
-		methods: {
-			rowEdit() {
-				this.$emit('row-edit', this.row)
-				this.$set(this.row, '_edit', !this.row._edit)
-			},
-			rowDelete() {
-				this.$emit('row-delete', this.row)
-			}
-		}
+	const Circle = {
+		template: `<div>
+								<span v-if="row.status === -1">已删除</span>
+								<span v-else-if="row.status === 0">正常</span>
+							</div>`,
+		props: ['row']
 	}
 
 	export default {
@@ -47,12 +40,14 @@
 				message3: "",
 				totalRecords: 0,
 				tableData: [],
+				loading: false,
 				dialogVisible: false,
 				requestData: {
-					uname: "",
-					game_over_type: "",
-					pageNow: 0,
-					pageSize: 10
+					status   : '',
+					type     : '',
+					like     : '',
+					pageNow  : 0,
+					pageSize : 10
 				},
 				optionValue3: [{
 					"opti": "搜索内容",
@@ -84,39 +79,35 @@
 					"label": "序号",
 					"prop": "serial"
 				}, {
-					"label": "订单编号",
-					"prop": "out_trade_no"
+					"label": "发起人昵称",
+					"prop": "userName"
 				}, {
-					"label": "订单金额",
-					"prop": "total_fee"
+					"label": "所属部落",
+					"prop": "post_circle_name"
 				}, {
-					"label": "用户昵称",
-					"prop": "uname"
-				}, {
-					"label": "用户手机号",
-					"prop": "phone"
-				}, {
-					"label": "支付方式",
-					"prop": "payment_type"
-				}, {
-					"label": "结束原因",
-					"prop": "game_over_type"
-				}, {
-					"label": "订单状态",
-					"prop": "orderStatus"
-				}, {
-					"label": "配送方式",
-					"prop": "getWay"
-				}, {
-					"label": "创建日期",
+					"label": "发表时间",
 					"prop": "createTime"
+				}, {
+					"label": "圈标题",
+					"prop": "title"
+				}, {
+					"label": "浏览数",
+					"prop": "pageView"
+				}, {
+					"label": "评论数",
+					"prop": "replies"
+				}, {
+					"label": "圈状态",
+					"prop": "status"
 				}],
 				columnsProps: {
 					align: "center",
 					sortable: true
 				},
 				columnsSchema: {
-					
+					'圈状态': {
+						component: Circle
+					}
 				},
 				columnType: ""
 			}
@@ -126,28 +117,27 @@
 		},
 		methods: {
 			getData() {
-				getFightData(this.requestData).then(response => {
-					console.log(response)
+				this.loading = true
+				getCircle(this.requestData).then(response => {
+					this.loading = false
 					this.tableData = response.items
 					this.totalRecords = response.totalRecords
 				}).catch(error => {
-					console.log(error)
+					this.$message({
+						showClose: true,
+						message: '服务器错误',
+						type: 'error'
+					})
+					this.loading = false
 				})
 			},
 			orderBuyWay(val) {
-				this.requestData.game_over_type = val
-				this.getData()
-			},
-			orderSendWay(select, input) {
-				this.requestData.uname = input
-				this.getData()
-			},
-			orderStatus(select, input) {
-				this.requestData.uname = input
+				this.requestData.status = val
 				this.getData()
 			},
 			orderPhone(select, input) {
-				this.requestData.uname = input
+				this.requestData.type = select
+				this.requestData.like = input
 				this.getData()
 			},
 			getFightSize(pageSize) {
@@ -157,26 +147,6 @@
 			getFightPage(pageNow) {
 				this.requestData.pageNow = pageNow;
 				this.getData()
-			},
-			orderEdit(row) {
-	      this.dialogVisible = true
-			},
-			columnsHandler(cols) {
-				let edt = this.orderEdit
-				return cols.concat({
-					label: '操作',
-					fixed: 'right',
-					width: 180,
-					component: Btn,
-					listeners: {
-						'row-edit'(row) {
-							edt(row)
-						},
-						'row-delete'(row) {
-							console.log("删除")
-						}
-					}
-				})
 			}
 		}
 	}

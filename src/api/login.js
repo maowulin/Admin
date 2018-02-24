@@ -1,16 +1,23 @@
 import request from '@/utils/request'
 
 export function login(_name, _password, _code) {
-  const formData = new FormData()
-  formData.append('username', _name)
-  formData.append('password', _password)
-  formData.append('code', _code)
   return request({
     url: '../authority/admin_user_login',
-    method: 'POST',
-    data: formData,
+    method: 'post',
+    data: {
+      username: _name,
+      password: _password,
+      code: _code
+    },
+    transformRequest: [data => {
+      let ret = ''
+      for (let it in data) {
+        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+      }
+      return ret
+    }],
     headers: {
-      'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      'Content-Type': 'application/x-www-form-urlencoded'
     }
   })
 }
@@ -27,7 +34,7 @@ export function getOnlineTime(_data) {
   return request({
     url: '../userL8/online_time_list.json',
     method: 'get',
-    data: _data
+    params: _data
   })
 }
 

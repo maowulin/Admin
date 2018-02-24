@@ -446,13 +446,12 @@
 		},
 		methods: {
 			getCheck(row) {
-				this.gameSecRequest.time = row.time;
-				this.check = false;
+				this.gameSecRequest.time = row.time
+				this.check = false
 			},
 			
 			secondBack(val) {
-				console.log(val);
-				this.check = val;
+				this.check = val
 			}
 		}
 	

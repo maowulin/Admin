@@ -14,6 +14,7 @@
 		
 		<el-table
 			fit
+			v-loading="loading"
 			:data="tableData"
 			tooltip-effect="dark"
 			style="width: 100%"
@@ -68,7 +69,7 @@
 	import Paging from '@/components/Paging/'
 	import MySelect from '@/components/Select/'
 	import MySearch from '@/components/Search/'
-	import { getBounds } from '@/api/management'
+	import { getBouns, bounsPass, bounsRefuse } from '@/api/management'
 
 	var Status = {
 		template: `<div>
@@ -90,6 +91,7 @@
 				message2: '',
 				message3: '',
 				totalRecords: 0,
+				loading: false,
 				optionValue1: [{
 					'opti': '审核状态',
 					'val': ''
@@ -142,6 +144,7 @@
 					pageNow: 0,
 					pageSize: 10
 				},
+				checkRows: [],
 				columnsSchema: {
 					'序号': {
 						width: '70px'
@@ -165,16 +168,31 @@
 		},
 		methods: {
 			getData() {
-				getBounds('../userL8/destoonFinanceCash_list.json', 'get', this.requesetData).then(response => {
-					console.log(response)
+				this.loading = true
+				getBouns(this.requesetData).then(response => {
+					this.loading = false
 					this.tableData = response.items
 					this.totalRecords = response.totalRecords
 				}).catch(error => {
-					console.log(error)
+					this.$message({
+						showClose: true,
+						message: '服务器错误！',
+						type: 'error'
+					})
 				})
 			},
 			bounsPass() {
+				let tempObj = {
+												approverID : $(".person_id").text(),
+												approver   : $(".person_name").text(),
+												ids        : this.checkRows,
+												status     : "1"
+											}
+				bounsPass().then(response => {
 
+				}).catch(error => {
+
+				})
 			},
 			bounsRefuse() {
 
@@ -196,19 +214,17 @@
 				this.getData()
 			},
 			handleSelectionChange(index) {
-				let tempArray = []
+				this.checkRows = []
 				for(let i = 0; i < index.length; i++) {
-					tempArray.push(index[i].id)
+					this.checkRows.push(index[i].id)
 				}
-				console.log(tempArray)
 			},
 			isChecked (row, index) {
-				// if(row.status === 0) {
-				// 	return true
-				// }else {
-				// 	return false 
-				// }
-				return true
+				if(row.status === 0) {
+					return true
+				}else {
+					return false 
+				}
 			}
 		}
 	}

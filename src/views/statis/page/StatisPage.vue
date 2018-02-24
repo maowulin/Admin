@@ -3,7 +3,7 @@
 
 		<div class="user_head2">
 
-			<el-date-picker v-model="presentDate" type="daterange" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" :default-value="defaultDate" @change="dateChange">
+			<el-date-picker clearable v-model="presentDate" type="daterange" start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-dd" :default-value="defaultDate" @change="dateChange">
 
 			</el-date-picker>
 
@@ -55,23 +55,35 @@
 
 	// 操作按钮
 
-	var Btn = {
-
+	const Btn = {
 	  template: `<el-button class="click-btn" @click="todo" type="primary" icon="el-icon-view">查看</el-button>`,
-
 	  props: ['row'],
-
 	  methods: {
-
 	    todo() {
 	      this.$emit('row-check', this.row)
-
 	      this.$set(this.row, '_edit', !this.row._edit)
 	    }
-
 	  }
-
 	}
+
+	const Conent = {
+		template: `<span v-text="conentext"></span>`,
+		props: ['row', 'col'],
+		computed: {
+			conentext: function() {
+				let tempText = ''
+				if(this.col.isPercent) {
+					tempText = this.row[this.col.prop] + '%'
+				}else {
+					tempText = this.row[this.col.prop]
+				}
+
+				return tempText
+			}
+		}
+	}
+
+
 
 	export default {
 
@@ -116,7 +128,9 @@
 
 	        align: 'center',
 
-	        sortable: true
+					sortable: true,
+					
+					component: Conent
 
 	      },
 
@@ -197,7 +211,11 @@
 
 	        this.totalRecords = response.totalRecords
 	      }).catch(error => {
-	        console.log(error)
+	        this.$message({
+	          showClose: true,
+	          message: '服务器错误',
+	          type: 'error'
+	        })
 	      })
 	    },
 
@@ -206,7 +224,7 @@
 	    },
 
 	    dateChange(val) {
-	      if (val === '') return
+	      if (!val) return
 
 	      if (this.requestData.beginTime) {
 	        this.requestData.beginTime = val[0]

@@ -154,13 +154,12 @@
 		},
 		methods: {
 			getCheck(row) {
-				this.gameSecRequest.createDate = row.time;
-				this.check = false;
+				this.gameSecRequest.createDate = row.time
+				this.check = false
 			},
 			
 			secondBack(val) {
-				console.log(val);
-				this.check = val;
+				this.check = val
 			}
 		}
 	

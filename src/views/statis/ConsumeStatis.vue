@@ -65,7 +65,8 @@
 	import {getDate} from '@/method'
 	export default {
 		components: {
-			StatisPage
+			StatisPage,
+			StatisScond
 		},
 		data() {
 			return {
@@ -344,20 +345,22 @@
 			},
 			
 			//红包赠送查看
-			getCheck() {
-				
+			getCheck(row) {
+				this.presentSecRequest.time = row.create_date
+				this.check = false
 			},
 			//返回
-			secondBack() {
-				
+			secondBack(val) {
+				this.check = val
 			},
 			//金币赠送查看
-			getGoldCheck() {
-				
+			getGoldCheck(row) {
+				this.goldSecRequest.time = row.create_date
+				this.goldCheck = false
 			},
 			//返回
-			secondGoldBack() {
-				
+			secondGoldBack(val) {
+				this.goldCheck = val
 			}
 		}
 	}

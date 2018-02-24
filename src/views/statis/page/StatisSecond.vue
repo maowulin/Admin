@@ -94,27 +94,31 @@
 	  		getStatis(this.reUrl, this.reType, this.requestData).then(response => {
 					this.loading = false
 	  			if(response.data) {
-	  				response = response.data;
+	  				response = response.data
 	  			}
-	  			this.tableData = response.items;
-	  			this.totalRecords = response.totalRecords;
+	  			this.tableData = response.items
+	  			this.totalRecords = response.totalRecords
 	  		}).catch(error => {
-	  			console.log(error);
-	  		});
+	  			this.$message({
+	          showClose: true,
+	          message: '服务器错误',
+	          type: 'error'
+	        })
+	  		})
 	  	},
 	  	getBasiedSize(pageSize) {
 	  		this.requestData.pageSize = pageSize;
-	  		this.getData();
+	  		this.getData()
 	  	},
 	  	getBasiedPage(pageNow) {
 	  		this.requestData.pageNow = pageNow;
-	  		this.getData();
+	  		this.getData()
 	  	},
 	  	getCvs() {
-	  		getStatisSecCvs(this.cvsUrl, this.requestData.time);
+	  		getStatisSecCvs(this.cvsUrl, this.requestData.time)
 	  	},
 	  	isChart() {
-	  		this.chartShow = !this.chartShow;
+	  		this.chartShow = !this.chartShow
 	  		if(this.chartShow) { 
 	  			this.buttonText = '表格'
 	  		}else {

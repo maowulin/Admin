@@ -6,6 +6,7 @@
 	
 			<egrid class="egrid"
 				fit
+				v-loading="loading"
 				:data="tableData"
 				:columns="columns"
 				:columns-schema="columnsSchema"
@@ -20,7 +21,7 @@
 		import Paging from '@/components/Paging/'
 		import MySelect from '@/components/Select/'
 		import MySearch from '@/components/Search/'
-		import { getDetaConfig } from '@/api/management'
+		import { gameConfig, gameConfigAdd, gameConfigEdit, gameConfigDel } from '@/api/management'
 
 		var Btn = {
 			template: `<div>
@@ -72,7 +73,8 @@
 		      message1: '',
 		      message2: '',
 		      message3: '',
-		      totalRecords: 0,
+					totalRecords: 0,
+					loading: false,
 		      optionValue1: [{
 		        'opti': '分配状态',
 		        'val': ''
@@ -149,11 +151,16 @@
 			},
 		  methods: {
 		    getData() {
-		      getDetaConfig('get', this.getRequestData).then(response => {
-						console.log(response)
+					this.loading = true
+		      gameConfig({'type': 1}).then(response => {
+						this.loading = false
 						this.tableData = response.data
 		      }).catch(error => {
-		        console.log(response)
+		        this.$message({
+							showClose: true,
+							message: '服务器错误！',
+							type: 'error'
+						})
 		      })
 		    },
 		    dataInsert() {
@@ -177,9 +184,33 @@
 							cancelButtonText: '取消',
 							type: 'warning'
 						}).then(() => {
-							this.$message({
-								type: 'success',
-								message: '提交成功!'
+							let tempObj = {
+								type 		    : 2,
+								key   		  : row.v_key,
+								upper_limit : row.upper_limit,
+								explain     : row.explain,
+								value   	  : row.v_value
+							}
+							gameConfigEdit(tempObj).then(response => {
+								if(response.result === 1) {
+									this.$message({
+										type: 'success',
+										message: '提交成功!'
+									})
+								}else {
+									this.$message({
+										showClose: true,
+										message: '提交失败！',
+										type: 'error'
+									})
+								}
+								this.getData()
+							}).catch(error => {
+								this.$message({
+									showClose: true,
+									message: '服务器错误！',
+									type: 'error'
+								})
 							})
 						}).catch(() => {
 							this.$message({
@@ -195,9 +226,28 @@
 						cancelButtonText: '取消',
 						type: 'warning'
 					}).then(() => {
-						this.$message({
-							type: 'success',
-							message: '删除成功!'
+						gameConfigDel({'type': 4, 'key': row.v_key}).then(response => {
+							if(response.result === 1) {
+								this.$message({
+									type: 'success',
+									message: '删除成功!'
+								})
+							}else {
+								this.$message({
+									showClose: true,
+									message: '删除失败！',
+									type: 'error'
+								})
+							}
+
+							this.getData()
+
+						}).catch(error => {
+							this.$message({
+								showClose: true,
+								message: '服务器错误！',
+								type: 'error'
+							})
 						})
 					}).catch(() => {
 						this.$message({
@@ -207,7 +257,36 @@
 					})
 				},
 				rowAdd(row) {
-					console.log(row)
+					let tempObj = {
+						type 		    : 3,
+						key   		  : row.v_key,
+						upper_limit : row.upper_limit,
+						explain     : row.explain,
+						value   	  : row.v_value
+					}
+					gameConfigAdd(tempObj).then(response => {
+						console.log(response)
+						if(response.result === 1) {
+							this.$message({
+								showClose: true,
+								message: '添加成功！',
+								type: 'success'
+							})
+						}else {
+							this.$message({
+								showClose: true,
+								message: '添加失败！',
+								type: 'error'
+							})
+						}
+						this.getData()
+					}).catch(error => {
+						this.$message({
+							showClose: true,
+							message: '服务器错误！',
+							type: 'error'
+						})
+					})
 					row.isAdd = false
 				},
 		    columnsHandler(cols) {

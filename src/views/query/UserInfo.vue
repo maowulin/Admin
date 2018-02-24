@@ -530,6 +530,7 @@ export default {
 				this.tableData = response.items
 				this.totalRecords = response.totalRecords
     	}).catch(error => {
+				this.loading = false
 				this.$message({
           showClose: true,
           message: '服务器错误',

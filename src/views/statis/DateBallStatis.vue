@@ -247,13 +247,13 @@
 		},
 		methods: {
 			getCheck(row) {
-				this.ballSecRequest.time = row.time;
-				this.check = false;
+				this.ballSecRequest.time = row.time
+				this.check = false
 			},
 			
 			secondBack(val) {
-				console.log(val);
-				this.check = val;
+				console.log(val)
+				this.check = val
 			}
 		}
 	

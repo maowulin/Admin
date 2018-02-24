@@ -1,52 +1,67 @@
 	<template>
 		<section>
-			<el-form ref="form" :model="form" label-width="105px">
-				<el-form-item label="战队头像">
-					<el-upload
-						class="avatar-uploader"
-						action="https://jsonplaceholder.typicode.com/posts/"
-						:show-file-list="false"
-						:on-success="handleAvatarSuccess">
-						<img v-if="imageUrl" :src="imageUrl" class="avatar">
-						<i v-else class="el-icon-plus avatar-uploader-icon"></i>
-					</el-upload>
-				</el-form-item>
-	
-				<el-form-item label="战队管理员">
-						<el-button size="small">管理</el-button>
-				</el-form-item>
-	
-				<el-form-item label="战队名称">
-					<el-input v-model="form.name"></el-input>
-				</el-form-item>
-	
-				<el-form-item label="成员管理">
-					<el-input v-model="form.name"></el-input>
-				</el-form-item>
-	
-				<el-form-item label="战队ID">
-					<el-input v-model="form.name"></el-input>
-				</el-form-item>
-	
-				<el-form-item label="成员等级">
-					<el-input v-model="form.name"></el-input>
-				</el-form-item>
-				
-				<el-form-item label="战队宣言">
-					<el-input type="textarea" v-model="form.desc"></el-input>
-				</el-form-item>
+			<div class="user_head">
+					<my-search :option-value="compeValue" @searchClick="tribeManageSearch"></my-search>
+			</div>
 
-				<div class="from-footer">
-					<el-button type="primary" @click="onSubmit">提交</el-button>
-					<el-button>取消</el-button>
-				</div>
-			</el-form>
+			<transition name="fade">
+				<el-form v-if="show" class="ment-coent" ref="form" :model="form" label-width="105px">
+					<el-form-item label="战队头像">
+						<el-upload
+							class="avatar-uploader"
+							action="https://jsonplaceholder.typicode.com/posts/"
+							:show-file-list="false"
+							:on-success="handleAvatarSuccess">
+							<img v-if="imageUrl" :src="imageUrl" class="avatar">
+							<i v-else class="el-icon-plus avatar-uploader-icon"></i>
+						</el-upload>
+					</el-form-item>
+		
+					<el-form-item label="战队管理员">
+							<el-button size="small">管理</el-button>
+					</el-form-item>
+		
+					<el-form-item label="战队名称">
+						<el-input v-model="form.name"></el-input>
+					</el-form-item>
+		
+					<el-form-item label="成员管理">
+						<el-input v-model="form.name"></el-input>
+					</el-form-item>
+		
+					<el-form-item label="战队ID">
+						<el-input v-model="form.name"></el-input>
+					</el-form-item>
+		
+					<el-form-item label="成员等级">
+						<el-input v-model="form.name"></el-input>
+					</el-form-item>
+					
+					<el-form-item label="战队宣言">
+						<el-input type="textarea" v-model="form.desc"></el-input>
+					</el-form-item>
+	
+					<div class="from-footer">
+						<el-button type="primary" @click="onSubmit">提交</el-button>
+						<el-button>取消</el-button>
+					</div>
+				</el-form>
+			</transition>
 		</section>
 	</template>
 	<script>
+		import MySearch from '@/components/Search'
 		export default {
+			components: {
+				MySearch
+			},
 			data() {
 				return {
+					show: false,
+					compeValue: [{
+						'opti': 'ID/队长昵称/手机号',
+						'val' : ''
+					}],
 					form: {
 						name: '',
 						region: '',
@@ -64,6 +79,10 @@
 			methods: {
 				onSubmit() {
 					console.log('submit!')
+				},
+
+				tribeManageSearch(val, input) {
+					this.show = true
 				},
 	
 				handleAvatarSuccess(res, file) {

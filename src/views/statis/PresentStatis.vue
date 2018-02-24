@@ -67,7 +67,7 @@
 	    return {
 	      bordShow: 1,
 	      check: true,
-	      goldCheck: false,
+	      goldCheck: true,
 	      isSecond: true,
 	      chekcGoldTime: '',
 	      presentColumns: [{
@@ -89,7 +89,7 @@
 	        'itemColor2': 'rgba(137,189,2,0.27)' // rgba
 	      },
 	      {
-	        'label': '红包赛赠送统计',
+	        'label': '奖金赛赠送统计',
 	        'prop': 'redpack_presented_amount',
 	        'isDefaultHead': true,
 	        'isChart': true,
@@ -103,6 +103,18 @@
 	      {
 	        'label': '抽奖赠送统计',
 	        'prop': 'lottery__presented_amount',
+	        'isDefaultHead': true,
+	        'isChart': true,
+	        'chartType': 'line',
+	        'chartGroup': '1',
+	        'areaColor1': 'rgba(219, 50, 51, 0.3)',
+	        'areaColor2': 'rgba(0, 0, 0, 0.1)',
+	        'itemColor1': 'rgb(219,50,51)',
+	        'itemColor2': 'rgba(219,50,51,0.2)'
+				},
+				{
+	        'label': '新手引导赠送',
+	        'prop': '',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -196,9 +208,9 @@
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      }
 	      ],
-	      presentSecUrl: '../loginreg/info_detail.json',
+	      presentSecUrl: '../game/game_user_presentedstatisticinfo.json',
 	      presentSecType: 'get',
-	      presentSecCvs: '../loginreg/loginreg_click_detail_export.json',
+	      presentSecCvs: '../game/game_Presented_exportusers.json',
 	      presentSecGroup: [{
 	        group: '1',
 	        id: 'gameChart2',
@@ -256,7 +268,7 @@
 	      ],
 	      goldUrl: '../game/game_presented_statisticinfo.json',
 	      goldType: 'get',
-	      goldCvs: '../loginreg/loginreg_click_export.json',
+	      goldCvs: '../game/game_presented_exportall.json',
 	      goldGroup: [{
 	        group: '1',
 	        id: 'goldChart1',
@@ -278,7 +290,7 @@
 	      },
 	      {
 	        'label': '用户绰号', // 表头及复选框文字
-	        'prop': 'time', // 字段名
+	        'prop': 'uname', // 字段名
 	        'isDefaultHead': true, // 是否默认显示
 	        'isChart': true, // 是否显示到图表中
 	        'chartType': 'line', // 图表类型
@@ -289,8 +301,8 @@
 	        'itemColor2': 'rgba(137,189,2,0.27)' // rgba
 	      },
 	      {
-	        'label': '用户绰号',
-	        'prop': 'register',
+	        'label': '金币赠送总数',
+	        'prop': 'gold_presented_total',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -302,7 +314,7 @@
 	      },
 	      {
 	        'label': '抽奖获得金币数',
-	        'prop': 'reg_code',
+	        'prop': 'lottery_presented_gold',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -314,7 +326,7 @@
 	      },
 	      {
 	        'label': 'VIP金币赠送总数',
-	        'prop': 'reg_next',
+	        'prop': 'vip_presented_gold',
 	        'isDefaultHead': true,
 	        'isChart': true,
 	        'chartType': 'line',
@@ -323,11 +335,11 @@
 	        'areaColor2': 'rgba(0, 0, 0, 0.1)',
 	        'itemColor1': 'rgb(219,50,51)',
 	        'itemColor2': 'rgba(219,50,51,0.2)'
-	      }
+				}
 	      ],
-	      goldSecUrl: '../loginreg/info_detail.json',
+	      goldSecUrl: '../game/game_user_presentedstatisticinfo.json',
 	      goldSecType: 'get',
-	      goldSecCvs: '../loginreg/loginreg_click_detail_export.json',
+	      goldSecCvs: '../game/game_Presented_exportusers.json',
 	      goldSecGroup: [{
 	        group: '1',
 	        id: 'goldChart2',
@@ -345,19 +357,33 @@
 	  methods: {
 	    cutBord(e) {
 	      if (e.label === '奖金赠送') {
-	        this.bordShow = 1
+					this.bordShow = 1
+					this.check = true
 	      } else if (e.label === '金币赠送') {
-	        this.bordShow = 2
+					this.bordShow = 2
+					this.goldCheck = true
 	      }
 	    },
 	    // 红包赠送查看
-	    getCheck(row) {},
+	    getCheck(row) {
+				console.log(row)
+				this.presentSecRequest.time = row.create_date
+				this.check = false
+			},
 	    // 返回
-	    secondBack() {},
+	    secondBack(val) {
+				
+				this.check = val
+			},
 	    // 金币赠送查看
-	    getGoldCheck(row) {},
+	    getGoldCheck(row) {
+				this.goldSecRequest.time = row.create_date
+				this.goldCheck = false
+			},
 	    // 返回
-	    secondGoldBack() {}
+	    secondGoldBack(val) {
+				this.goldCheck = val
+			}
 	  }
 }
 
@@ -370,7 +396,6 @@
 }
 
 .el-button {
-	width: auto;
 	margin-left: auto;
 }
 

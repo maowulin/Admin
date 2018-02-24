@@ -11,9 +11,9 @@ import { mapGetters } from 'vuex'
 import SidebarItem from './SidebarItem'
 import ScrollBar from '@/components/ScrollBar'
 import Layout from '@/views/layout/Layout'
-const _import = require('@/router/_import_' + process.env.NODE_ENV)
-import { getMenuSec } from '@/method'
-import { constant404Map } from '@/router'
+// const _import = require('@/router/_import_' + process.env.NODE_ENV)
+// import { getMenuSec } from '@/method'
+// import { constant404Map } from '@/router'
 export default {
   components: { SidebarItem, ScrollBar },
   data() {

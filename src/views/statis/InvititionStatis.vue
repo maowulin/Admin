@@ -99,9 +99,9 @@
 	        'itemColor1': 'rgb(219,50,51)',
 	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      }],
-				invitiUrl: '../postingsL8/postings_exportall.json',
+				invitiUrl: '../postingsL8/postings_allstatisticinfo.json',
 				invitiType: 'get',
-				invitiCvs: "../circleL8/circleL8_exportinfo.json",
+				invitiCvs: "../postingsL8/postings_exportall.json",
 				invitiGroup: [{
 					group: '1',
 					id: 'invitiChart1',
@@ -197,13 +197,13 @@
 		},
 		methods: {
 			getCheck(row) {
-				this.invitiSecRequest.time = row.time;
-				this.check = false;
+				this.invitiSecRequest.time = row.time
+				this.check = false
 			},
 			
 			secondBack(val) {
-				console.log(val);
-				this.check = val;
+				console.log(val)
+				this.check = val
 			}
 		}
 	

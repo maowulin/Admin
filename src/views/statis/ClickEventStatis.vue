@@ -39,7 +39,7 @@
 			return {
 				gameColumns: [{
 	        'label': '日期', // 表头及复选框文字
-	        'prop': 'create_date',  // 字段名
+	        'prop': 'time',  // 字段名
 	        'isDefaultHead': true, // 是否默认显示
 	        'isChart': false
 	      },
