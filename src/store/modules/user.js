@@ -5,6 +5,7 @@ const user = {
   state: {
     token: getToken(),
     name: '',
+    id: '',
     avatar: '',
     roles: []
   },
@@ -15,6 +16,9 @@ const user = {
     },
     SET_NAME: (state, name) => {
       state.name = name
+    },
+    SET_ID: (state, id) => {
+      state.id = id
     },
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
@@ -38,6 +42,8 @@ const user = {
             }
             setToken(data)
             commit('SET_TOKEN', data)
+            commit('SET_NAME', data.name)
+            commit('SET_ID', data.id)
             resolve({ type: 'success', message: '登陆成功' })
           } else {
             resolve({ type: 'error', message: response.error_message })

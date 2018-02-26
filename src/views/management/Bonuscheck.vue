@@ -70,6 +70,7 @@
 	import MySelect from '@/components/Select/'
 	import MySearch from '@/components/Search/'
 	import { getBouns, bounsPass, bounsRefuse } from '@/api/management'
+	import { mapGetters } from 'vuex'
 
 	var Status = {
 		template: `<div>
@@ -160,6 +161,12 @@
 				columnType: 'selection'
 			}
 		},
+		computed: {
+			...mapGetters([
+				'name',
+				'id'
+			])
+		},
 		created() {
 			this.getData()
 		},
@@ -182,17 +189,19 @@
 				})
 			},
 			bounsPass() {
-				let tempObj = {
-												approverID : $(".person_id").text(),
-												approver   : $(".person_name").text(),
-												ids        : this.checkRows,
-												status     : "1"
-											}
-				bounsPass().then(response => {
+				// let tempObj = {
+				// 								approverID : $(".person_id").text(),
+				// 								approver   : $(".person_name").text(),
+				// 								ids        : this.checkRows,
+				// 								status     : "1"
+				// 							}
+				// bounsPass().then(response => {
 
-				}).catch(error => {
+				// }).catch(error => {
 
-				})
+				// })
+
+				console.log(this.name)
 			},
 			bounsRefuse() {
 
