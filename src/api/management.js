@@ -35,14 +35,6 @@ export function setUserConfig(_data) {
   })
 }
 
-export function getPremis(_url, _type, _data) {
-  return request({
-    url: _url,
-    method: _type,
-    params: _data
-  })
-}
-
 export function getOrder(params) {
   return request({
     url: '../order/orderlist',

@@ -50,7 +50,7 @@
   
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" :disabled="scope.row.id === 1" @click="primEdit(scope.row)" icon="el-icon-edit">编辑</el-button>
+            <el-button size="mini" type="primary" @click="primEdit(scope.row)" icon="el-icon-edit">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -64,7 +64,7 @@
 <script>
 	import MySearch from '@/components/Search'
 	import MySelect from '@/components/Select'
-  import { getPremis } from '@/api/management'
+  import { getPremis } from '@/api/systemconfig'
   import PremisConfig from './PremisConfig'
 	export default {
 		components: {
@@ -105,23 +105,14 @@
 		},
 		created() {
       this.getData()
-      this.getRoles()
 		},
 		methods: {
 			getData() {
-				getPremis('../authority/administrator_list', 'get', this.requestData).then(reponse => {
+				getPremis(this.requestData).then(reponse => {
 					this.tableData = reponse.items
 				}).catch(error => {
 					console.log(console.error)
 				})
-      },
-      getRoles() {
-        getPremis('../authority/role_all', 'get', '').then(response => {
-          console.log(response)
-          this.roles = response
-        }).catch(error => {
-          console.log(error)
-        })
       },
 			premisAdd() {
         this.isAdd = true

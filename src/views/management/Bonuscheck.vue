@@ -164,7 +164,8 @@
 		computed: {
 			...mapGetters([
 				'name',
-				'id'
+				'id',
+				'token'
 			])
 		},
 		created() {
@@ -189,22 +190,64 @@
 				})
 			},
 			bounsPass() {
-				// let tempObj = {
-				// 								approverID : $(".person_id").text(),
-				// 								approver   : $(".person_name").text(),
-				// 								ids        : this.checkRows,
-				// 								status     : "1"
-				// 							}
-				// bounsPass().then(response => {
-
-				// }).catch(error => {
-
-				// })
-
-				console.log(this.name)
+				let letToken = JSON.parse(this.$store.getters.token)
+				let tempObj = {
+												approverID : letToken.id,
+												approver   : letToken.name,
+												ids        : this.checkRows,
+												status     : "1"
+											}
+				bounsPass(tempObj).then(response => {
+					if(response.result === 1) {
+            this.$message({
+              showClose: true,
+              message: '审核成功',
+              type: 'success'
+            })
+          }else {
+            this.$message({
+              showClose: true,
+              message: '提交失败',
+              type: 'error'
+            })
+          }
+				}).catch(error => {
+					this.$message({
+						showClose: true,
+						message: '错误！',
+						type: 'error'
+					})
+				})
 			},
 			bounsRefuse() {
-
+				let letToken = JSON.parse(this.$store.getters.token)
+				let tempObj = {
+												approverID : letToken.id,
+												approver   : letToken.name,
+												ids        : this.checkRows,
+												status     : "2"
+											}
+				bounsPass(tempObj).then(response => {
+					if(response.result === 1) {
+            this.$message({
+              showClose: true,
+              message: '审核成功',
+              type: 'success'
+            })
+          }else {
+            this.$message({
+              showClose: true,
+              message: '提交失败',
+              type: 'error'
+            })
+          }
+				}).catch(error => {
+					this.$message({
+						showClose: true,
+						message: '错误！',
+						type: 'error'
+					})
+				})
 			},
 			bounsStatus(val) {
 				this.requesetData.status = val

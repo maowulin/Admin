@@ -49,7 +49,7 @@
 <script>
 	import MySearch from '@/components/Search'
 	import MySelect from '@/components/Select'
-  import { getPremis } from '@/api/management'
+  import { getManager, getManagerRoles } from '@/api/systemconfig'
   import PremisConfig from './PremisConfig'
 	export default {
 		components: {
@@ -76,18 +76,17 @@
 		},
 		created() {
       this.getData()
-      this.getRoles()
 		},
 		methods: {
 			getData() {
-				getPremis('../authority/role_list', 'get', this.requestData).then(reponse => {
+				getManager(this.requestData).then(reponse => {
 					this.tableData = reponse.items
 				}).catch(error => {
 					console.log(console.error)
 				})
       },
-      getRoles() {
-        getPremis('../authority/role_all', 'get', '').then(response => {
+      getRoles(params) {
+        getManagerRoles(params).then(response => {
           console.log(response)
           this.roles = response
         }).catch(error => {
@@ -113,6 +112,7 @@
 				}
 			},
 			primEdit(row) {
+        
         this.isAdd = false
         this.isSecond = false
         this.premisId.id = row.id
