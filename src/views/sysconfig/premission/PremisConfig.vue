@@ -27,7 +27,7 @@
 
       <el-form-item label="角色">
         <el-checkbox-group v-model="roleId" @change="roleChange">
-          <el-checkbox v-for="item in roles" :label="item.id" name="type">{{ item.roleName }}</el-checkbox>
+          <el-checkbox v-for="item in roles" :label="item.id" :key="item.id" name="type">{{ item.roleName }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-  import { getManagerRoles, getRolesAll, updateManageconfig } from '@/api/systemconfig'
+  import { getManagerRoles, getRolesAll, updateManageconfig, addManageconfig} from '@/api/systemconfig'
   import { getToken } from '@/api/management'
   export default {
     props: ['value', 'isAdd', 'premisId'],
@@ -82,7 +82,6 @@
 
       return {
         form: {
-          id              : '',
 					uname           : '',
 					password        : '',
 					comfirmPassword : '',
@@ -189,32 +188,63 @@
           })
         })
       },
+      managerAdd() {
+        addManageconfig(this.form).then(response => {
+          if(response.result === 1) {
+            this.$message({
+              showClose: true,
+              message: '添加成功',
+              type: 'success'
+            })
+            this.back()
+          }else {
+            this.$message({
+              showClose: true,
+              message: '添加失败',
+              type: 'error'
+            })
+          }
+        }).catch(error => {
+          this.$message({
+            showClose: true,
+            message: '添加失败',
+            type: 'error'
+          })
+        })
+      },
+      managerUpdate() {
+        this.form.id = this.premisId.id
+        updateManageconfig(this.form).then(response => {
+          if(response.result === 1) {
+            this.$message({
+              showClose: true,
+              message: '更新成功',
+              type: 'success'
+            })
+            this.back()
+          }else {
+            this.$message({
+              showClose: true,
+              message: '更新失败',
+              type: 'error'
+            })
+          }
+        }).catch(error => {
+          this.$message({
+            showClose: true,
+            message: '提交失败！',
+            type: 'error'
+          })
+        })
+      },
       onSubmit() {
         this.$refs.form.validate((valid) => {
           if (valid) {
-            this.form.id = this.premisId.id
-            console.log(this.form)
-            updateManageconfig(this.form).then(response => {
-              if(response.result === 1) {
-                this.$message({
-                  showClose: true,
-                  message: '更新成功',
-                  type: 'success'
-                })
-              }else {
-                this.$message({
-                  showClose: true,
-                  message: '更新失败',
-                  type: 'error'
-                })
-              }
-            }).catch(error => {
-              this.$message({
-                showClose: true,
-                message: '提交失败！',
-                type: 'error'
-              })
-            })
+            if(this.isAdd) {
+              this.managerAdd()
+            }else {
+              this.managerUpdate()
+            }
           } else {
             return false
           }
@@ -236,7 +266,7 @@
         this.$emit('input', 'false')
       },
       settingChange() {
-        console.log(this.form.status)
+        
       }
     }
   }

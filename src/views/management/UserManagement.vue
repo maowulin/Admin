@@ -85,7 +85,7 @@
   
         <el-form-item label="注册时间">
           <el-col :span="16">
-            <el-date-picker disabled type="date" placeholder="选择日期" style="width: 100%;"></el-date-picker>
+            <el-input v-model="registerDate"  disabled style="width: 150px;"></el-input>
           </el-col>
         </el-form-item>
   
@@ -143,6 +143,7 @@
 					token          : ''
         },
         imageUrl: '',
+        registerDate: '',
         show: false,
         loading: false
       }
@@ -207,6 +208,7 @@
             this.form.if_vip = response.data.if_vip + ''
             this.form.facs = response.data.facilityBindings
             this.form.balance = response.data.balance
+            this.registerDate = response.data.registerDate
             this.show = true
           } else {
             this.$message({

@@ -1,43 +1,21 @@
 <template>
   <div>
     <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="活动名称">
-        <el-input v-model="form.uname"></el-input>
+      <el-form-item label="角色名称">
+        <el-input v-model="form.roleName"></el-input>
       </el-form-item>
 
-      <el-form-item label="密码">
-        <el-input type="password" v-model="form.password"></el-input>
+      <el-form-item label="角色描述">
+        <el-input v-model="form.roleDesc"></el-input>
       </el-form-item>
 
-      <el-form-item label="重复密码">
-        <el-input type="password" v-model="form.comfirmPassword"></el-input>
-      </el-form-item>
-
-      <el-form-item label="部门">
-        <el-input v-model="form.department"></el-input>
-      </el-form-item>
-
-      <el-form-item label="手机号码">
-        <el-input v-model="form.phone"></el-input>
-      </el-form-item>
-
-      <el-form-item label="角色">
-        <el-checkbox-group v-model="roleId" @change="roleChange">
-          <el-checkbox v-for="item in roles" :label="item.id" name="type">{{ item.roleName }}</el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-      
-      <el-form-item label="设置">
-        <el-checkbox-group v-model="status" @change="settingChange">
-          <el-checkbox label="true" name="type">是否启用</el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-
-      <el-form-item label="短信通知">
-        <el-checkbox-group >
-          <el-checkbox label="" name="type">是否启用</el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
+      <div>
+        <el-form-item v-for="item in menu" :key="item.id" :label="item.menu">
+          <el-checkbox-group v-model="roleId" @change="rolesChange">
+            <el-checkbox v-for="list in item.children" :key="list.id" :label="list.id" name="type">{{list.menu}}</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+      </div>
 
       <el-form-item>
         <el-button type="primary" @click="onSubmit">立即提交</el-button>
@@ -48,53 +26,52 @@
 </template>
 
 <script>
-  import { getPremis, getToken } from '@/api/management'
+  import { getToken } from '@/api/management'
+  import { getRolerInfo, addRoler, updateRoler } from '@/api/systemconfig'
+  import { getMenuSec } from '@/method'
   export default {
     props: ['value', 'isAdd', 'premisId', 'roles'],
     data() {
       return {
         form: {
-          uname: '',
-          password: '',
-          comfirmPassword: '',
-          department: '',
-          phone: '',
-          roleIds: '',
-          status: '',
-          token: ''
+          roleName      : '',
+          roleDesc      : '',
+          token         : ''
         },
         roleId: [],
-        status: false
+        status: false,
+        menu: []
       }
     },
     created() {
       this.getRoler()
       this.getPreToken()
+      this.getRolesConfig()
     },
     beforeUpdate() {
-      this.roleChange()
+      this.rolesChange()
     },
+
     methods: {
       getRoler() {
         if (!this.isAdd) {
-          getPremis('../authority/administrator_edit', 'get', this.premisId).then(response => {
+          this.form.id = this.premisId.id
+          getRolerInfo(this.premisId).then(response => {
             console.log(response)
-            this.form.uname = response.name
-            this.form.password = response.password
-            this.form.comfirmPassword = response.comfirmPassword
-            this.form.department = response.deptName
-            this.form.phone = response.phone
-            this.form.status = response.status
+            this.form.roleName = response.roleName
+            this.form.roleDesc = response.roleDesc
 
             // 获取当前管理员角色
-            for (let i = 0; i < response.roleList.length; i++) {
-              this.roleId.push(response.roleList[i].id)
+            for (let i = 0; i < response.rpList.length; i++) {
+              this.roleId.push(response.rpList[i].moduleId)
             }
-            console.log(name)
           }).catch(error => {
             console.log(error)
           })
         }
+      },
+      async getRolesConfig() {
+        this.menu = await getMenuSec()
       },
       getPreToken() {
 				getToken().then(response => {
@@ -104,19 +81,77 @@
 				})
 			},
       onSubmit() {
-        console.log(this.form)
-      },
-      roleChange() {
-        let tempStr = ''
-        for (let i = 0; i < this.roleId.length; i++) {
-          if (i < this.roleId.length - 1) {
-            tempStr += this.roleId[i]
-            tempStr += ','
-          } else {
-            tempStr += this.roleId[i]
+        if(this.isAdd) {
+
+          this.form.moduleIds = ''
+          for(let i = 0; i < this.roleId.length; i++) {
+            if(i < this.roleId.length - 1) {
+              this.form.moduleIds += this.roleId[i] + ','
+            }else {
+              this.form.moduleIds += this.roleId[i]
+            }
           }
+
+          addRoler(this.form).then(response => {
+            if(response.result === 1) {
+              this.$message({
+                showClose: true,
+                message: '添加成功',
+                type: 'success'
+              })
+              this.back()
+            }else {
+              this.$message({
+                showClose: true,
+                message: '添加失败',
+                type: 'error'
+              })
+            }
+            
+          }).catch(error => {
+            this.$message({
+              showClose: true,
+              message: '服务器错误',
+              type: 'error'
+            })
+          })
+        }else {
+
+          this.form.permissionIds = ''
+          for(let i = 0; i < this.roleId.length; i++) {
+            if(i < this.roleId.length - 1) {
+              this.form.permissionIds += this.roleId[i] + ','
+            }else {
+              this.form.permissionIds += this.roleId[i]
+            }
+          }
+
+          updateRoler(this.form).then(response => {
+            if(response.result === 1) {
+              this.$message({
+                showClose: true,
+                message: '更新成功',
+                type: 'success'
+              })
+              this.back()
+            }else {
+              this.$message({
+                showClose: true,
+                message: '更新失败',
+                type: 'error'
+              })
+            }
+          }).catch(error => {
+            this.$message({
+              showClose: true,
+              message: '服务器错误',
+              type: 'error'
+            })
+          })
         }
-        this.form.roleIds = tempStr
+      },
+      rolesChange() {
+        
       },
       back() {
         this.$emit('input', 'false')

@@ -12,6 +12,7 @@
 			
 			<egrid class="egrid"
 				fit
+				v-loading="loading"
 				:data="tableData"
 				:columns="columns"
 				:columns-schema="columnsSchema"
@@ -21,44 +22,42 @@
 		 </egrid>
 
 		 <el-dialog
-			title="收获地址信息"
+			title="版本发发布"
 			:visible.sync="dialogVisible"
-			width="30%">
+			:before-close="handleClose"
+			width="600px">
 
 			<el-form :model="versionInfo" status-icon ref="versionInfo" label-width="120px" class="demo-ruleForm">
-				<el-form-item label="选择平台" prop="pass">
+				<el-form-item label="选择平台" prop="type">
 					<el-select v-model="versionInfo.type" placeholder="请选择">
-						<el-option value="1" label="ios"></el-option>
-						<el-option value="2" label="android"></el-option>
-						<el-option value="3" label="ios游戏端"></el-option>
-						<el-option value="4" label="android游戏端"></el-option>
+						<el-option label="ios" value="1"></el-option>
+						<el-option label="android" value="2"></el-option>
+						<el-option label="ios游戏端" value="3"></el-option>
+						<el-option label="android游戏端" value="4"></el-option>
 					</el-select>
 				</el-form-item>
 
-				<el-form-item label="最低版本" prop="age">
-					<el-input v-model="versionInfo.minVersion" auto-complete="off"></el-input>
+				<el-form-item label="最低版本" prop="minVersion">
+					<el-input v-model="versionInfo.minVersion" type="text" auto-complete="off"></el-input>
 				</el-form-item>
 
-				<el-form-item label="当前版本" prop="age">
-					<el-input v-model="versionInfo.maxVersion" auto-complete="off"></el-input>
+				<el-form-item label="当前版本" prop="maxVersion">
+					<el-input v-model="versionInfo.maxVersion" type="text" auto-complete="off"></el-input>
 				</el-form-item>
 
-				<el-form-item label="更新说明" prop="age">
-					<el-input v-model="versionInfo.desc" type="textarea" auto-complete="off"></el-input>
+				<el-form-item label="更新说明" prop="desc">
+					<el-input v-model="versionInfo.desc" rows="6" type="textarea" auto-complete="off"></el-input>
 				</el-form-item>
 
-				<el-form-item label="上传文件" prop="age">
-					<el-upload
-						class="upload-demo"
-						drag
-						action="../version/version_submit"
-						multiple>
-						<i class="el-icon-upload"></i>
-						<div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-					</el-upload>
+				<el-form-item label="上传文件">
+					<input type="file" id="version-file" @change="fileChange">
+				</el-form-item>
+
+				<el-form-item v-if="isProgress">
+					<span v-text="network"></span>
+					<el-progress :percentage="progressData"></el-progress>
 				</el-form-item>
 			</el-form>
-
 			<span slot="footer" class="dialog-footer">
 				<el-button type="primary" @click="versionSubmit">确认发布</el-button>
 			</span>
@@ -68,7 +67,8 @@
 	</template>
 	
 	<script>
-		import { getPremis } from '@/api/management'
+		import { getVersion, getVersionEdit, versionUpdate, versionSubmit } from '@/api/systemconfig'
+		import { getToken } from '@/api/management'
 		import Paging from '@/components/Paging/'
 		import MySelect from '@/components/Select/'
 		import MySearch from '@/components/Search/'
@@ -80,7 +80,6 @@
 		  methods: {
 		    rowEdit() {
 		      this.$emit('row-edit', this.row)
-		      // this.$set(this.row, '_edit', !this.row._edit)
 		    },
 		    rowDownload() {
 		      this.$emit('row-download', this.row)
@@ -89,7 +88,7 @@
 		}
 
 		const Tooltip = {
-		  template: `<div style="overflow:hidden; text-overflow:ellipsis; white-space: nowrap; cursor: pointer;">
+		  template: `<div class="version-tip">
 										<span :title="row.updateContent">{{ row.updateContent }}</span>	
 								</div>`,
 		  props: ['row']
@@ -105,8 +104,15 @@
 		    return {
 		      message1: '',
 					message3: '功能描述',
-		      totalRecords: 0,
-		      tableData: [],
+					totalRecords: 0,
+					loading: false,
+					dialogType: 0,
+					tableData: [],
+					isProgress: false,
+					network: '0kb/s',
+					progressData: 0,
+					nowTime: 0,
+					readyFile: 0,
 		      versionInfo: {
 		        type: '',
           	minVersion: '',
@@ -180,18 +186,30 @@
 		    }
 		  },
 		  created() {
-		    this.getData()
-		  },
+				this.getData()
+			},
 		  methods: {
 		    getData() {
-		      getPremis('../version/version_list', 'get', this.requestData).then(response => {
-		        console.log(response)
+					this.loading = true
+		      getVersion(this.requestData).then(response => {
+						this.loading = false
 		        this.tableData = response.items
 		        this.totalRecords = response.totalRecords
 		      }).catch(error => {
 		        console.log(error)
 		      })
-		    },
+				},
+				getVersionToken() {
+					getToken().then(response => {
+						this.versionInfo.token  = response.data
+					}).catch(error => {
+						this.$message({
+							showClose: true,
+							message: 'token获取失败！',
+							type: 'error'
+						})
+					})
+				},
 		    versionWay(val) {
 		      this.requestData.game_over_type = val
 		      this.getData()
@@ -210,38 +228,134 @@
 		    },
 		    versionEdit(row) {
 					this.dialogVisible = false
-					getPremis('../version/version_edit', 'get', row.id).then(response => {
+					this.dialogType = 1
+					this.versionRowId = row.id
+					this.getVersionToken()
+					getVersionEdit({'versionId': row.id}).then(response => {
 						( {	type: (this.versionInfo.type), 
-								minimumVersion: (this.versionInfo.minVersion), 
-								version: (this.versionInfo.maxVersion), 
-								updateContent: (this.versionInfo.desc) 
+								updateContent: (this.versionInfo.desc)
 							} = response)
-					}).catch(error => {
-						console.log(error)
-					})
 
-					this.dialogVisible = true
+						this.versionInfo.minVersion = Number(response.minimumVersion)
+						this.versionInfo.maxVersion = Number(response.version)
+						this.dialogVisible = true
+
+						let fileEle = document.getElementById('version-file')
+						fileEle.value = ''
+						this.versionInfo.file = ''
+					}).catch(error => {
+						this.$message({
+							showClose: true,
+							message: '服务器错误！',
+							type: 'error'
+						})
+					})
 		    },
 		    versionDownload(row) {
-		      console.log(row)
+					window.open(row.apkUrl)
 		    },
 		    versionAdd(formName) {
 					this.dialogVisible = true
+					this.dialogType = 2
+					
 					this.versionInfo.type = ''
 					this.versionInfo.minVersion = ''
 					this.versionInfo.maxVersion = ''
 					this.versionInfo.desc = ''
-					this.file = ''
-					this.token = ''
+
+					let fileEle = document.getElementById('version-file')
+					fileEle.value = ''
+					this.versionInfo.file = ''
 		    },
 		    versionSubmit() {
-					console.log('信息提交')
-					console.log(this.versionInfo)
-		      this.dialogVisible = false
+					if(this.dialogType === 1) {
+						const tempObj = {
+							'type': this.versionInfo.type,
+							'minimumVersion': this.versionInfo.minVersion,
+							'version': this.versionInfo.maxVersion,
+							'updateContent': this.versionInfo.desc,
+							'id': this.versionRowId,
+							'file': this.versionInfo.file
+						}
+						versionUpdate(tempObj, (res) => {
+							this.isProgress = true // 上传开始
+						}, (res) => {
+							this.progressChange(res) // 上传中
+						}).then(response => {
+							this.$message({  // 上传完成
+								showClose: true,
+								message: '编辑成功',
+								type: 'success'
+							})
+							this.isProgress = false
+							this.dialogVisible = false
+							this.getData()
+						}).catch(error => {
+							this.isProgress = false // 上传失败
+							this.$message({
+								showClose: true,
+								message: '编辑失败',
+								type: 'error'
+							})
+						})
+					}else if (this.dialogType === 2) {
+						versionSubmit(this.versionInfo, (res) => {
+							this.isProgress = true // 上传开始
+						}, (res) => {
+							this.progressChange(res) // 上传中
+						}).then(response => {
+							this.$message({
+								showClose: true,
+								message: '发布成功',
+								type: 'success'
+							})
+							this.isProgress = false
+							this.dialogVisible = false
+							this.getData()
+						}).catch(error => {
+							this.$message({
+								showClose: true,
+								message: '服务器错误',
+								type: 'error'
+							})
+							this.isProgress = false // 上传失败
+						})
+					}
 		    },
 		    fromChange() {
-		      console.log(this.orderInfo)
-		    },
+
+				},
+				fileChange() {
+					this.versionInfo.file = document.getElementById('version-file').files[0]
+				},
+				progressChange(res) {
+					// 计算时间间隔
+					let thatTime = new Date().getTime()
+					let perTime = (thatTime - this.nowTime) / 1000
+					this.nowTime = new Date().getTime()
+
+					// 计算时间段内传输的文件大小
+					let perload = res.loaded - this.readyFile
+					this.readyFile = res.loaded
+
+					// 计算传输速度
+					let transTime = perload/perTime
+					let surplusTime = ((res.total - res.loaded) / transTime)
+					surplusTime = surplusTime.toFixed(2) + 's' 
+					let transUnit = ''
+					if(transTime/1024 > 1) {
+						transTime = transTime/1024 
+						transUnit = 'kb/s'
+					}
+					if(transTime/1024 > 1) {
+						transTime = transTime/1024 
+						transUnit = 'Mb/s'
+					}
+					transTime = transTime.toFixed(2)
+
+					this.network = '上传速度：' + transTime + transUnit + '    剩余时间：' + surplusTime
+					this.progressData = Number(parseInt((res.loaded / res.total) * 100))
+				},
 		    columnsHandler(cols) {
 		      const ved = this.versionEdit
 		      const vdl = this.versionDownload
@@ -259,7 +373,12 @@
 		          }
 		        }
 		      })
-		    }
+				},
+				handleClose(done) {
+					this.$confirm('确认关闭？').then( _ => {
+						done()
+					}).catch( _ => {})
+				}
 		  }
 		}
 	</script>
@@ -277,5 +396,11 @@
 	}
 	.el-dialog__body {
 		padding: 15px 20px;
+	}
+	.version-tip {
+		overflow: hidden; 
+		text-overflow: ellipsis; 
+		white-space: nowrap; 
+		cursor: pointer;
 	}
 	</style>

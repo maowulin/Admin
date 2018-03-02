@@ -8,6 +8,7 @@
       </div>
       <el-table
         fit
+        v-loading="loading"
         :data="tableData"
         tooltip-effect="dark"
         style="width: 100%"
@@ -64,7 +65,7 @@
 <script>
 	import MySearch from '@/components/Search'
 	import MySelect from '@/components/Select'
-  import { getPremis } from '@/api/systemconfig'
+  import { getPremis, addManageconfig, delManageconfig } from '@/api/systemconfig'
   import PremisConfig from './PremisConfig'
 	export default {
 		components: {
@@ -78,7 +79,9 @@
         isSecond: true,
         isAdd: true,
         premisId: {},
+        premisIds: '',
         roles: [],
+        loading: false,
 				requestData: {
 					type: '',
 					like: '',
@@ -105,10 +108,17 @@
 		},
 		created() {
       this.getData()
-		},
+    },
+    watch: {
+      isSecond: function() {
+        this.getData()
+      }
+    },
 		methods: {
 			getData() {
+        this.loading = true
 				getPremis(this.requestData).then(reponse => {
+          this.loading = false
 					this.tableData = reponse.items
 				}).catch(error => {
 					console.log(console.error)
@@ -118,13 +128,47 @@
         this.isAdd = true
         this.isSecond = false
       },
-			premisDelete() {},
+			premisDelete() {
+        if(this.premisIds !== '' ) {
+          delManageconfig({'ids': this.premisIds}).then(response => {
+            if(response.result === 1) {
+              this.$message({
+                showClose: true,
+                message: '更新成功',
+                type: 'success'
+              })
+              this.getData()
+            }else {
+              this.$message({
+                showClose: true,
+                message: '更新失败',
+                type: 'error'
+              })
+            }
+          }).catch(error => {
+            this.$message({
+              showClose: true,
+              message: '获取用户信息失败，请重试！',
+              type: 'error'
+            })
+          })
+        }
+      },
 			premisSarch(val, input) {
 				this.requestData.type = val
 				this.requestData.like = input
 				this.getData()
 			},
-			handleSelectionChange(index) {},
+			handleSelectionChange(index) {
+        this.premisIds = ''
+        for(let i = 0; i < index.length; i++) {
+          if(i < index.length -1 ) {
+            this.premisIds += index[i].id + ','
+          }else {
+            this.premisIds += index[i].id
+          }
+        }
+      },
 			isChecked(row) {
 				if (row.id === 1) {
 					return false
