@@ -93,7 +93,8 @@
           this.tableData = reponse.items
           console.log(reponse)
 				}).catch(error => {
-					console.log(console.error)
+					this.loading = false
+          this.$message.error('服务器错误')
 				})
       },
       getRoles(params) {

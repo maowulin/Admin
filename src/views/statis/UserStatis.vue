@@ -532,11 +532,6 @@
 		margin: 10px 0;
 	}
 	
-	.el-button {
-		width: auto;
-		margin-left: auto;
-	}
-	
 	.user_head2 {
 		line-height: 2;
 	}

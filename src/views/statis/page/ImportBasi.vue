@@ -112,6 +112,7 @@
 				basiedUrl: '../userL8/getUserBasicInfo_list.json',
 				basiedType: 'get',
 				basiedCvs: "",
+				basiedSecond: false,
 				basiedGroup: [{
 					group: '1',
 					id: 'basiedChart1',

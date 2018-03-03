@@ -77,13 +77,10 @@
 				}else {
 					tempText = this.row[this.col.prop]
 				}
-
 				return tempText
 			}
 		}
 	}
-
-
 
 	export default {
 
@@ -215,7 +212,8 @@
 	          showClose: true,
 	          message: '服务器错误',
 	          type: 'error'
-	        })
+					})
+					this.loading = false
 	      })
 	    },
 

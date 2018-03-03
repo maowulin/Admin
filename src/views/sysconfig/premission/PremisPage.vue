@@ -121,7 +121,8 @@
           this.loading = false
 					this.tableData = reponse.items
 				}).catch(error => {
-					console.log(console.error)
+					this.loading = false
+          this.$message.error('服务器错误')
 				})
       },
 			premisAdd() {

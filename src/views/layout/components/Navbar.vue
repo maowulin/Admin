@@ -1,5 +1,5 @@
 <template>
-  <el-menu class="navbar" mode="horizontal">
+  <el-menu :class="{'navbar': true, 'menu-slide': !sidebar.opened}" mode="horizontal">
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
     <breadcrumb></breadcrumb>
     <el-dropdown class="avatar-container" trigger="click">
@@ -39,6 +39,7 @@ export default {
   },
   methods: {
     toggleSideBar() {
+      console.log(this.$store.state)
       this.$store.dispatch('ToggleSideBar')
     },
     logout() {
@@ -94,10 +95,14 @@ export default {
 .el-menu {
   position: fixed;
   top: 0;
-
-  width: 100%;
-
+  right: 0;
+  left: 180px;
+  /* width: 100%; */
   z-index: 999;
+}
+
+.menu-slide {
+  left: 36px;
 }
 </style>
 

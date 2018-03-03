@@ -52,3 +52,28 @@ export function menu(_data) {
     params: _data
   })
 }
+
+export function logOut(data) {
+  return request({
+    url: '../authority/admin_user_logout',
+    method: 'post',
+    data: data,
+    transformRequest: [data => {
+      let ret = ''
+      for (let it in data) {
+        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+      }
+      return ret
+    }],
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+}
+
+export function getOnline() {
+  return request({
+    url: '../butterfly/totalinfo.json',
+    method: 'get'
+  })
+}

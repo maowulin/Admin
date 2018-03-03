@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<section v-show="check">
+		<section v-if="check">
 			<statis-page
 				:columns="gameColumns" 
 				:chart-group="gameGroup"
@@ -12,7 +12,7 @@
 				v-on:is-check="getCheck">
 			</statis-page >
 		</section>
-		<section v-show="!check">
+		<section v-else>
 			<statis-scond
 				:columns="gameSecColumns" 
 				:chart-group="gameSecGroup"
@@ -102,7 +102,7 @@
 	      },{
 	        'label': '加入金币赛房间次数（23分）',
 	        'prop': 'join_room_gold_score23_num',
-	        'isDefaultHead': true,
+	        'isDefaultHead': false,
 	        'isChart': false,
 	        'chartType': 'line',
 	        'chartGroup': '1',
@@ -113,7 +113,7 @@
 	      },{
 	        'label': '加入免费赛房间次数（中式黑8）',
 	        'prop': 'join_room_free_black8_num',
-	        'isDefaultHead': true,
+	        'isDefaultHead': false,
 	        'isChart': true,
 	        'chartType': 'line',
 	        'chartGroup': '1',
@@ -124,7 +124,7 @@
 	      },{
 	        'label': '加入免费赛房间次数（23分）',
 	        'prop': 'join_room_free_score23_num',
-	        'isDefaultHead': true,
+	        'isDefaultHead': false,
 	        'isChart': true,
 	        'chartType': 'line',
 	        'chartGroup': '1',
@@ -219,7 +219,7 @@
 	      },{
 	        'label': '加入金币赛房间次数（23分）',
 	        'prop': 'user_join_gold_score23_num',
-	        'isDefaultHead': true,
+	        'isDefaultHead': false,
 	        'isChart': true,
 	        'chartType': 'line',
 	        'chartGroup': '1',
@@ -230,7 +230,7 @@
 	      },{
 	        'label': '加入免费赛房间次数（中式黑8）',
 	        'prop': 'user_join_free_black8_num',
-	        'isDefaultHead': true,
+	        'isDefaultHead': false,
 	        'isChart': false,
 	        'chartType': 'line',
 	        'chartGroup': '1',
@@ -241,7 +241,7 @@
 	      },{
 	        'label': '加入免费赛房间次数（23分）',
 	        'prop': 'user_join_free_score23_num',
-	        'isDefaultHead': true,
+	        'isDefaultHead': false,
 	        'isChart': false,
 	        'chartType': 'line',
 	        'chartGroup': '1',

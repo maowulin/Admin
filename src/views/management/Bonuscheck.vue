@@ -76,6 +76,7 @@
 		template: `<div>
 								<span v-if="row.status === 1">已通过</span>
 								<span v-else-if="row.status === 2">已拒绝</span>
+								<span v-else-if="row.status === 0">等待审核</span>
 							</div>`,
 		props: ['row']
 	}
@@ -212,11 +213,8 @@
             })
           }
 				}).catch(error => {
-					this.$message({
-						showClose: true,
-						message: '错误！',
-						type: 'error'
-					})
+					this.loading = false
+					this.$message.error('服务器错误')
 				})
 			},
 			bounsRefuse() {

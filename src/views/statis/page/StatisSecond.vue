@@ -103,7 +103,8 @@
 	          showClose: true,
 	          message: '服务器错误',
 	          type: 'error'
-	        })
+					})
+					this.loading = false
 	  		})
 	  	},
 	  	getBasiedSize(pageSize) {

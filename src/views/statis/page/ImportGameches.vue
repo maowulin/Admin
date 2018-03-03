@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<section v-show="check">
+		<section v-if="check">
 			<statis-page
 				:columns="gameColumns" 
 				:chart-group="gameGroup"
@@ -12,7 +12,7 @@
 				v-on:is-check="getCheck">
 			</statis-page >
 		</section>
-		<section v-show="!check">
+		<section v-else>
 			<statis-scond
 				:columns="gameSecColumns" 
 				:chart-group="gameSecGroup"

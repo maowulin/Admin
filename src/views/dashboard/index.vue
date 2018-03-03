@@ -19,7 +19,7 @@
 import { mapGetters } from 'vuex'
 import ShowGroup from './components/ShowGroup'
 // import LineChart from './components/LineChart'
-import { getPremis } from '@/api/management'
+import { getStatis } from '@/api/statis'
 import { getDate } from '@/method'
 
 export default {
@@ -227,7 +227,7 @@ export default {
       this.userload = true
       this.bounsload = true
       this.gameload = true
-      getPremis('../userL8/getUserBasicInfo_list.json', 'get', this.userRequestData).then(response => {
+      getStatis('../userL8/getUserBasicInfo_list.json', 'get', this.userRequestData).then(response => {
         this.userload = false
         this.userData = response.items
         // console.log(this.userData)
@@ -235,7 +235,7 @@ export default {
         console.log(error)
       })
 
-      getPremis('../userL8/getUserBasicInfo_list.json', 'get', this.bounsRequestData).then(response => {
+      getStatis('../userL8/getUserBasicInfo_list.json', 'get', this.bounsRequestData).then(response => {
         this.bounsload = false
         this.bounsData = response.items
         // console.log(this.bounsData)
@@ -243,7 +243,7 @@ export default {
         console.log(error)
       })
 
-      getPremis('../game/game_allstatisticinfo.json', 'get', this.gameRequestData).then(response => {
+      getStatis('../game/game_allstatisticinfo.json', 'get', this.gameRequestData).then(response => {
         this.gameload = false
         this.gameData = response.items
         // console.log(this.gameData)

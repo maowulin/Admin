@@ -53,15 +53,75 @@
 </template>
 
 <script>
+  import  {getOnline} from '@/api/login'
+  import { getBouns } from '@/api/management'
   export default {
     name: 'ShowGroup',
     data() {
       return {
         userNum: 0,
         onlineNum: 0,
-        messageNum: 0,
-        adminName: '----',
-        adminUser: '----'
+        messageNum: 0
+      }
+    },
+    created() {
+      this.getOnlineNumber()
+      this.getMessage()
+    },
+    computed: {
+      adminName: function() {
+        let token = this.$store.state.user.token
+        let type = typeof(token)
+        if(type === 'string') {
+          return JSON.parse(token).name
+        }else {
+          return token.name
+        }
+      },
+      adminUser: function() {
+        let token = this.$store.state.user.token
+        let type = typeof(token)
+        if(type === 'string') {
+          return JSON.parse(token).rols
+        }else {
+          return token.rols
+        }
+      }
+    },
+    methods: {
+      getOnlineNumber() {
+        const _that = this
+        setInterval(()=>{
+          getOnline().then(response => {
+            _that.userNum = response.totalUserNum
+            _that.onlineNum = response.onlineNum
+          }).catch(error => {
+            console.log('获取失败！');
+          })
+        }, 300000)
+      },
+      getMessage() {
+        getBouns({ 'status': '', 'phone': '', 'pageNow': 0, 'pageSize': 10 }).then(response => {
+          let bounsMessage = 0
+          for(let i = 0; i < response.items.length; i++) {
+            let list = response.items[i]
+            if(list.status === 0) {
+              bounsMessage++
+            }
+          }
+          this.messageNum = bounsMessage
+          this.$notify({
+            title: '提示',
+            message: `共有${bounsMessage}人等待奖金审核！`,
+            duration: 0
+          });
+        }).catch(error =>{
+          this.$message({
+						showClose: true,
+						message: '奖金审核统计消息获取失败！',
+						type: 'error'
+					})
+        })
       }
     }
   }

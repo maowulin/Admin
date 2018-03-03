@@ -47,10 +47,20 @@
 
 	const gameOverCom = {
 	  template: `<div>
-								<span v-if="row.game_over_type === 1">逃跑判输</span>
-								<span v-if="row.game_over_type === 2">主动认输</span>
-								<span v-if="row.game_over_type === 3">进黑8胜利</span>
-								<span v-else>误入黑8失败</span>
+								<span v-if="row.game_over_detail === 'TwentyThree1'">分数高获得胜利/失败</span>
+								<span v-else-if="row.game_over_detail === 'TwentyThree2'">分数为23分/超过23分</span>
+								<span v-else-if="row.game_over_detail === 'TwentyThree3'">分数超过23分/对方超过23分</span>
+								<span v-else-if="row.game_over_detail === 'TwentyThree4'">三回合未操作/对方三回合未操作</span>
+								<span v-else-if="row.game_over_detail === 'TwentyThree5'">对手主动认输</span>
+								<span v-else-if="row.game_over_detail === 'TwentyThree6'">同分数下进球多/少</span>
+								<span v-else-if="row.game_over_detail === 'TwentyThree7'">同分数同球数球号大/小</span>
+								<span v-else-if="row.game_over_detail === 'TwentyThree8'">双方同时为零，房主失败</span>
+								<span v-else-if="row.game_over_detail === 'BlackEight1'">进黑8</span>
+								<span v-else-if="row.game_over_detail === 'BlackEight2'">白球与黑白同时落袋</span>
+								<span v-else-if="row.game_over_detail === 'BlackEight3'">误入黑8/对方击打黑8犯规</span>
+								<span v-else-if="row.game_over_detail === 'BlackEight4'">击打黑8时结束/对方击打黑8犯规</span>
+								<span v-else-if="row.game_over_detail === 'BlackEight5'">三回合未操作</span>
+								<span v-else-if="row.game_over_detail === 'BlackEight6'">对方主动认输</span>
 							</div>`,
 	  props: ['row']
 	}
@@ -72,7 +82,7 @@
 	      tableData: [],
 	      requestData: {
 	        uname: '',
-	        game_over_type: '',
+	        game_over_detail: '',
 	        game_type: '',
 	        beginTime: getDate().ten,
 	        endTime: getDate().dateLine,
@@ -83,17 +93,47 @@
 	        'opti': '结束原因',
 	        'val': ''
 	      }, {
-	        'opti': '逃跑判输（包含三回合为操作）',
-	        'val': '1'
+	        'opti': '分数高获得胜利/失败',
+	        'val': 'TwentyThree1'
 	      }, {
-	        'opti': '主动认输',
-	        'val': '2'
+	        'opti': '分数为23分/超过23分',
+	        'val': 'TwentyThree2'
 	      }, {
-	        'opti': '进黑8胜利',
-	        'val': '3'
+	        'opti': '分数超过23分/对方超过23分',
+	        'val': 'TwentyThree3'
 	      }, {
-	        'opti': '误入黑8失败',
-	        'val': '4'
+	        'opti': '三回合未操作/对方三回合未操作',
+	        'val': 'TwentyThree4'
+	      }, {
+	        'opti': '对手主动认输 ',
+	        'val': 'TwentyThree5'
+	      }, {
+	        'opti': '同分数下进球多/少 ',
+	        'val': 'TwentyThree6'
+	      }, {
+	        'opti': '同分数同球数球号大/小',
+	        'val': 'TwentyThree7'
+	      }, {
+	        'opti': '双方同时为零，房主失败',
+	        'val': 'TwentyThree8'
+	      }, {
+	        'opti': '进黑8 ',
+	        'val': 'BlackEight1'
+	      }, {
+	        'opti': '白球与黑白同时落袋',
+	        'val': 'BlackEight2'
+	      }, {
+	        'opti': '误入黑8/对方击打黑8犯规',
+	        'val': 'BlackEight3'
+	      }, {
+	        'opti': '击打黑8时结束/对方击打黑8犯规',
+	        'val': 'BlackEight4'
+	      }, {
+	        'opti': '三回合未操作',
+	        'val': 'BlackEight5'
+	      }, {
+	        'opti': '对方主动认输',
+	        'val': 'BlackEight6'
 	      }],
 	      optionValue2: [{
 	        'opti': '用户昵称',
@@ -163,21 +203,18 @@
 	  },
 	  methods: {
 	    getData() {
-	      this.loading = true
+				this.loading = true
 	      getFightData(this.requestData).then(response => {
 	        this.loading = false
 	        this.tableData = response.items
-	        this.totalRecords = response.totalRecords
+					this.totalRecords = response.totalRecords
 	      }).catch(error => {
-	        this.$message({
-	          showClose: true,
-	          message: '服务器错误',
-	          type: 'error'
-	        })
+	        this.loading = false
+					this.$message.error('服务器错误')
 	      })
 	    },
 	    userFightChange(val) {
-	      this.requestData.game_over_type = val
+	      this.requestData.game_over_detail = val
 	      this.getData()
 	    },
 	    FightSearch(select, input) {
@@ -197,7 +234,7 @@
 	      this.getData()
 	    },
 	    dateChange(val) {
-	      if (val === '') return
+	      if (val === null) return
 	      if (this.requestData.beginTime) {
 	        this.requestData.beginTime = val[0]
 	        this.requestData.endTime = val[1]

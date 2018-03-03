@@ -235,7 +235,8 @@
 					this.tableData = response.items
 					this.totalRecords = response.totalRecords
 				}).catch(error => {
-					console.log(error)
+					this.loading = false
+					this.$message.error('服务器错误')
 				})
 			},
 			orderBuyWay(val) {

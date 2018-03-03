@@ -46,7 +46,7 @@
 				</el-form-item>
 
 				<el-form-item label="更新说明" prop="desc">
-					<el-input v-model="versionInfo.desc" rows="6" type="textarea" auto-complete="off"></el-input>
+					<el-input v-model="versionInfo.desc" :rows="6" type="textarea" auto-complete="off"></el-input>
 				</el-form-item>
 
 				<el-form-item label="上传文件">
@@ -196,7 +196,8 @@
 		        this.tableData = response.items
 		        this.totalRecords = response.totalRecords
 		      }).catch(error => {
-		        console.log(error)
+		        this.loading = false
+            this.$message.error('服务器错误')
 		      })
 				},
 				getVersionToken() {
@@ -263,8 +264,10 @@
 					this.versionInfo.maxVersion = ''
 					this.versionInfo.desc = ''
 
-					let fileEle = document.getElementById('version-file')
-					fileEle.value = ''
+					setTimeout(function() {
+						let fileEle = document.getElementById('version-file')
+						fileEle.value = ''
+					}, 0)
 					this.versionInfo.file = ''
 		    },
 		    versionSubmit() {
@@ -340,7 +343,7 @@
 
 					// 计算传输速度
 					let transTime = perload/perTime
-					let surplusTime = ((res.total - res.loaded) / transTime)
+					let surplusTime = (Math.abs(res.total - res.loaded) / transTime)
 					surplusTime = surplusTime.toFixed(2) + 's' 
 					let transUnit = ''
 					if(transTime/1024 > 1) {

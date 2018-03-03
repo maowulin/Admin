@@ -264,7 +264,7 @@
 						this.totalRecords = response.totalRecords
 					}).catch(error => {
 						this.loading = false
-						console.log(error)
+            this.$message.error('服务器错误')
 					})
 				},
 				orderBuyWay(val) {

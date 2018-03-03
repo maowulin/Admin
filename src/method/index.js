@@ -1,5 +1,6 @@
 import { menu } from '@/api/login'
 import jq from 'jquery'
+import { request } from 'https';
 // 获取日期
 export function getDate() {
   var days = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']

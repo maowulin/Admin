@@ -219,11 +219,8 @@
 		        this.tableData = response.items
 		        this.totalRecords = response.totalRecords
 		      }).catch(error => {
-		        this.$message({
-							showClose: true,
-							message: '数据加载失败',
-							type: 'error'
-						})
+		        this.loading = false
+            this.$message.error('服务器错误')
 		      })
 				},
 				getBannerToken() {

@@ -156,11 +156,8 @@
 						this.loading = false
 						this.tableData = response.data
 		      }).catch(error => {
-		        this.$message({
-							showClose: true,
-							message: '服务器错误！',
-							type: 'error'
-						})
+		        this.loading = false
+            this.$message.error('服务器错误')
 		      })
 		    },
 		    dataInsert() {
