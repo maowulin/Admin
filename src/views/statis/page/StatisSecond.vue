@@ -34,6 +34,10 @@
 	import { getStatis, getStatisSecCvs } from '@/api/statis'
 	import { getDate } from '@/method'
 
+	const GuideHtml = {
+		template: `<span>0.88</span>`
+	}
+
 	export default {
 		components: {
 			Paging,
@@ -53,7 +57,10 @@
 	      columnsSchema: {
 	      	'日期' : {
 	      		width: '120px'
-	      	}
+					},
+					'新手引导领取': {
+						component: GuideHtml
+					}
 	      },
 	      columnsProps: {
 	      	align: "center",

@@ -82,6 +82,19 @@
 		}
 	}
 
+	const GuideHtml = {
+		template: `<span v-text="guideNum"></span>`,
+		props: ['row', 'col'],
+		computed: {
+			guideNum: function() {
+				let totalAmount = this.row.presented_total_amount
+				let redpack = this.row.redpack_presented_amount
+				let lottery = this.row.lottery__presented_amount
+				return totalAmount - (redpack+lottery)
+			}
+		}
+	}
+
 	export default {
 
 	  components: {
@@ -118,7 +131,10 @@
 	      columnsSchema: {
 	        '日期': {
 	          width: '120px'
-	        }
+					},
+					'新手引导赠送': {
+						component: GuideHtml
+					}
 	      },
 
 	      columnsProps: {

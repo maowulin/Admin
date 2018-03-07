@@ -110,11 +110,13 @@
             }
           }
           this.messageNum = bounsMessage
-          this.$notify({
-            title: '提示',
-            message: `共有${bounsMessage}人等待奖金审核！`,
-            duration: 0
-          });
+          if(bounsMessage > 0) {
+            this.$notify({
+              title: '提示',
+              message: `共有${bounsMessage}人等待奖金审核！`,
+              duration: 0
+            })
+          }
         }).catch(error =>{
           this.$message({
 						showClose: true,

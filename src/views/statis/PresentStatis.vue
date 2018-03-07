@@ -206,6 +206,18 @@
 	        'areaColor2': 'rgba(0, 0, 0, 0.1)',
 	        'itemColor1': 'rgb(219,50,51)',
 	        'itemColor2': 'rgba(219,50,51,0.2)'
+	      },
+	      {
+	        'label': '新手引导领取',
+	        'prop': '',
+	        'isDefaultHead': true,
+	        'isChart': true,
+	        'chartType': 'line',
+	        'chartGroup': '1',
+	        'areaColor1': 'rgba(219, 50, 51, 0.3)',
+	        'areaColor2': 'rgba(0, 0, 0, 0.1)',
+	        'itemColor1': 'rgb(219,50,51)',
+	        'itemColor2': 'rgba(219,50,51,0.2)'
 	      }
 	      ],
 	      presentSecUrl: '../game/game_user_presentedstatisticinfo.json',

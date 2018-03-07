@@ -113,7 +113,7 @@
 	      },{
 	        'label': '好友PK赛',
 	        'prop': 'pk_game_num',
-	        'isDefaultHead': true,
+	        'isDefaultHead': false,
 	        'isChart': true,
 	        'chartType': 'line',
 	        'chartGroup': '1',
@@ -124,7 +124,7 @@
 	      },{
 	        'label': '正在对局数',
 	        'prop': '',
-	        'isDefaultHead': true,
+	        'isDefaultHead': false,
 	        'isChart': true,
 	        'chartType': 'line',
 	        'chartGroup': '1',
@@ -135,7 +135,7 @@
 	      },{
 	        'label': '游戏对战人数（去重）',
 	        'prop': 'game_num',
-	        'isDefaultHead': true,
+	        'isDefaultHead': false,
 	        'isChart': true,
 	        'chartType': 'line',
 	        'chartGroup': '1',

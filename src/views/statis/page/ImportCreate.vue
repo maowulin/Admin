@@ -102,7 +102,7 @@
 	      },{
 	        'label': '创建免费赛房间数（23分）',
 	        'prop': 'create_free_score23_num',
-	        'isDefaultHead': true,
+	        'isDefaultHead': false,
 	        'isChart': false,
 	        'chartType': 'line',
 	        'chartGroup': '1',
@@ -113,7 +113,7 @@
 	      },{
 	        'label': '创建好友赛房间数',
 	        'prop': 'create_pk_num',
-	        'isDefaultHead': true,
+	        'isDefaultHead': false,
 	        'isChart': true,
 	        'chartType': 'line',
 	        'chartGroup': '1',

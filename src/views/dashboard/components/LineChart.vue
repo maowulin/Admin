@@ -60,8 +60,13 @@ export default {
     },
     xAxis: function() {
       let tempArray = []
+      
       for (let j = 0; j < this.chartData.length; j++) {
         tempArray.push(this.chartData[j].time)
+      }
+      
+      if(tempArray.length < 2) {
+        return tempArray
       }
 
       if (parseInt(tempArray[0].replace(/\-/g, '')) > parseInt(tempArray[1].replace(/\-/g, ''))) {
@@ -114,6 +119,22 @@ export default {
       return tempArray
     },
 
+    selected: function() {
+      let tempObj = {}
+      for(let i = 0; i < this.lineConf.length; i++) {
+        let list = this.lineConf[i]
+        if(list.isChart) {
+          let label = list.label
+          if(list.defaultShow) {
+            tempObj[label] = true
+          }else {
+            tempObj[label] = false
+          }
+        }
+      }
+      return tempObj
+    },
+
     optionVal: function() {
       return {
         tooltip: {
@@ -124,7 +145,8 @@ export default {
           padding: [5, 10]
         },
         legend: {
-          data: this.legend
+          data: this.legend,
+          selected: this.selected
         },
         xAxis: {
           data: this.xAxis,
@@ -134,10 +156,10 @@ export default {
           }
         },
         grid: {
-          left: 10,
-          right: 10,
+          left: 20,
+          right: 20,
           bottom: 20,
-          top: 30,
+          top: 50,
           containLabel: true
         },
         yAxis: [{
