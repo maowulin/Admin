@@ -53,7 +53,7 @@ export function getTribeDetail(data) {
   return new Promise((resolve, reject) => {
     jq.ajax({
       type: 'POST',
-      url: 'http://localhost:8090/circleL8/circleL8_details.json',
+      url: '../circleL8/circleL8_details.json',
       data: data,
       success: function(response) {
         resolve(response)

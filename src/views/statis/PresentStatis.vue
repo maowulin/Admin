@@ -378,7 +378,6 @@
 	    },
 	    // 红包赠送查看
 	    getCheck(row) {
-				console.log(row)
 				this.presentSecRequest.time = row.create_date
 				this.check = false
 			},

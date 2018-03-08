@@ -12,17 +12,18 @@
 	  	
 		</div>
 		
-		<egrid class="egrid"
-  		fit
-      :data="tableData"
-      :columns="columns"
-      :columns-schema="columnsSchema"
-			:columns-props="columnsProps"
-			v-loading="loading"
-      :column-type="columnType">
-    </egrid>
-		<div class="user_head">
-			<paging :total="totalRecords" v-on:getSize="getFightSize" v-on:getPage="getFightPage"></paging>
+		<div v-loading="loading">
+			<egrid class="egrid"
+				fit
+				:data="tableData"
+				:columns="columns"
+				:columns-schema="columnsSchema"
+				:columns-props="columnsProps"
+				:column-type="columnType">
+			</egrid>
+			<div class="user_head">
+				<paging :total="totalRecords" v-on:getSize="getFightSize" v-on:getPage="getFightPage"></paging>
+			</div>
 		</div>
 	</section>
 </template>

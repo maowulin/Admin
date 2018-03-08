@@ -259,7 +259,6 @@
 					this.loading = true
 					getOrder(this.requestData).then(response => {
 						this.loading = false
-						console.log(response)
 						this.tableData = response.items
 						this.totalRecords = response.totalRecords
 					}).catch(error => {
@@ -326,7 +325,6 @@
 
 					if(this.orderRow.orderStatus === 1) {
 						updateOrder(tempReObj).then(response => {
-							console.log(response)
 						}).catch(error => {
 							this.$message({
 								showClose: true,
@@ -336,7 +334,7 @@
 						})
 					}else if(this.orderRow.orderStatus === 2) {
 						overOrder({'orderId': this.orderRow.id}).then(response => {
-							console.log(response)
+							 
 						}).catch(error => {
 							this.$message({
 								showClose: true,
@@ -353,7 +351,7 @@
 					this.$refs['orderInfo'].resetFields()
 				},
 				fromChange() {
-					console.log(this.orderInfo);
+				  
 				},
 				columnsHandler(cols) {
 					let oed = this.orderEdit

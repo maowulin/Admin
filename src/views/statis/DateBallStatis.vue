@@ -252,7 +252,6 @@
 			},
 			
 			secondBack(val) {
-				console.log(val)
 				this.check = val
 			}
 		}

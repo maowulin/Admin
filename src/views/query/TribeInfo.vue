@@ -247,7 +247,7 @@
       expandChange(row, expandedRows) {
         if (expandedRows) {
           getTribeDetail({ 'circleID': row.circleID }).then(response => {
-            console.log(response)
+            
             this.detailData = response
           }).catch(error => {
             this.$message({

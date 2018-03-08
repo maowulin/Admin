@@ -155,8 +155,6 @@
             for (let i = 0; i < response.roleList.length; i++) {
               this.roleId.push(response.roleList[i].id)
             }
-
-            console.log(response)
           }).catch(error => {
             this.$message({
               showClose: true,

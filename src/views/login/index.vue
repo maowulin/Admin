@@ -105,7 +105,6 @@ export default {
             this.$message.error('服务器错误')
           })
         } else {
-          console.log('error submit!!')
           return false
         }
       })

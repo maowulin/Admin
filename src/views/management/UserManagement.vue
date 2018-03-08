@@ -190,7 +190,7 @@
         this.loading = true
         getUserConfig({ 'like': input }).then(response => {
           this.loading = false
-          console.log(response)
+          
           if (response.result === 1) {
             // this.form = response.data
             this.form.id = response.data.id

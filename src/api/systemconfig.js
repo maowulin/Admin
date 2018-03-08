@@ -180,7 +180,7 @@ export function versionUpdate(data, callback1, callback2) {
 		formData.append("file", data.file)
     formData.append("id", data.id)
     
-		xhr.open('POST', 'http://localhost:8090/version/version_update', true)
+		xhr.open('POST', '../version/version_update', true)
 		xhr.onload = (response) => {
 			reslove(response)
     }
@@ -217,7 +217,7 @@ export function versionSubmit(data, callback1, callback2) {
 		formData.append("file", data.file)
     formData.append("token", data.token)
     
-		xhr.open('POST', 'http://localhost:8090/version/version_submit', true)
+		xhr.open('POST', '../version/version_submit', true)
 		xhr.onload = response => {
 			reslove(response)
     }

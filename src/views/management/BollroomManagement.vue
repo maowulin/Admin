@@ -264,17 +264,14 @@
 				this.getData()
 			},
 			orderEdit(row) {
-				console.log(row)
 				this.isSecond = false
 				this.isEdite = true
 			},
 			orderAudit(row) {
-				console.log(row)
 				this.isSecond = false
 				this.isEdite = false
 			},
 			orderAddressSubmit() {
-				console.log("信息提交")
 				this.dialogVisible = false
 			},
 			orderPass() {  //通过审核

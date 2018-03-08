@@ -159,21 +159,16 @@
 		      this.getData()
 		    },
 		    noticeChcek(row) {
-					console.log('查看')
 		    },
 		    noticeDelete(row) {
-		      console.log('删除')
 		    },
 		    noticeAdd(formName) {
 					
 		    },
 		    versionSubmit() {
-					console.log('信息提交')
-					console.log(this.versionInfo)
 		      this.dialogVisible = false
 		    },
 		    fromChange() {
-		      console.log(this.orderInfo)
 		    },
 		    columnsHandler(cols) {
 		      const nck = this.noticeChcek

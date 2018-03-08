@@ -8,6 +8,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import store from '@/store'
 import SidebarItem from './SidebarItem'
 import ScrollBar from '@/components/ScrollBar'
 import Layout from '@/views/layout/Layout'
@@ -31,7 +32,10 @@ export default {
     routes() {
       // console.log(this.route)
       // this.$router.options.routes = this.route
-      return this.$router.options.routes
+      
+      let storeRoute = store.getters.route
+      let optionRoute = this.$router.options.routes
+      return optionRoute.concat(storeRoute)
     },
     isCollapse() {
       return !this.sidebar.opened

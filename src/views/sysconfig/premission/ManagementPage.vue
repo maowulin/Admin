@@ -91,7 +91,6 @@
 				getManager(this.requestData).then(reponse => {
           this.loading = false
           this.tableData = reponse.items
-          console.log(reponse)
 				}).catch(error => {
 					this.loading = false
           this.$message.error('服务器错误')

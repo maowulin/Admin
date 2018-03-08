@@ -174,7 +174,6 @@
 					})
 		    },
 		    dataEdit(row) {
-		      console.log(row)
 					if(row._edit) {
 						this.$confirm('确认提交?', '提示', {
 							confirmButtonText: '确定',
@@ -262,7 +261,6 @@
 						value   	  : row.v_value
 					}
 					gameConfigAdd(tempObj).then(response => {
-						console.log(response)
 						if(response.result === 1) {
 							this.$message({
 								showClose: true,

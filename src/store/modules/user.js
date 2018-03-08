@@ -40,7 +40,7 @@ const user = {
               'id': response.data.id,
               'rols': response.data.department
             }
-            setToken(data)
+            setToken(JSON.stringify(data))
             commit('SET_TOKEN', data)
             commit('SET_NAME', data.name)
             commit('SET_ID', data.id)

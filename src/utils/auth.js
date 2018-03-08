@@ -1,15 +1,28 @@
 import Cookies from 'js-cookie'
 
 const TokenKey = 'Admin-Token'
+const MenuKey = 'Admin-Menu'
 
 export function getToken() {
-  return Cookies.get(TokenKey)
+  return window.sessionStorage.getItem(TokenKey)
 }
 
 export function setToken(token) {
-  return Cookies.set(TokenKey, token)
+  window.sessionStorage.setItem(TokenKey, token)
 }
 
 export function removeToken() {
-  return Cookies.remove(TokenKey)
+  window.sessionStorage.removeItem(TokenKey)
+}
+
+export function getMenuSession() {
+  return window.sessionStorage.getItem(MenuKey)
+}
+
+export function setMenuSession(menu) {
+  window.sessionStorage.setItem(MenuKey, menu)
+}
+
+export function removeMenuSession() {
+  window.sessionStorage.removeItem(MenuKey)
 }

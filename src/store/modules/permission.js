@@ -2,6 +2,7 @@ import Layout from '@/views/layout/Layout'
 const _import = require('@/router/_import_' + process.env.NODE_ENV)
 import { getMenuSec } from '@/method'
 import { constantRouterMap, constant404Map } from '@/router'
+import { getMenuSession, setMenuSession } from '@/utils/auth'
 
 // function hasPermission(roles, route) {
 //   if (route.meta && route.meta.role) {
@@ -24,8 +25,14 @@ const permission = {
   },
   actions: {
     async GenerateRoutes({ commit }, data) {
-      const menu = await getMenuSec()
-
+      let menu = []
+      if(getMenuSession()) {
+        menu = JSON.parse(getMenuSession())
+      }else {
+        menu = await getMenuSec()
+        setMenuSession(JSON.stringify(menu))
+      }
+      
       let tempArray = []
       for (let i = 0; i < menu.length; i++) {
         let tempObj = {
@@ -53,16 +60,14 @@ const permission = {
           }
         }
         tempArray.push(tempObj)
-        // this.$router.options.routes.push(tempObj)
       }
-      // this.$router.addRoutes(tempArray)
-      // this.routes = this.$router.options.routes
       tempArray = tempArray.concat(constant404Map)
-      // constantRouterMap.concat(routers)
       commit('SET_ROUTERS', tempArray)
+
+      let tempA = constantRouterMap
+      tempA = constantRouterMap.concat(tempArray)
+      
       return new Promise((resolve, reject) => {
-        let tempA = constantRouterMap
-        tempA = constantRouterMap.concat(tempArray)
         resolve(tempA)
       })
     }

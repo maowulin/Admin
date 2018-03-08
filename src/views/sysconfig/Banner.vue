@@ -280,7 +280,6 @@
 					this.getData()
 				},
 				bannerCheck(img) {
-					console.log(img)
 				},
 				bannerAdd(row) {
 					this.getBannerToken()
@@ -327,7 +326,6 @@
 					})
 				},
 				handleSelectionChange(index) {
-					console.log(index)
 					this.bannerIds = ''
 					for(let i = 0; i < index.length; i++) {
 						if(i < index.length - 1) {

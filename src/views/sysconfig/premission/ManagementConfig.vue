@@ -57,7 +57,6 @@
         if (!this.isAdd) {
           this.form.id = this.premisId.id
           getRolerInfo(this.premisId).then(response => {
-            console.log(response)
             this.form.roleName = response.roleName
             this.form.roleDesc = response.roleDesc
 

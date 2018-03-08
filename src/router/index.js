@@ -290,7 +290,8 @@ export const constantRouterMap = [
       name: 'dashboard',
       meta: { title: '首页', icon: 'example', noCache: true }
     }]
-  }]
+  }
+]
 
 export const constant404Map = [{
   path: '*',
@@ -299,7 +300,7 @@ export const constant404Map = [{
 }]
 
 export default new Router({
-  mode: 'history', // 后端支持可开
+  // mode: 'history', // 后端支持可开
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })

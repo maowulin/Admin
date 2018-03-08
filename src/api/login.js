@@ -47,7 +47,7 @@ export function logout() {
 
 export function menu(_data) {
   return request({
-    url: 'http://localhost:8090/adminMenu/getMenu.json',
+    url: '../adminMenu/getMenu.json',
     method: 'get',
     params: _data
   })

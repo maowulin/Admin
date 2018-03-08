@@ -78,7 +78,6 @@
 			},
 			methods: {
 				onSubmit() {
-					console.log('submit!')
 				},
 
 				tribeManageSearch(val, input) {
