@@ -90,15 +90,12 @@
     },
     methods: {
       getOnlineNumber() {
-        const _that = this
-        setInterval(()=>{
-          getOnline().then(response => {
-            _that.userNum = response.totalUserNum
-            _that.onlineNum = response.onlineNum
-          }).catch(error => {
-            console.log('获取失败！');
-          })
-        }, 300000)
+        getOnline().then(response => {
+          this.userNum = response.totalUserNum
+          this.onlineNum = response.onlineNum
+        }).catch(error => {
+          console.log('获取失败！');
+        })
       },
       getMessage() {
         getBouns({ 'status': '', 'phone': '', 'pageNow': 0, 'pageSize': 10 }).then(response => {

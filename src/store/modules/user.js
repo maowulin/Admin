@@ -1,5 +1,5 @@
 import { login, logOut, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, removeMenuSession } from '@/utils/auth'
 
 const user = {
   state: {
@@ -83,6 +83,7 @@ const user = {
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
           removeToken()
+          removeMenuSession()
           resolve()
         }).catch(error => {
           reject(error)

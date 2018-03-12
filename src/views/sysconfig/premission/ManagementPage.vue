@@ -4,7 +4,8 @@
       <div class="user_head">
         <el-button class="hede-btn" @click="premisAdd" plain>添加</el-button>
         <el-button class="hede-btn" @click="premisDelete" plain>删除</el-button>
-        <my-search :message="message" :option-value="optionValue" @searchClick="premisSarch"></my-search>		
+        <my-search :message="message" :option-value="optionValue" @searchClick="premisSarch"></my-search>	
+        <paging :total="totalRecords" v-on:getSize="getPremisSize" v-on:getPage="getPremisPage"></paging>
       </div>
       <el-table
         fit
@@ -36,7 +37,7 @@
 				
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" :disabled="scope.row.id === 4" @click="primEdit(scope.row)" icon="el-icon-edit">编辑</el-button>
+            <el-button size="mini" type="primary" @click="primEdit(scope.row)" icon="el-icon-edit">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -49,14 +50,16 @@
 
 <script>
 	import MySearch from '@/components/Search'
-	import MySelect from '@/components/Select'
+  import MySelect from '@/components/Select'
+  import Paging from '@/components/Paging'
   import { getManager, getManagerRoles, delRoler } from '@/api/systemconfig'
   import ManagementConfig from './ManagementConfig'
 	export default {
 		components: {
 			MySearch,
       MySelect,
-      ManagementConfig
+      ManagementConfig,
+      Paging
 		},
 		data(){
 			return {
@@ -68,6 +71,7 @@
         loading: false,
         premisIds: '',
         roles: [],
+        totalRecords: 0,
 				requestData: {
 					type: '',
 					like: '',
@@ -88,9 +92,10 @@
 		methods: {
 			getData() {
         this.loading = true
-				getManager(this.requestData).then(reponse => {
+				getManager(this.requestData).then(response => {
           this.loading = false
-          this.tableData = reponse.items
+          this.tableData = response.items
+          this.totalRecords = response.totalRecords
 				}).catch(error => {
 					this.loading = false
           this.$message.error('服务器错误')
@@ -161,7 +166,15 @@
         this.isAdd = false
         this.isSecond = false
         this.premisId.id = row.id
-			}
+      },
+      getPremisSize(pageSize) {
+        this.requestData.pageSize = pageSize
+        this.getData()
+      },
+      getPremisPage(pageNow) {
+        this.requestData.pageNow = pageNow
+        this.getData()
+      }
 		}
 	}
 </script>

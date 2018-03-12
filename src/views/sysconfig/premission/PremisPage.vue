@@ -4,7 +4,8 @@
       <div class="user_head">
         <el-button class="hede-btn" @click="premisAdd" plain>添加</el-button>
         <el-button class="hede-btn" @click="premisDelete" plain>删除</el-button>
-        <my-search :option-value="optionValue" @searchClick="premisSarch"></my-search>		
+        <my-search :option-value="optionValue" @searchClick="premisSarch"></my-search>
+        <paging :total="totalRecords" v-on:getSize="getPremisSize" v-on:getPage="getPremisPage"></paging>		
       </div>
       <el-table
         fit
@@ -64,14 +65,16 @@
 
 <script>
 	import MySearch from '@/components/Search'
-	import MySelect from '@/components/Select'
+  import MySelect from '@/components/Select'
+  import Paging from '@/components/Paging'
   import { getPremis, addManageconfig, delManageconfig } from '@/api/systemconfig'
   import PremisConfig from './PremisConfig'
 	export default {
 		components: {
 			MySearch,
       MySelect,
-      PremisConfig
+      PremisConfig,
+      Paging
 		},
 		data(){
 			return {
@@ -80,6 +83,7 @@
         isAdd: true,
         premisId: {},
         premisIds: '',
+        totalRecords: 0,
         roles: [],
         loading: false,
 				requestData: {
@@ -117,9 +121,10 @@
 		methods: {
 			getData() {
         this.loading = true
-				getPremis(this.requestData).then(reponse => {
+				getPremis(this.requestData).then(response => {
           this.loading = false
-					this.tableData = reponse.items
+          this.tableData = response.items
+          this.totalRecords = response.totalRecords
 				}).catch(error => {
 					this.loading = false
           this.$message.error('服务器错误')
@@ -181,7 +186,15 @@
         this.isAdd = false
         this.isSecond = false
         this.premisId.id = row.id
-			}
+      },
+      getPremisSize(pageSize) {
+        this.requestData.pageSize = pageSize
+        this.getData()
+      },
+      getPremisPage(pageNow) {
+        this.requestData.pageNow = pageNow
+        this.getData()
+      }
 		}
 	}
 </script>

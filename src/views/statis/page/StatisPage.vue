@@ -95,6 +95,24 @@
 		}
 	}
 
+	const Gameing = {
+		template: `<span v-text="gameNum"></span>`,
+		props: ['row', 'col'],
+		computed: {
+			gameNum: function() {
+				let totalNum = this.row.total_game_num
+				let bounsNum = this.row.bonus_game_num
+				let goldBlack = this.row.gold_game_black8_num
+				let goldNum = this.row.gold_game_score23_num
+				let freeBlack = this.row.free_game_black8_num
+				let freeNum = this.row.free_game_score23_num
+				let pkNum = this.row.pk_game_num
+
+				return totalNum - (bounsNum+goldBlack+goldNum+freeBlack+freeNum+pkNum)
+			}
+		}
+	}
+
 	export default {
 
 	  components: {
@@ -134,6 +152,9 @@
 					},
 					'新手引导赠送': {
 						component: GuideHtml
+					},
+					'正在对局数': {
+						component: Gameing
 					}
 	      },
 

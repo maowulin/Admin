@@ -4,14 +4,6 @@ import { getMenuSec } from '@/method'
 import { constantRouterMap, constant404Map } from '@/router'
 import { getMenuSession, setMenuSession } from '@/utils/auth'
 
-// function hasPermission(roles, route) {
-//   if (route.meta && route.meta.role) {
-//     return roles.some(role => route.meta.role.indexOf(role) >= 0)
-//   } else {
-//     return true
-//   }
-// }
-
 const permission = {
   state: {
     routers: [],
@@ -32,7 +24,7 @@ const permission = {
         menu = await getMenuSec()
         setMenuSession(JSON.stringify(menu))
       }
-      
+    
       let tempArray = []
       for (let i = 0; i < menu.length; i++) {
         let tempObj = {

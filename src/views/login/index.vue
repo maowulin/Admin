@@ -86,7 +86,7 @@ export default {
       }
     },
     authimgRquest() {
-      document.getElementsByClassName('auth-show')[0].src = 'http://localhost:8090/authImage?date=' + new Date()
+      document.getElementsByClassName('auth-show')[0].src = '../authImage?date=' + new Date()
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {

@@ -215,3 +215,19 @@ export function getToken() {
     method: 'get'
   })
 }
+
+export function getFreeRoom(params) {
+  return request({
+    url: '../game/get_game_room_list.json',
+    method: 'get',
+    params: params
+  })
+}
+
+export function delFreeRoom(params) {
+  return request({
+    url: '../game/del_game_room_list.json',
+    method: 'get',
+    params: params
+  })
+}
