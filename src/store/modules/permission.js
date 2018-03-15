@@ -58,6 +58,7 @@ const permission = {
 
       let tempA = constantRouterMap
       tempA = constantRouterMap.concat(tempArray)
+      console.log(_import)
       
       return new Promise((resolve, reject) => {
         resolve(tempA)
