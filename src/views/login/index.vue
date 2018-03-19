@@ -23,7 +23,7 @@
           <span class="svg-container">
             <svg-icon class="menu-svg" style="width: 17px; height: 17px;" icon-class="auth-code"></svg-icon>
           </span>
-          <el-input name="authimg" class="authimage" type="text"  v-model="loginForm.code" autoComplete="on" placeholder="验证码"></el-input>
+          <el-input name="authimg" @keyup.enter.native="loginEnter" class="authimage" type="text"  v-model="loginForm.code" autoComplete="on" placeholder="验证码"></el-input>
         </el-form-item>
   
         <img class="auth-show" @click="authimgRquest">
@@ -86,7 +86,10 @@ export default {
       }
     },
     authimgRquest() {
-      document.getElementsByClassName('auth-show')[0].src = 'http://localhost:8090/authImage?date=' + new Date()
+      document.getElementsByClassName('auth-show')[0].src = '../authImage?date=' + new Date()
+    },
+    loginEnter() {
+      this.handleLogin()
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
@@ -95,7 +98,7 @@ export default {
           this.$store.dispatch('Login', this.loginForm).then(response => {
             if (response.type === 'error') {
               this.loading = false
-              this.$message.error('登陆失败')
+              this.$message.error(response.message)
             } else {
               this.loading = false
               this.$router.push({ path: '/' })

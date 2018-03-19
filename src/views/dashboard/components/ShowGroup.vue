@@ -98,7 +98,7 @@
         })
       },
       getMessage() {
-        getBouns({ 'status': '', 'phone': '', 'pageNow': 0, 'pageSize': 10 }).then(response => {
+        getBouns({ 'status': '', 'phone': '', 'pageNow': 0, 'pageSize': 100 }).then(response => {
           let bounsMessage = 0
           for(let i = 0; i < response.items.length; i++) {
             let list = response.items[i]

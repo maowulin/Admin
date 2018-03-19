@@ -1,7 +1,7 @@
 <template>
 	<section class="bound-bord">
 		<div class="user_head">
-			<el-button class="hede-btn" @click="bounsPass" plain>通过</el-button>
+			<el-button class="hede-btn" @click="pass" plain>通过</el-button>
 
 			<el-button class="hede-btn" @click="bounsRefuse" plain>拒绝</el-button>
 
@@ -190,7 +190,7 @@
 					})
 				})
 			},
-			bounsPass() {
+			pass() {
 				let letToken = JSON.parse(this.$store.getters.token)
 				let tempObj = {
 												approverID : letToken.id,
@@ -199,19 +199,12 @@
 												status     : "1"
 											}
 				bounsPass(tempObj).then(response => {
-					if(response.result === 1) {
-            this.$message({
-              showClose: true,
-              message: '审核成功',
-              type: 'success'
-            })
-          }else {
-            this.$message({
-              showClose: true,
-              message: '提交失败',
-              type: 'error'
-            })
-          }
+					this.$message({
+						showClose: true,
+						message: '审核成功',
+						type: 'success'
+					})
+					this.getData()
 				}).catch(error => {
 					this.loading = false
 					this.$message.error('服务器错误')
@@ -238,7 +231,8 @@
               message: '提交失败',
               type: 'error'
             })
-          }
+					}
+					this.getData()
 				}).catch(error => {
 					this.$message({
 						showClose: true,

@@ -37,18 +37,20 @@ const permission = {
         }
         const list = menu[i]
         const children = menu[i].children
-        tempObj.path = '/' + list.event
-        tempObj.redirect = '/' + list.event + '/' + children[0].event
-        tempObj.name = list.event
-        tempObj.meta.title = list.menu
-        tempObj.meta.icon = list.ext1
-        for (let j = 0; j < children.length; j++) {
-          const item = children[j]
-          tempObj.children[j] = {
-            path: item.url,
-            name: item.event,
-            component: _import(list.event + '/' + item.event),
-            meta: { title: item.menu, icon: item.ext1 }
+        if(children) {
+          tempObj.path = '/' + list.event
+          tempObj.redirect = '/' + list.event + '/' + children[0].event
+          tempObj.name = list.event
+          tempObj.meta.title = list.menu
+          tempObj.meta.icon = list.ext1
+          for (let j = 0; j < children.length; j++) {
+            const item = children[j]
+            tempObj.children[j] = {
+              path: item.url,
+              name: item.event,
+              component: _import(list.event + '/' + item.event),
+              meta: { title: item.menu, icon: item.ext1 }
+            }
           }
         }
         tempArray.push(tempObj)
@@ -58,7 +60,6 @@ const permission = {
 
       let tempA = constantRouterMap
       tempA = constantRouterMap.concat(tempArray)
-      console.log(_import)
       
       return new Promise((resolve, reject) => {
         resolve(tempA)
