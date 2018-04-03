@@ -38,6 +38,27 @@
 		template: `<span>0.88</span>`
 	}
 
+	const DivicesHtml = {
+		template: `<span v-text="guideNum" style="cursor: pointer;" :title="row.user_type"></span>`,
+		props: ['row', 'col'],
+		computed: {
+			guideNum: function() {
+				let userAgent = this.row.user_type.split(/\)|\(/)
+				let os = userAgent[1]
+				let version = userAgent[4]
+				
+				if(os.includes('Android')) {
+					userAgent = os.replace("U;", "").split(/\;/)[1]
+				}else if(os.includes('Mac OS X')){
+					userAgent = os.split(/\;/)[0]
+				}else if(os.includes('Windows')) {
+					userAgent = os.split(/\;/)[0]
+				}
+				return userAgent
+			}
+		}
+	}
+
 	export default {
 		components: {
 			Paging,
@@ -58,8 +79,14 @@
 	      	'日期' : {
 	      		width: '120px'
 					},
+					'序号' : {
+	      		width: '120px'
+					},
 					'新手引导领取': {
 						component: GuideHtml
+					},
+					'访问设备': {
+						component: DivicesHtml
 					}
 	      },
 	      columnsProps: {

@@ -77,3 +77,18 @@ export function getOnline() {
     method: 'get'
   })
 }
+
+export function getUserType() {
+  return request({
+    url: '../userL8/getUserTypeProporTion.json',
+    method: 'get'
+  })
+}
+
+export function getEveryDayUserStatis(data) {
+  return request({
+    url: '../userL8/getEverydayUserStatis.json',
+    method: 'get',
+    params: data
+  })
+}

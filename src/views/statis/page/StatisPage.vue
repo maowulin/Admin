@@ -239,7 +239,26 @@
 					this.loading = false
 	        if (response.data) {
 	          response = response.data
-	        }
+					}
+					
+					if(response.items.length === 0) {
+						response.items[0] = {}
+						for(let i = 0; i < this.columns.length; i++) {
+							let item = this.columns[i].prop
+							let itemObj = {}
+							if(item === 'time') {
+								itemObj[item] = getDate().dateLine
+								
+							}else if(item === 'create_date') {
+								itemObj[item] = getDate().dateLine
+								
+							}else {
+								itemObj[item] = 0
+								
+							}
+							Object.assign(response.items[0], itemObj)
+						}
+					}
 
 	        this.tableData = response.items
 

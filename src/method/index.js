@@ -159,7 +159,7 @@ export async function getMenuSec() {
   return new Promise(function(resolve, reject) {
     jq.ajax({
       type: 'GET',
-      url: '../adminMenu/getMenu.json',
+      url: 'http://localhost:8090/adminMenu/getMenu.json',
       data: { 'level': '1', 'menu_parent': 0 },
       dataType: 'json',
       async: false,
@@ -168,7 +168,7 @@ export async function getMenuSec() {
         for (let i = 0; i < data.length; i++) {
           jq.ajax({
             type: 'GET',
-            url: '../adminMenu/getMenu.json',
+            url: 'http://localhost:8090/adminMenu/getMenu.json',
             data: { 'level': '2', 'menu_parent': data[i].id },
             dataType: 'json',
             async: false,
