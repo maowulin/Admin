@@ -160,8 +160,8 @@
 					unit: '单位（数）'
 				}],
 				basiedRequest: {
-					beginTime : getDate().dateLine,
-					endTime   : getDate().dateLine,
+					beginTime : getDate(0),
+					endTime   : getDate(0),
 					pageNow   : 0,
 					pageSize  : 10,
 					type: 2

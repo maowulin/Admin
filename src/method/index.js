@@ -2,65 +2,57 @@ import { menu } from '@/api/login'
 import jq from 'jquery'
 import { request } from 'https';
 // 获取日期
-export function getDate() {
-  var days = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
-  var time = new Date()
-  var tenAgoTime = new Date(time)
-  tenAgoTime.setDate(time.getDate() - 9)
+export function getDate(dateAgo) {
+  let days = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+  let time = new Date()
+  let agoTime = new Date(time)
+  
+  if(dateAgo > 0) {
+    agoTime.setDate(time.getDate() - (dateAgo-1))
+  }
 
-  var year = time.getFullYear()
-  var month = time.getMonth() + 1
-  var date = time.getDate()
-  var day = time.getDay()
-  var hour = time.getHours()
-  var minutes = time.getMinutes()
-  var seconds = time.getSeconds()
+  let agoYear = agoTime.getFullYear()
+  let agoMonth = agoTime.getMonth() + 1
+  let agoDate = agoTime.getDate()
+  let agoDay = agoTime.getDay()
+  let agoHour = agoTime.getHours()
+  let agoMinutes = agoTime.getMinutes()
+  let agoSeconds = agoTime.getSeconds()
 
-  var tenAgoYear = tenAgoTime.getFullYear()
-  var tenAgoMonth = tenAgoTime.getMonth() + 1
-  var tenAgoDate = tenAgoTime.getDate()
-  var tenAgoDay = tenAgoTime.getDay()
-  var tenAgoHour = tenAgoTime.getHours()
-  var tenAgoMinutes = tenAgoTime.getMinutes()
-  var tenAgoSeconds = tenAgoTime.getSeconds()
+  if (agoMonth < 10) {
+    agoMonth = '0' + agoMonth
+  }
 
-  if (month < 10) {
-    month = '0' + month
+  if (agoDate < 10) {
+    agoDate = '0' + agoDate
   }
-  if (date < 10) {
-    date = '0' + date
-  }
-  if (hour < 10) {
-    hour = '0' + hour
-  }
-  if (minutes < 10) {
-    minutes = '0' + minutes
-  }
-  if (seconds < 10) {
-    seconds = '0' + seconds
-  }
-  if (tenAgoMonth < 10) {
-    tenAgoMonth = '0' + tenAgoMonth
-  }
-  if (tenAgoDate < 10) {
-    tenAgoDate = '0' + tenAgoDate
-  }
-  var dateLine = year + '-' + month + '-' + date
-  var str = year + '-' + month + '-' + date + ' ' + days[day] + ' ' + hour + ':' + minutes + ':' + seconds
-  var tenAgo = tenAgoYear + '-' + tenAgoMonth + '-' + tenAgoDate
 
-  return {
-    'dateLine': dateLine,
-    'str': str,
-    'ten': tenAgo
+  if (agoHour < 10) {
+    agoHour = '0' + agoHour
   }
+
+  if (agoMinutes < 10) {
+    agoMinutes = '0' + agoMinutes
+  }
+
+  if (agoSeconds < 10) {
+    agoSeconds = '0' + agoSeconds
+  }
+
+  if(dateAgo > 0) {
+    return agoYear + "-" + agoMonth + "-" + agoDate + " 00:00:00"
+  }else {
+    return agoYear + "-" + agoMonth + "-" + agoDate + " " + agoHour + ":" + agoMinutes + ":" + agoSeconds
+  }
+
+   
 }
 
 // 获取系统版本
 export function getSystem() {
-  var browser = {
+  let browser = {
     versions: (function() {
-      var u = navigator.userAgent, app = navigator.appVersion
+      let u = navigator.userAgent, app = navigator.appVersion
       return { // 移动终端浏览器版本信息
         trident: u.indexOf('Trident') > -1, // IE内核
         presto: u.indexOf('Presto') > -1, // opera内核
@@ -78,7 +70,7 @@ export function getSystem() {
   }
 
   if (browser.versions.mobile) { // 判断是否是移动设备打开。browser代码在下面
-    var ua = navigator.userAgent.toLowerCase()// 获取判断用的对象
+    let ua = navigator.userAgent.toLowerCase()// 获取判断用的对象
     if (ua.match(/MicroMessenger/i) == 'micromessenger') {
       return 'weixin'
     } else if (ua.match(/WeiBo/i) == 'weibo') {
@@ -97,9 +89,9 @@ export function getSystem() {
 
 // 获取选中项
 export function getChecked(checkedVal, columns) {
-  var tempArray = []
-  for (var j = 0; j < columns.length; j++) {
-    for (var i = 0; i < checkedVal.length; i++) {
+  let tempArray = []
+  for (let j = 0; j < columns.length; j++) {
+    for (let i = 0; i < checkedVal.length; i++) {
       if (checkedVal[i] === columns[j].label) {
         tempArray.push(columns[j])
       }

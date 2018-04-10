@@ -2,28 +2,27 @@
   <section class="index-panel">
     <show-group></show-group>
     <div class="index-line-chart" v-loading="basiload">
-      <line-chart v-if="basiData.length !== 0" :chart-data="basiData" :line-conf="basiedLineColumns" :line-id="'imp-basi-chart'"></line-chart>
-      <span class="chart-title">用户基本信息表</span>
+
+      <my-select :message="message1" :option-value="optionValue1" v-on:selectChange="selectChange" class="chart-select"></my-select>
+
+      <div style="width:100%;height:100%;">
+          <line-chart v-if="basiData.length !== 0 && !isThreeDay" :chart-data="basiData" :line-conf="userDayConfig" :line-id="'imp-basi-chart'"></line-chart>
+          <time-quantum-chart v-else-if="userTimeQuantumData.length !== 0 && isThreeDay" :lineConf="userTimeQuantumConfig" :chart-data="userTimeQuantumData" :line-id="'three-time-chart'"></time-quantum-chart>
+      </div>
+
+      <span class="chart-title">新用户登陆</span>
     </div>
 
-    <div class="index-line-chart" v-loading="rechargeload">
-      <line-chart v-if="rechargeData.length !== 0" :chart-data="rechargeData" :line-conf="rechargeLineColumns" :line-id="'imp-recharge-chart'"></line-chart>
-      <span class="chart-title">充值信息表</span>
-    </div>
+    <div class="index-line-chart" v-loading="oldload">
 
-    <div class="index-line-chart" v-loading="gamechesload">
-      <line-chart v-if="gameChesData.length !== 0" :chart-data="gameChesData" :line-conf="gameChesLineColumns" :line-id="'imp-gameches-chart'"></line-chart>
-      <span class="chart-title">游戏对局表</span>
-    </div>
+      <my-select :message="message1" :option-value="optionValue1" v-on:selectChange="oldUserSelectChange" class="chart-select"></my-select>
 
-    <div class="index-line-chart" v-loading="createload">
-      <line-chart v-if="createData.length !== 0" :chart-data="createData" :line-conf="createLineColumns" :line-id="'imp-create-chart'"></line-chart>
-      <span class="chart-title">游戏创建表</span>
-    </div>
+      <div style="width:100%;height:100%;">
+          <line-chart v-if="oldBasiData.length !== 0 && !isOldThreeDay" :chart-data="oldBasiData" :line-conf="oldUserDayConfig" :line-id="'imp-old-basi-chart'"></line-chart>
+          <time-quantum-chart v-else-if="oldUserTimeData.length !== 0 && isOldThreeDay" :lineConf="userTimeQuantumConfig" :chart-data="oldUserTimeData" :line-id="'old-time-chart'"></time-quantum-chart>
+      </div>
 
-    <div class="index-line-chart" v-loading="joinload">
-      <line-chart v-if="joinData.length !== 0" :chart-data="joinData" :line-conf="joinLineColumns" :line-id="'imp-join-chart'"></line-chart>
-      <span class="chart-title">房间加入信息表</span>
+      <span class="chart-title">老用户登陆</span>
     </div>
 
     <div class="index-line-chart" v-loading="rateload">
@@ -38,84 +37,114 @@ import { mapGetters } from 'vuex'
 import ShowGroup from './components/ShowGroup'
 import { getStatis } from '@/api/statis'
 import { getDate } from '@/method'
-import { basiedColumns } from './config/basi'
-import { createColumns } from './config/create'
 import { rateColumns } from './config/rate'
-import { rechargeColumns } from './config/recharge'
-import { gameChesColumns } from './config/gameChes'
-import { joinColumns } from './config/join'
+import { getUserTimeQuantum, getUserDayList } from '@/api/query'
 
 export default {
   name: 'dashboard',
   components: {
     ShowGroup,
+    MySelect: function(resolve) {
+      require(['@/components/Select'], resolve)
+    },
     LineChart: function(resolve) {
       require(['./components/LineChart'], resolve)
+    },
+    timeQuantumChart: function(resolve) {
+      require(['./components/timeQuantumChart'], resolve)
     }
   },
   data() {
     return {
-      basiData: [],
-      rechargeData: [],
-      gameChesData: [],
-      createData: [],
-      joinData: [],
       rateData: [],
+      message1: "近3日",
 
-      basiload: false,
-      rechargeload: false,
-      gamechesload: false,
-      createload: false,
-      joinload: false,
-      rateload: false,
+      userTimeQuantumData: [],
+      userTimeQuantumConfig: [],
+      basiData: [],
+      oldUserTimeData: [],
+      oldBasiData: [],
 
-      basiedLineColumns: basiedColumns,
-      createLineColumns: createColumns,
-      rateLineColumns: rateColumns,
-      rechargeLineColumns: rechargeColumns,
-      gameChesLineColumns: gameChesColumns,
-      joinLineColumns: joinColumns,
+      isThreeDay: true,
+      isOldThreeDay: true,
+
+      optionValue1: [{
+        	'opti': '近3日',
+        	'val': '3'
+      }, {
+        	'opti': '近7日',
+        	'val': '7'
+      }, {
+        	'opti': '近30日',
+        	'val': '30'
+      }, {
+        	'opti': '近60日',
+        	'val': '60'
+      }],
       
-      basiRequestData: {
-        beginTime  : getDate().ten,
-        endTime    : getDate().dateLine,
-        pageNow    : 0,
-        pageSize   : 10,
-        type: 1
-      },
-      createRequestData: {
-        beginTime  : getDate().ten,
-        endTime    : getDate().dateLine,
-        pageNow    : 0,
-        pageSize   : 10,
-        type: 4
-      },
+      basiload: false,
+      rateload: false,
+      oldload: false,
+      
+      userDayConfig: [{
+        'label': '新增用户', // 表头及复选框文字
+        'prop': 'new_user',  // 字段名
+        'lineColor': '#9d82df',
+        'renderColor': '#cfbcfd',
+        'isChart': true,
+        'defaultShow': true
+      }],
+      oldUserDayConfig: [{
+        'label': '老用户', // 表头及复选框文字
+        'prop': 'new_user',  // 字段名
+        'lineColor': '#9d82df',
+        'renderColor': '#cfbcfd',
+        'isChart': true,
+        'defaultShow': true
+      }],
+      userTimeQuantumConfig: [{
+        'label': '', // 表头及复选框文字
+        'prop': 'new_user',  // 字段名
+        'lineColor': '#9d82df',
+        'renderColor': '#cfbcfd',
+        'isChart': true,
+        'defaultShow': true
+      },{
+        'label': '', // 表头及复选框文字
+        'prop': 'new_user',  // 字段名
+        'lineColor': '#676fd0',
+        'renderColor': '#c2c6fb',
+        'isChart': true,
+        'defaultShow': true
+      },{
+        'label': '', // 表头及复选框文字
+        'prop': 'new_user',  // 字段名
+        'lineColor': '#377bd0',
+        'renderColor': '#aed0fb',
+        'isChart': true,
+        'defaultShow': true
+      }],
+      rateLineColumns: rateColumns,
+      
       rateReuestData: {
-        beginTime : getDate().ten,
-        endTime   : getDate().dateLine,
+        beginTime : getDate(10),
+        endTime   : getDate(0),
         pageNow   : 0,
         pageSize  : 10
       },
-      rechargeReuestData: {
-        beginTime  : getDate().ten,
-        endTime    : getDate().dateLine,
-        pageNow    : 0,
-        pageSize   : 10,
-        type: 2
+      newUserDayRequest: {
+        beginTime  : getDate(3),
+        endTime    : getDate(0)
       },
-      gameChesReuestData: {
-        beginTime  : getDate().ten,
-        endTime    : getDate().dateLine,
-        pageNow    : 0,
-        pageSize   : 10,
-        type: 3
+      oldUserRequest: {
+        beginTime  : getDate(3),
+        endTime    : getDate(0),
+        type       : "2"
       },
-      joinReuestData: {
-        beginTime  : getDate().ten,
-        endTime    : getDate().dateLine,
-        pageNow    : 0,
-        pageSize   : 10,
-        type: 5
+      newUserReqeust: {
+        beginTime  : getDate(3),
+        endTime    : getDate(0),
+        type       : "1"
       }
     }
   },
@@ -127,71 +156,12 @@ export default {
   },
   created() {
     this.getData()
+    this.getUserTimeDate()
+    this.getOldUserTimeQuantum()
   },
   methods: {
     getData() {
-      this.basiload = true
-      this.rechargeload = true
-      this.gamechesload = true
-      this.createload = true
-      this.joinload = true
       this.rateload = true
-      getStatis('../userL8/getUserBasicInfo_list.json', 'get', this.basiRequestData).then(response => {
-        this.basiload = false
-        if(response.items.length > 0) {
-          this.basiData = response.items
-        }else {
-          this.basiData = ''
-        }
-      }).catch(error => {
-        console.log(error)
-      })
-
-      getStatis('../userL8/getUserBasicInfo_list.json', 'get', this.rechargeReuestData).then(response => {
-        this.rechargeload = false
-        
-        if(response.items.length > 0) {
-          this.rechargeData = response.items
-        }else {
-          this.rechargeData = ''
-        }
-      }).catch(error => {
-        console.log(error)
-      })
-
-      getStatis('../userL8/getUserBasicInfo_list.json', 'get', this.gameChesReuestData).then(response => {
-        this.gamechesload = false
-        if(response.items.length > 0) {
-          this.gameChesData = response.items
-        }else {
-          this.gameChesData = ''
-        }
-      }).catch(error => {
-        console.log(error)
-      })
-
-      getStatis('../userL8/getUserBasicInfo_list.json', 'get', this.createRequestData).then(response => {
-        this.createload = false
-        if(response.items.length > 0) {
-          this.createData = response.items
-        }else {
-          this.createData = ''
-        }
-      }).catch(error => {
-        console.log(error)
-      })
-
-      getStatis('../userL8/getUserBasicInfo_list.json', 'get', this.joinReuestData).then(response => {
-        this.joinload = false
-        if(response.items.length > 0) {
-          this.joinData = response.items
-        }else {
-          this.joinData = ''
-        }
-      }).catch(error => {
-        console.log(error)
-      })
-
       getStatis('../userL8/userL8_retain_rate.json', 'get', this.rateReuestData).then(response => {
         this.rateload = false
         if(response.items.length > 0) {
@@ -202,6 +172,88 @@ export default {
       }).catch(error => {
         console.log(error)
       })
+    },
+    getUserTimeDate() {
+      this.basiload = true
+      getUserTimeQuantum(this.newUserReqeust).then(response => {
+        this.basiload = false
+        this.userTimeQuantumData = response.items
+      }).catch(error => {
+        this.$message({
+          showClose: true,
+          message: '获取数据失败！',
+          type: 'error'
+        })
+      })
+    },
+    getUserDay(data) {
+      this.basiload = true
+      this.basiData = []
+      getUserDayList(data).then(response => {
+        this.basiload = false
+        this.basiData = response.items
+      }).catch(error => {
+        this.$message({
+          showClose: true,
+          message: '获取数据失败！',
+          type: 'error'
+        })
+      })
+    },
+    getOldUserTimeQuantum() {
+      this.oldload = true
+      getUserTimeQuantum(this.oldUserRequest).then(response => {
+        this.oldload = false
+        this.oldUserTimeData = response.items
+      }).catch(error => {
+        this.$message({
+          showClose: true,
+          message: '获取数据失败！',
+          type: 'error'
+        })
+      })
+    },
+    getOldUserDay(data) {
+      this.oldload = true
+      this.oldBasiData = []
+      getUserDayList(data).then(response => {
+        this.oldload = false
+        this.oldBasiData = response.items
+      }).catch(error => {
+        this.$message({
+          showClose: true,
+          message: '获取数据失败！',
+          type: 'error'
+        })
+      })
+    },
+    selectChange(val) {
+      if(val === '3' || val == ''){
+        this.isThreeDay = true
+        this.getUserTimeDate()
+      }else{
+        this.isThreeDay = false
+        let data = {
+          beginTime: getDate(val),
+          endTime  : getDate(0),
+          type: "1"
+        }
+        this.getUserDay(data)
+      }
+    },
+    oldUserSelectChange(val) {
+      if(val === '3' || val == ''){
+        this.isOldThreeDay = true
+        this.getOldUserTimeQuantum()
+      }else{
+        this.isOldThreeDay = false
+        let data = {
+          beginTime: getDate(val),
+          endTime  : getDate(0),
+          type: "2"
+        }
+        this.getOldUserDay(data)
+      }
     }
   }
 }
@@ -230,6 +282,7 @@ export default {
 }
 
 .index-line-chart {
+  position: relative;
   width: 100%;
   height: 365px;
   margin-top: 30px;
@@ -241,6 +294,13 @@ export default {
   display: block;
   padding-top: 5px;
   text-align: center;
+}
+
+.chart-select {
+  position: absolute;
+  left: 49px;
+  top: 10px;
+  z-index: 5555;
 }
 
 </style>

@@ -131,8 +131,8 @@
 					unit: '单位（数）'
 				}],
 				ballRequest: {
-					beginTime : getDate().ten,
-					endTime   : getDate().dateLine,
+					beginTime : getDate(10),
+					endTime   : getDate(0),
 					pageNow   : 0,
 					pageSize  : 10
 				},
@@ -236,7 +236,7 @@
 					unit: '单位（数）'
 				}],
 				ballSecRequest: {
-					time : getDate().ten,
+					time : getDate(10),
 					pageNow   : 0,
 					pageSize  : 10
 				},

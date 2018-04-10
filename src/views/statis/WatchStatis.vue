@@ -88,8 +88,8 @@
 					unit: '单位（数）'
 				}],
 				gameRequest: {
-					startDate  : getDate().ten,
-					endDate    : getDate().dateLine,
+					startDate  : getDate(10),
+					endDate    : getDate(0),
 					pageNow    : 0,
 					pageSize   : 10
 				},

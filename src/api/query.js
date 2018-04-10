@@ -136,3 +136,19 @@ export function getFightData(data) {
     params: data
   })
 }
+
+export function getUserTimeQuantum(data) {
+  return request({
+    url: '../userL8/getUserTimeQuantumList.json',
+    method: 'get',
+    params: data
+  })
+}
+
+export function getUserDayList(data) {
+  return request({
+    url: '../userL8/getUserDayQuantumList.json',
+    method: 'get',
+    params: data
+  })
+}

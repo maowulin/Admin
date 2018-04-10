@@ -137,8 +137,8 @@
 					unit: '单位（数）'
 				}],
 				presentRequest: {
-					beginTime : getDate().ten,
-					endTime   : getDate().dateLine,
+					beginTime : getDate(10),
+					endTime   : getDate(0),
 					pageNow   : 0,
 					pageSize  : 10,
 					type      : 1
@@ -259,8 +259,8 @@
 					unit: '单位（数）'
 				}],
 				goldRequest: {
-					beginTime : getDate().ten,
-					endTime   : getDate().dateLine,
+					beginTime : getDate(10),
+					endTime   : getDate(0),
 					pageNow   : 0,
 					pageSize  : 10,
 					type      : 2

@@ -183,29 +183,36 @@
         })
         
         this.loading2 = true
-        getEveryDayUserStatis({"beginTime": getDate().dateLine, "endTime": getDate().dateLine}).then(response => {
+        getEveryDayUserStatis({"beginTime": getDate(0), "endTime": getDate(0)}).then(response => {
           this.loading2 = false
-          let item = response.items[0]
+          let total = response.items.total
+          let order = response.items.order
+          let ches = response.items.ches
           
-          this.newUserTotal = item.total_new
-          this.newIos = ((item.ios_new / item.total_new) * 100).toFixed(2)
-          this.newAndroid = ((item.android_new / item.total_new) * 100).toFixed(2)
-          this.visToRegister = ((item.vis_to_register / item.total_new) * 100).toFixed(2)
+          if(total) {
+            this.newUserTotal = total.total_new
+            this.newIos = ((total[0].ios_new / total[0].total_new) * 100).toFixed(2)
+            this.newAndroid = ((total[0].android_new / total[0].total_new) * 100).toFixed(2)
+            this.visToRegister = ((total[0].vis_to_register / total[0].total_new) * 100).toFixed(2)
 
-          this.dayActiveNum = item.dayActiveNum
-          this.dayActiveAndroidNum = item.dayActiveNum_android
-          this.dayActiveIosNum = item.dayActiveNum_ios
+            this.dayActiveNum = total[0].dayActiveNum
+            this.dayActiveAndroidNum = total[0].dayActiveNum_android
+            this.dayActiveIosNum = total[0].dayActiveNum_ios
+          }
 
-          this.orderUserTotal = item.order_all_total
-          this.orderAndroid = item.order_android
-          this.orderIos = item.order_ios
+          if(order) {
+            this.orderUserTotal = order[0].order_all_total
+            this.orderAndroid = order[0].order_android
+            this.orderIos = order[0].order_ios
+          }
 
-          this.chesTotalNum = item.total_ches
-          this.chesBouns = ((item.bouns / item.total_ches) * 100).toFixed(2)
-          this.chesFree = ((item.free / item.total_ches) * 100).toFixed(2)
-          this.chesGold = ((item.gold / item.total_ches) * 100).toFixed(2)
-          this.chesCreate = ((item.total_ches / item.total_crete) * 100).toFixed(2)
-
+          if(ches) {
+            this.chesTotalNum = ches[0].total_ches
+            this.chesBouns = ((ches[0].bouns / ches[0].total_ches) * 100).toFixed(2)
+            this.chesFree = ((ches[0].free / ches[0].total_ches) * 100).toFixed(2)
+            this.chesGold = ((ches[0].gold / ches[0].total_ches) * 100).toFixed(2)
+            this.chesCreate = ((ches[0].total_ches / ches[0].total_crete) * 100).toFixed(2)
+          }
         }).catch(error => {
           this.$message({
 						showClose: true,

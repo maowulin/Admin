@@ -72,7 +72,7 @@
 	      totalRecords: 0,
 	      chartShow: false,
 	      buttonText: '图表',
-				defaultDate: getDate().ten,
+				defaultDate: getDate(10),
 				loading: false,
 	      newColumns: [],
 	      columnsSchema: {

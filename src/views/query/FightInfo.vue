@@ -85,8 +85,8 @@
 	        uname: '',
 	        game_over_detail: '',
 	        game_type: '',
-	        beginTime: getDate().ten,
-	        endTime: getDate().dateLine,
+	        beginTime: getDate(10),
+	        endTime: getDate(0),
 	        pageNow: 0,
 	        pageSize: 10
 	      },

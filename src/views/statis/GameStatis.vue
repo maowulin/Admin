@@ -242,8 +242,8 @@
 					unit: '单位（数）'
 				}],
 				gameRequest: {
-					beginTime  : getDate().ten,
-					endTime    : getDate().dateLine,
+					beginTime  : getDate(10),
+					endTime    : getDate(0),
 					pageNow    : 0,
 					pageSize   : 10
 				},
@@ -435,7 +435,7 @@
 					unit: '单位（数）'
 				}],
 				gameSecRequest: {
-					time : getDate().ten,
+					time : getDate(10),
 					pageNow   : 0,
 					pageSize  : 10
 				},

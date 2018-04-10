@@ -142,7 +142,7 @@
 
 	      buttonText: '图表',
 
-	      defaultDate: getDate().ten,
+	      defaultDate: getDate(10),
 
 	      newColumns: [],
 
@@ -247,10 +247,10 @@
 							let item = this.columns[i].prop
 							let itemObj = {}
 							if(item === 'time') {
-								itemObj[item] = getDate().dateLine
+								itemObj[item] = getDate(0)
 								
 							}else if(item === 'create_date') {
-								itemObj[item] = getDate().dateLine
+								itemObj[item] = getDate(0)
 								
 							}else {
 								itemObj[item] = 0

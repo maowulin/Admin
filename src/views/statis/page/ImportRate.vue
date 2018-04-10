@@ -137,8 +137,8 @@
 					unit: '单位（%）'
 				}],
 				basiedRequest: {
-					beginTime : getDate().ten,
-					endTime   : getDate().dateLine,
+					beginTime : getDate(10),
+					endTime   : getDate(0),
 					pageNow   : 0,
 					pageSize  : 10
 				}
