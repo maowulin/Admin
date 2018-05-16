@@ -34,7 +34,7 @@
       <el-col :span="4">
         <div class="grid-content bg-purple" v-loading="loading2">
           <div class="right-text">
-            <span class="text-t">新增用户：
+            <span class="text-t">当日新增用户：
               <count-to :starVal="0" :endVal="newUserTotal" :duration="3000"></count-to>
             </span>
             <span class="text-s">IOS占比：{{newIos}}%</span>
@@ -47,7 +47,7 @@
       <el-col :span="4">
         <div class="grid-content bg-purple" v-loading="loading2">
           <div class="right-text">
-              <span class="text-t">活跃用户：
+              <span class="text-t">当日活跃用户：
                 <count-to :starVal="0" :endVal="dayActiveNum" :duration="3000"></count-to>
               </span>
               <span class="text-s">IOS占比：{{dayActiveIosNum}}%</span>
@@ -59,7 +59,7 @@
       <el-col :span="4">
         <div class="grid-content bg-purple" v-loading="loading2">
           <div class="right-text">
-              <span class="text-t">充值用户：
+              <span class="text-t">当日充值用户：
                 <count-to :starVal="0" :endVal="orderUserTotal" :duration="3000"></count-to>
               </span>
               <span class="text-s">IOS占比：{{orderIos}}%</span>
@@ -71,7 +71,7 @@
       <el-col :span="4">
         <div class="grid-content bg-purple" v-loading="loading2">
           <div class="right-text">
-              <span class="text-t">游戏对局用户：
+              <span class="text-t">当日游戏对局数：
                 <count-to :starVal="0" :endVal="chesTotalNum" :duration="3000"></count-to>
               </span>
               <span class="text-s">免费赛：{{chesFree}}%</span>
@@ -189,24 +189,25 @@
           let order = response.items.order
           let ches = response.items.ches
           
-          if(total) {
-            this.newUserTotal = total.total_new
+          if(total.length !== 0) {
+            this.newUserTotal = total[0].total_new
             this.newIos = ((total[0].ios_new / total[0].total_new) * 100).toFixed(2)
             this.newAndroid = ((total[0].android_new / total[0].total_new) * 100).toFixed(2)
             this.visToRegister = ((total[0].vis_to_register / total[0].total_new) * 100).toFixed(2)
 
             this.dayActiveNum = total[0].dayActiveNum
-            this.dayActiveAndroidNum = total[0].dayActiveNum_android
-            this.dayActiveIosNum = total[0].dayActiveNum_ios
+            this.dayActiveAndroidNum = ((total[0].dayActiveNum_android / this.dayActiveNum)*100).toFixed(2)
+            this.dayActiveIosNum = ((total[0].dayActiveNum_ios / this.dayActiveNum)*100).toFixed(2)
+
           }
 
-          if(order) {
+          if(order.length !== 0) {
             this.orderUserTotal = order[0].order_all_total
             this.orderAndroid = order[0].order_android
             this.orderIos = order[0].order_ios
           }
 
-          if(ches) {
+          if(ches.length !== 0) {
             this.chesTotalNum = ches[0].total_ches
             this.chesBouns = ((ches[0].bouns / ches[0].total_ches) * 100).toFixed(2)
             this.chesFree = ((ches[0].free / ches[0].total_ches) * 100).toFixed(2)

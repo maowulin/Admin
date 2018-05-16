@@ -88,3 +88,11 @@
 [0125/091257.215:ERROR:crash_report_database_win.cc(427)] unexpected header
 [0125/125553.352:ERROR:crash_report_database_win.cc(427)] unexpected header
 [0126/090848.051:ERROR:crash_report_database_win.cc(427)] unexpected header
+[0411/090042.080:ERROR:process_reader_win.cc(151)] SuspendThread: 拒绝访问。 (0x5)
+[0411/090042.122:ERROR:exception_snapshot_win.cc(88)] thread ID 52648 not found in process
+[0411/090042.122:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
+[0411/090042.147:ERROR:process_reader_win.cc(151)] SuspendThread: 拒绝访问。 (0x5)
+[0411/090042.147:ERROR:exception_snapshot_win.cc(88)] thread ID 52664 not found in process
+[0411/090042.148:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
+[0411/090042.123:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: 已尝试访问正在退出的过程。 (0xc000010a)
+[0411/090042.148:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: 已尝试访问正在退出的过程。 (0xc000010a)

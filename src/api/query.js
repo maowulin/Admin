@@ -152,3 +152,10 @@ export function getUserDayList(data) {
     params: data
   })
 }
+
+export function loginCity() {
+  return request({
+    url: '../userL8/getUserLoginCity.json',
+    method: 'get'
+  })
+}

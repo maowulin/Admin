@@ -151,7 +151,7 @@ export async function getMenuSec() {
   return new Promise(function(resolve, reject) {
     jq.ajax({
       type: 'GET',
-      url: 'http://localhost:8090/adminMenu/getMenu.json',
+      url: 'http://localhost:9999/adminMenu/getMenu.json',
       data: { 'level': '1', 'menu_parent': 0 },
       dataType: 'json',
       async: false,
@@ -160,7 +160,7 @@ export async function getMenuSec() {
         for (let i = 0; i < data.length; i++) {
           jq.ajax({
             type: 'GET',
-            url: 'http://localhost:8090/adminMenu/getMenu.json',
+            url: 'http://localhost:9999/adminMenu/getMenu.json',
             data: { 'level': '2', 'menu_parent': data[i].id },
             dataType: 'json',
             async: false,
@@ -173,4 +173,25 @@ export async function getMenuSec() {
       }
     })
   })
+}
+
+export function coputedData(tempData, tempTime) {
+  let temp = []
+  for(let i = 0; i < 24; i++) {
+    let time = (i < 10) ? ('0'+i+':00') : (i+':00')
+    if(tempTime.includes(time)) {
+      let index = tempTime.findIndex((val, index, arr) => {
+        return val === time
+      })
+      if(tempData[index].create_count !== '') {
+        temp[i] = parseInt(tempData[index].create_count)
+      }else {
+        temp[i] = parseInt(tempData[index].join_count)
+      }
+      
+    }else {
+      temp[i] = 0
+    }
+  }
+  return temp
 }

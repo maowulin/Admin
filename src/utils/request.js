@@ -22,6 +22,11 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(response => {
   if (response.data.items !== undefined) {
     let count = 1
+
+    if(response.data.items === null) {
+      response.data.items = []
+    }
+
     for (let i = 0; i < response.data.items.length; i++) {
       response.data.items[i].serial = count + ''
       count++
@@ -35,7 +40,7 @@ service.interceptors.response.use(response => {
   }
 },
 error => {
-  console.log('err' + error)// for debug
+  console.log('err' + error)  // for debug
   Message({
     message: error.message,
     type: 'error',

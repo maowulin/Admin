@@ -24,6 +24,14 @@ export function getStatis(_url, _type, _data) {
 	})
 }
 
+export function getCreateAndJoin(data) {
+	return request({
+		url: '../userL8/getCrateAndJoin.json',
+		method: 'get',
+		params: data
+	})
+}
+
 export function getStatisCvs(_url, _startDate, _stopDate) {
 	window.open(_url + "?beginTime=" + _startDate + "&endTime=" + _stopDate)
 }

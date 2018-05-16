@@ -299,32 +299,8 @@ export default {
         	'isSortable': true, // 是否显示排序
         	'width': ''
       }, {
-        	'label': '积分', // 列名称
-        	'prop': 'integral', // 列数据
-        	'isCustom': false, // 是否自定义列
-        	'isSortable': true, // 是否显示排序
-        	'width': ''
-      }, {
-        	'label': '红包余额', // 列名称
-        	'prop': 'balance', // 列数据
-        	'isCustom': false, // 是否自定义列
-        	'isSortable': true, // 是否显示排序
-        	'width': ''
-      }, {
-        	'label': '累计提现金额', // 列名称
-        	'prop': 'withdrawSum', // 列数据
-        	'isCustom': false, // 是否自定义列
-        	'isSortable': true, // 是否显示排序
-        	'width': '120px'
-      }, {
         	'label': '金币', // 列名称
         	'prop': 'gold', // 列数据
-        	'isCustom': false, // 是否自定义列
-        	'isSortable': true, // 是否显示排序
-        	'width': ''
-      }, {
-        	'label': '赠送金币数', // 列名称
-        	'prop': 'goldGiftNum', // 列数据
         	'isCustom': false, // 是否自定义列
         	'isSortable': true, // 是否显示排序
         	'width': ''
@@ -332,18 +308,6 @@ export default {
         	'label': '游戏场次', // 列名称
         	'prop': 'total_number', // 列数据
         	'isCustom': false, // 是否自定义列
-        	'isSortable': true, // 是否显示排序
-        	'width': ''
-      }, {
-        	'label': '战队', // 列名称
-        	'prop': 'circleName', // 列数据
-        	'isCustom': false, // 是否自定义列
-        	'isSortable': false, // 是否显示排序
-        	'width': ''
-      }, {
-        	'label': 'VIP', // 列名称
-        	'prop': 'if_vip', // 列数据
-        	'isCustom': true, // 是否自定义列
         	'isSortable': true, // 是否显示排序
         	'width': ''
       }, {

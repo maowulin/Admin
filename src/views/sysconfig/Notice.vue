@@ -1,198 +1,242 @@
 <template>
-		<section>
-			<div class="user_head">
-				<el-button @click="noticeAdd" >添加</el-button>
+		<section v-loading="loading">
+			<el-tabs v-model="activeName" @tab-click="handleClick" editable @edit="noticeEdit">
+				<el-tab-pane v-for="item in tabs" :label="item.title" :key="item.id" :name="item.id + ''">
+					<el-form class="notice-panel">
+						<el-form-item label="公告标题">
+								<el-input type="text" :id="'notice-title' + item.id" :value="item.title" ></el-input>
+						</el-form-item>
 
-				<my-search :message="message" :option-value="optionValue" @searchClick="noticeSear"></my-search>
+						<el-form-item label="公告状态">
+							<el-select v-model="status" placeholder="请选择">
+								<el-option
+									v-for="temp in noticeStatus"
+									:key="temp.value"
+									:label="temp.label"
+									:value="temp.value">
+								</el-option>
+							</el-select>
+							</el-form-item>
+
+						<el-form-item label="公告类型">
+							<el-select v-model="type" placeholder="请选择">
+								<el-option
+									v-for="list in options"
+									:key="list.value"
+									:label="list.label"
+									:value="list.value">
+								</el-option>
+							</el-select>
+						</el-form-item>
+
+						<el-form-item label="公告内容">
+							<el-input type="textarea" :id="'testarea-notice' + item.id"  :rows="12" resize="both" :value="item.conent"></el-input>
+						</el-form-item>
+
+						<el-form-item style="text-align: center;">
+							<el-button type="danger" class="notice-button" @click="noticeUpdate(item.id)">更新</el-button>
+						</el-form-item>
+					</el-form>
+				</el-tab-pane>
+			</el-tabs>
+
+			<el-dialog title="新增公告" :visible.sync="dialogTableVisible">
+				<div class="add-notice-panel">
+					<el-form ref="form" label-width="80px">
+						<el-form-item label="标题">
+								<el-input type="text" v-model="addTitle"></el-input>
+						</el-form-item>
+
+						<el-form-item label="公告状态">
+							<el-select v-model="status" placeholder="请选择">
+								<el-option
+									v-for="temp in noticeStatus"
+									:key="temp.value"
+									:label="temp.label"
+									:value="temp.value">
+								</el-option>
+							</el-select>
+							</el-form-item>
+
+						<el-form-item label="公告类型">
+							<el-select v-model="type" placeholder="请选择">
+								<el-option
+									v-for="list in options"
+									:key="list.value"
+									:label="list.label"
+									:value="list.value">
+								</el-option>
+							</el-select>
+						</el-form-item>
 				
-				<paging :total="totalRecords" @getSize="getFightSize" @getPage="getFightPage"></paging>
-			</div>
-			
-			<egrid class="egrid"
-				fit
-				:data="tableData"
-				:columns="columns"
-				:columns-schema="columnsSchema"
-				:columns-props="columnsProps"
-				:column-type="columnType"
-				:columns-handler="columnsHandler">
-		 </egrid>
-
-		 <el-dialog
-			title="收获地址信息"
-			:visible.sync="dialogVisible"
-			width="30%">
-
-			<el-form :model="versionInfo" status-icon ref="versionInfo" label-width="120px" class="demo-ruleForm">
-				<el-form-item label="选择平台" prop="pass">
-					<el-select v-model="versionInfo.type" placeholder="请选择">
-						<el-option value="1" label="ios"></el-option>
-						<el-option value="2" label="android"></el-option>
-						<el-option value="3" label="ios游戏端"></el-option>
-						<el-option value="4" label="android游戏端"></el-option>
-					</el-select>
-				</el-form-item>
-
-				<el-form-item label="最低版本" prop="age">
-					<el-input v-model="versionInfo.minVersion" auto-complete="off"></el-input>
-				</el-form-item>
-
-				<el-form-item label="当前版本" prop="age">
-					<el-input v-model="versionInfo.maxVersion" auto-complete="off"></el-input>
-				</el-form-item>
-
-				<el-form-item label="更新说明" prop="age">
-					<el-input v-model="versionInfo.desc" type="textarea" auto-complete="off"></el-input>
-				</el-form-item>
-
-				<el-form-item label="上传文件" prop="age">
-					<el-upload
-						class="upload-demo"
-						drag
-						action="../version/version_submit"
-						multiple>
-						<i class="el-icon-upload"></i>
-						<div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-					</el-upload>
-				</el-form-item>
-			</el-form>
-
-			<span slot="footer" class="dialog-footer">
-				<el-button type="primary" @click="versionSubmit">确认发布</el-button>
-			</span>
-		</el-dialog>
-			
+						<el-form-item label="内容">
+								<el-input type="textarea" class="add-conent" :rows="12" resize="both" v-model="addConent"></el-input>
+						</el-form-item>
+				
+						<el-form-item class="from-button">
+								<el-button type="danger" class="notice-button" @click="addNotice">新增</el-button>
+						</el-form-item>
+					</el-form>
+				</div>
+			</el-dialog>
 		</section>
 	</template>
 	
 	<script>
-		import { getPremis } from '@/api/management'
-		import Paging from '@/components/Paging/'
-		import MySelect from '@/components/Select/'
-		import MySearch from '@/components/Search/'
-
-		const Btn = {
-		  template: `<div><el-button class="click-btn" @click="rowCheck" type="primary" icon="el-icon-view">查看</el-button>
-							  <el-button class="click-btn" @click="rowDelete" type="primary" icon="el-icon-delete">删除</el-button></div>`,
-		  props: ['row'],
-		  methods: {
-		    rowCheck() {
-		      this.$emit('row-check', this.row)
-		    },
-		    rowDelete() {
-		      this.$emit('row-delete', this.row)
-		    }
-		  }
-		}
-		
+		import { getOfficalList, addOfficalList, updateOfficalList, delOfficalList } from '@/api/systemconfig'
 		export default {
-		  components: {
-		    Paging,
-		    MySelect,
-		    MySearch
-		  },
 		  data() {
 		    return {
-		      message: '输入搜索',
-		      totalRecords: 0,
-		      tableData: [],
-		      versionInfo: {
-		        type: '',
-          	minVersion: '',
-          	maxVersion: '',
-		        desc: '',
-						file: '',
-						token: ''
-		      },
-		      dialogVisible: false,
-		      requestData: {
-		        type: '',
-		        desc: '',
-		        pageNow: 0,
-		        pageSize: 10
-		      },
-		      optionValue: [],
-		      columns: [{
-		        'label': '序号',
-		        'prop': 'serial'
-		      }, {
-		        'label': '时间',
-		        'prop': 'time'
-		      }, {
-		        'label': '标题',
-		        'prop': 'title'
-		      }, {
-		        'label': '浏览数量',
-		        'prop': 'pv'
-		      }],
-		      columnsProps: {
-		        align: 'center',
-		        sortable: true
-		      },
-		      columnsSchema: {},
-		      columnType: ''
+					tabs: [],
+					form: {
+						desc: ''
+					},
+					options: [{
+						value: '1',
+          	label: '普通'
+					}],
+					noticeStatus: [{
+						value: '0',
+          	label: '未使用'
+					},{
+						value: '1',
+          	label: '使用中'
+					}],
+					dialogTableVisible: false,
+					addTitle: '',
+					addConent: '',
+					loading: false,
+					updateConent: '',
+					updateTitle: '',
+					type: '1',
+					status: '1'
 		    }
 		  },
 		  created() {
-		    this.getData()
-		  },
+				this.getData()
+			},
+			computed: {
+				activeName: {
+					get: function() {
+						let tempObj = this.tabs[0]
+						if(tempObj) {
+							return tempObj.id + ''
+						}else {
+							return ''
+						}
+					},
+					set: function() {
+						
+					}
+				}
+			},
 		  methods: {
 		    getData() {
-		      // getPremis('../version/version_list', 'get', this.requestData).then(response => {
-		      //   console.log(response)
-		      //   this.tableData = response.items
-		      //   this.totalRecords = response.totalRecords
-		      // }).catch(error => {
-		      //   console.log(error)
-		      // })
-		    },
-		    noticeSear(select, input) {
-		      this.requestData.uname = input
-		      this.getData()
-		    },
-		    getFightSize(pageSize) {
-		      this.requestData.pageSize = pageSize
-		      this.getData()
-		    },
-		    getFightPage(pageNow) {
-		      this.requestData.pageNow = pageNow
-		      this.getData()
-		    },
-		    noticeChcek(row) {
-		    },
-		    noticeDelete(row) {
-		    },
-		    noticeAdd(formName) {
+					this.loading = true
+					getOfficalList().then(response => {
+						this.loading = false
+						this.tabs = response.items
+					}).catch(error => {
+						this.$message({
+							showClose: true,
+							message: '数据获取失败',
+							type: 'error'
+						})
+					})
+				},
+				handleClick(tab, event) {
 					
-		    },
-		    versionSubmit() {
-		      this.dialogVisible = false
-		    },
-		    fromChange() {
-		    },
-		    columnsHandler(cols) {
-		      const nck = this.noticeChcek
-		      const ntd = this.noticeDelete
-		      return cols.concat({
-		        label: '操作',
-		        fixed: 'right',
-		        width: 170,
-		        component: Btn,
-		        listeners: {
-		          'row-check'(row) {
-		            nck(row)
-		          },
-		          'row-delete'(row) {
-		            ntd(row)
-		          }
-		        }
-		      })
-		    }
+				},
+				noticeEdit(targetName, action) {
+					if(action === 'add') {
+						this.dialogTableVisible = true
+					}else if(action === 'remove') {
+						this.$confirm('确认删除?', '删除公告', {
+							confirmButtonText: '确定',
+							cancelButtonText: '取消',
+							type: 'warning'
+						}).then(() => {
+							this.delOffical(targetName)
+						}).catch(() => {
+							this.$message({
+								type: 'info',
+								message: '已取消删除'
+							})        
+						})
+					}
+				},
+				noticeUpdate(id) {
+					let tempData = {
+						id: id,
+						conent: this.getValue('testarea-notice' + id), 
+						type: this.type, 
+						status: this.status, 
+						title: this.getValue('notice-title' + id)
+					}
+					updateOfficalList(tempData).then(response => {
+						if(response.result === 1) {
+							this.$message({
+								showClose: true,
+								message: '更新成功！',
+								type: 'success'
+							})
+							this.getData()
+						}
+					}).catch(error => {
+						this.$message({
+							showClose: true,
+							message: '更新失败！',
+							type: 'error'
+						})
+					})
+				},
+				addNotice() {
+					addOfficalList({title: this.addTitle, conent: this.addConent, type: this.type, status: this.status}).then(response => {
+						if(response.result === 1) {
+							this.dialogTableVisible = false
+							this.getData()
+							this.addTitle = ''
+							this.addConent = ''
+						}else {
+							this.$message({
+								showClose: true,
+								message: '添加失败！',
+								type: 'error'
+							})
+						}
+					}).catch(error => {
+						this.$message({
+							showClose: true,
+							message: '添加失败！',
+							type: 'error'
+						})
+					})
+				},
+				delOffical(id) {
+					delOfficalList({id: id}).then(response => {
+						this.$message({
+							showClose: true,
+							message: '删除成功！',
+							type: 'success'
+						})
+						this.getData()
+					}).catch(error => {
+						this.$message({
+							showClose: true,
+							message: '删除失败！',
+							type: 'error'
+						})
+					})
+				},
+				getValue(ele) {
+					let element = document.getElementById(ele)
+					return element.value
+				}
 		  }
 		}
 	</script>
 	
-	<style>
+	<style rel="stylesheet/scss" lang="scss">
 	.click-btn {
 		width: 60px;
 		height: 32px;
@@ -205,5 +249,26 @@
 	}
 	.el-dialog__body {
 		padding: 15px 20px;
+	}
+	.notice-panel {
+		width: 600px;
+		margin: 20px auto;
+
+		.el-textarea {
+			width: 500px;
+		}
+	}
+	.notice-button {
+		margin-top: 10px;
+	}
+	.add-conent {
+		margin-top: 10px;
+	}
+	.add-notice-panel {
+		width: 600px;
+		margin: 20px auto;
+	}
+	.from-button {
+		text-align: center;
 	}
 	</style>

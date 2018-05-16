@@ -113,6 +113,16 @@
 		}
 	}
 
+	const retentionHtml = {
+    template: `<div v-text="retenCount"></div>`,
+    props: ['row'],
+    computed: {
+      retenCount() {
+				return this.row.buy_gold + this.row.present_gold + this.row.consume_gold
+      }
+    }
+	}
+
 	export default {
 
 	  components: {
@@ -155,6 +165,9 @@
 					},
 					'正在对局数': {
 						component: Gameing
+					},
+					'累计存留量': {
+						component: retentionHtml
 					}
 	      },
 
@@ -237,11 +250,8 @@
 				this.loading = true
 	      getStatis(this.reUrl, this.reType, this.requestData).then(response => {
 					this.loading = false
-	        if (response.data) {
-	          response = response.data
-					}
 					
-					if(response.items.length === 0) {
+					if(response.items.length === 0 || response.items === null) {
 						response.items[0] = {}
 						for(let i = 0; i < this.columns.length; i++) {
 							let item = this.columns[i].prop
@@ -250,7 +260,7 @@
 								itemObj[item] = getDate(0)
 								
 							}else if(item === 'create_date') {
-								itemObj[item] = getDate(0)
+								itemObj[item] = getDate(0).substring(0, 10)
 								
 							}else {
 								itemObj[item] = 0
@@ -259,11 +269,12 @@
 							Object.assign(response.items[0], itemObj)
 						}
 					}
-
+					
 	        this.tableData = response.items
 
 	        this.totalRecords = response.totalRecords
 	      }).catch(error => {
+					console.log(error)
 	        this.$message({
 	          showClose: true,
 	          message: '服务器错误',
@@ -279,7 +290,6 @@
 
 	    dateChange(val) {
 	      if (!val) return
-
 	      if (this.requestData.beginTime) {
 	        this.requestData.beginTime = val[0]
 

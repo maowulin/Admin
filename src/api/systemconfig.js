@@ -291,3 +291,89 @@ export function imgUpload(data){
     }
   })
 }
+
+export function getOfficalList() {
+  return request({
+    url: '../game/find_game_offical_list',
+    method: 'get'
+  })
+}
+
+export function addOfficalList(data) {
+  return request({
+    url: '../game/add_game_offical_list',
+    method: 'post',
+    data: data,
+    transformRequest: [data => {
+      let ret = ''
+      for (let it in data) {
+        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+      }
+      return ret
+    }],
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+  })
+}
+
+export function updateOfficalList(data) {
+  return request({
+    url: '../game/update_game_offical_list',
+    method: 'post',
+    data: data,
+    transformRequest: [data => {
+      let ret = ''
+      for (let it in data) {
+        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+      }
+      return ret
+    }],
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+  })
+}
+
+export function delOfficalList(data) {
+  return request({
+    url: '../game/del_game_offical_list',
+    method: 'post',
+    data: data,
+    transformRequest: [data => {
+      let ret = ''
+      for (let it in data) {
+        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+      }
+      return ret
+    }],
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+  })
+}
+
+export function findMaintainList(data) {
+  return request({
+    url: '../game/find_game_maintain_list',
+    method: 'get'
+  })
+}
+
+export function updateMaintainList(data) {
+  return request({
+    url: '../game/update_game_maintain_list',
+    method: 'post',
+    data: data,
+    transformRequest: [data => {
+      let ret = ''
+      for (let it in data) {
+        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+      }
+      return ret
+    }],
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+  })
+}

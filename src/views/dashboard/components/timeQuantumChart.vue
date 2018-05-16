@@ -8,7 +8,7 @@ import echarts from 'echarts'
 import { debounce } from '@/method'
 
 export default {
-  props: ['lineConf', 'chartData', 'lineId'],
+  props: ['lineConf', 'chartData', 'lineId', 'charTitel'],
   data() {
     return {
       chart: null,
@@ -373,6 +373,13 @@ export default {
 
     optionVal: function() {
       return {
+        title: {
+          text: this.charTitel,
+          left: 'center',
+          textStyle: {
+            color: 'black'
+          }
+        },
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -382,7 +389,8 @@ export default {
         },
         legend: {
           data: this.legend,
-          selected: this.selected
+          selected: this.selected,
+          right: '20'
         },
         xAxis: {
           data: this.xAxis,
