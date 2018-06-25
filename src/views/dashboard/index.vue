@@ -52,9 +52,9 @@
       <create-and-join v-if="createData.length !== 0 && !joinCreateLoad" :create-data="createData" :join-data="joinData"></create-and-join>
     </div>
 
-    <div class="china-chart">
+    <!-- <div class="china-chart">
       <city v-if="cityData.length !== 0" :char-data="cityData"></city>
-    </div>
+    </div> -->
 
   </section>
 </template>
@@ -66,7 +66,7 @@ import { getStatis, getCreateAndJoin } from '@/api/statis'
 import { getDate } from '@/method'
 import { rate } from './components/rate'
 import { getUserTimeQuantum, getUserDayList } from '@/api/query'
-import { loginCity } from '@/api/query'
+
 
 export default {
   name: 'dashboard',
@@ -257,7 +257,6 @@ export default {
     this.getOldUserTimeQuantum()
     this.getChesTimeData()
     this.getOrderTimeData()
-    this.getCityData()
     this.getCreataAndJoinData(this.request)
   },
   methods: {
@@ -372,13 +371,7 @@ export default {
         })
       })
     },
-    getCityData() {
-      loginCity().then(response => {
-        this.cityData = response.items
-      }).catch(error => {
-        console.log(error)
-      })
-    },
+
     getCreataAndJoinData(request) {
       this.joinCreateLoad = true
       getCreateAndJoin(request).then(response => {
@@ -492,14 +485,7 @@ export default {
   background-color: #fff;
 }
 
-.china-chart {
-  position: relative;
-  width: 100%;
-  height: 550px;
-  margin-top: 30px;
-  padding: 15px 15px 0;
-  background-color: #fff;
-}
+
 
 .chart-title {
   display: block;

@@ -377,3 +377,99 @@ export function updateMaintainList(data) {
     }
   })
 }
+
+export function getDitchList() {
+	return request({
+		url: '../ditch/getDitchList.json',
+		method: 'get'
+	})
+}
+
+export function getVersionList(data) {
+	return request({
+		url: '../ditch/getVersionList.json',
+    method: 'get',
+    params: data
+	})
+}
+
+export function delDitch(data) {
+  return request({
+    url: '../ditch/delDitchList.json',
+    method: 'post',
+    data: data,
+    transformRequest: [data => {
+      let ret = ''
+      for (let it in data) {
+        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+      }
+      return ret
+    }],
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+  })
+}
+
+export function addDitch(data) {
+  return request({
+    url: '../ditch/addDitchList.json',
+    method: 'post',
+    data: data,
+    transformRequest: [data => {
+      let ret = ''
+      for (let it in data) {
+        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+      }
+      return ret
+    }],
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+  })
+}
+
+export function changeDitch(data) {
+  return request({
+    url: '../ditch/changeDitchList.json',
+    method: 'post',
+    data: data,
+    transformRequest: [data => {
+      let ret = ''
+      for (let it in data) {
+        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+      }
+      return ret
+    }],
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+  })
+}
+
+export function getVersionInfo(data) {
+  return request({
+    url: '../ditch/getVersionInfo.json',
+    method: 'get',
+    params: data
+  })
+}
+
+export function addVersionInfo(data) {
+  return request({
+    url: '../ditch/addVersionInfo.json',
+    method: 'post',
+    data: data,
+    transformRequest: [data => {
+      let ret = ''
+      for (let it in data) {
+        ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+      }
+      return ret
+    }],
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    }
+  })
+}
+

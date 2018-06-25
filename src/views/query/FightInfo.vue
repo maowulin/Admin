@@ -51,8 +51,8 @@
 								<span v-if="row.game_over_detail === 'TwentyThree1'">分数高获得胜利/失败</span>
 								<span v-else-if="row.game_over_detail === 'TwentyThree2'">分数为23分/超过23分</span>
 								<span v-else-if="row.game_over_detail === 'TwentyThree3'">分数超过23分/对方超过23分</span>
-								<span v-else-if="row.game_over_detail === 'TwentyThree4'">三回合未操作/对方三回合未操作</span>
-								<span v-else-if="row.game_over_detail === 'TwentyThree5'">对手主动认输</span>
+								<span v-else-if="row.game_over_detail === 'TwentyThree5'">三回合未操作/对方三回合未操作</span>
+								<span v-else-if="row.game_over_detail === 'TwentyThree4'">对手主动认输</span>
 								<span v-else-if="row.game_over_detail === 'TwentyThree6'">同分数下进球多/少</span>
 								<span v-else-if="row.game_over_detail === 'TwentyThree7'">同分数同球数球号大/小</span>
 								<span v-else-if="row.game_over_detail === 'TwentyThree8'">双方同时为零，房主失败</span>

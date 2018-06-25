@@ -86,7 +86,7 @@ export default {
       }
     },
     authimgRquest() {
-      document.getElementsByClassName('auth-show')[0].src = 'http://localhost:9999/authImage?date=' + new Date()
+      document.getElementsByClassName('auth-show')[0].src = '../authImage?date=' + new Date()
     },
     loginEnter() {
       this.handleLogin()

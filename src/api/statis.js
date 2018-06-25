@@ -39,3 +39,4 @@ export function getStatisCvs(_url, _startDate, _stopDate) {
 export function getStatisSecCvs(_url, _time) {
 	window.open(_url + "?time=" + _time)
 }
+

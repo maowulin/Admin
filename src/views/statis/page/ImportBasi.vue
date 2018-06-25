@@ -84,15 +84,17 @@
 	        'chartType': 'line',
 	        'chartGroup': '1',
 	        'chartColor': ''
-				},{
-	        'label': '每日IOS登陆用户数',
-	        'prop': 'new_user_ios',
-	        'isDefaultHead': true,
-	        'isChart': false,
-	        'chartType': 'line',
-	        'chartGroup': '1',
-	        'chartColor': ''
-	      },{
+				},
+				// {
+	      //   'label': '每日IOS登陆用户数',
+	      //   'prop': 'new_user_ios',
+	      //   'isDefaultHead': true,
+	      //   'isChart': false,
+	      //   'chartType': 'line',
+	      //   'chartGroup': '1',
+	      //   'chartColor': ''
+				// },
+				{
 	        'label': '日活跃用户数',
 	        'prop': 'dayActiveNum',
 	        'isDefaultHead': true,
