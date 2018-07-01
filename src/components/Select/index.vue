@@ -1,5 +1,5 @@
 <template>
-	<el-select v-model="value" :placeholder="message" @change="handleCommand">
+	<el-select v-model="value" clearable no-data-text :placeholder="message" @change="handleCommand">
 		<el-option
 		  v-for="item in optionValue"
 		  :key="item.val"
@@ -29,10 +29,13 @@ export default {
 
 <style>
   .el-dropdown-link {
-	cursor: pointer;
-	color: #409EFF;
+    cursor: pointer;
+    color: #409EFF;
   }
   .el-icon-arrow-down {
     font-size: 12px;
+  }
+  .el-select .el-input {
+    width: 104px;
   }
 </style>

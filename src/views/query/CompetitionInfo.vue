@@ -12,12 +12,59 @@
       :columns="columns"
       :columns-schema="columnsSchema"
       :columns-props="columnsProps"
-      :column-type="columnType"
+			:column-type="columnType"
+			row-key="competitionID"
+      :expand-row-keys="expands"
+			v-loading="loading"
       @expand="expandChange">
       <template slot="expand" slot-scope="{}">
-        <section class="expand-detail">
+        <section class="expand-detail userdateil-expand">
           <div v-for="col in expansionConent" :key="col.label">
-            {{ col.label }}：{{ compeDetailData[col.prop] }}
+            <ul class="user-detail">
+              <li class="head">比赛简介</li>
+              <li class="conent">
+                <span class="conent-title"></span>
+                <span class="conent-cent">{{ compeDetailData.competition_intro }}</span>
+              </li>
+						</ul>
+						
+						<ul class="user-detail">
+              <li class="head">比赛规则</li>
+              <li class="conent">
+                <span class="conent-title"></span>
+                <span class="conent-cent">{{ compeDetailData.competition_regulation }}</span>
+              </li>
+						</ul>
+						
+						<ul class="user-detail">
+              <li class="head">支付说明</li>
+              <li class="conent">
+                <span class="conent-title"></span>
+                <span class="conent-cent">{{ compeDetailData.pay_explain }}</span>
+              </li>
+						</ul>
+						
+						<ul class="user-detail">
+              <li class="head">奖励说明</li>
+              <li class="conent">
+								<el-table
+								:table-data="compeDetailData.competitionRewards"
+								style="width: 100%">
+									<el-table-column
+										prop="prize_level"
+										label="等级">
+									</el-table-column>
+									<el-table-column
+										prop="reward_number"
+										label="人数">
+									</el-table-column>
+									<el-table-column
+										prop="bonus_content"
+										label="内容">
+									</el-table-column>
+								</el-table>
+              </li>
+            </ul>
           </div>
         </section>
       </template>
@@ -30,20 +77,18 @@
   import Paging from '@/components/Paging/'
   import MySelect from '@/components/Select/'
   import MySearch from '@/components/Search/'
-  
-	
-  //赛事状态
+
+  // 赛事状态
   var compeStaus = {
     template: `<span v-else-if="row.status == 1">正在报名</span>
   			 <span v-else-if="row.status == 2">即将开始</span>
   			 <span v-else-if="row.status == 3">正在进行</span>
 	         <span v-else>已经结束</span>`,
-	props: ['row']
+    props: ['row']
   }
   
-  
   export default {
-  	components: {
+    components: {
   	  Paging,
   	  MySelect,
   	  MySearch
@@ -52,7 +97,8 @@
   	  return {
   		compeMessage: "状态",
   		totalRecords: 0,
-  		tableData: [],
+			tableData: [],
+			expands: [],
   		compeDetailData: {},
   		compeData: {
   		  type: '',
@@ -141,47 +187,68 @@
 	      	component: compeStaus
 	      }
 	    },
-	    columnType: 'expand'
+			columnType: 'expand',
+			loading: false
   	  }
   	},
-  	created(){
-  	  this.getData();	
+  	created() {
+  	  this.getData()	
   	},
   	methods: {
   	  getData() {
+				this.loading = true
   	  	getCompeData(this.compeData).then(response => {
-  	  	  console.log(response);
-  	  	  this.tableData = response.items;
-  	  	  this.totalRecords = response.totalRecords;
+					this.loading = false
+  	  	  this.tableData = response.items
+  	  	  this.totalRecords = response.totalRecords
   	  	}).catch(error => {
-  	  	  console.log(error);
-  	  	});
+  	  	  this.loading = false
+          this.$message.error('服务器错误')
+  	  	})
   	  },
   	  expandChange(row, expandedRows){
   	  	if(expandedRows){
   	  	  getCompeDetail(row.competitionID).then(response => {
-  	  	    this.compeDetailData = response;
+  	  	    this.compeDetailData = response
   	  	  }).catch(error => {
-  	  	    console.log(error);
-  	  	  });
-  	  	}
+  	  	    this.$message({
+              showClose: true,
+              message: '服务器错误',
+              type: 'error'
+            })
+  	  	  })
+				}
+				
+				Array.prototype.remove = function(val) {
+          const index = this.indexOf(val)
+          if (index > -1) {
+            this.splice(index, 1)
+          }
+        }
+  
+        if (this.expands.indexOf(row.competitionID) < 0) {
+          this.expands = []
+          this.expands.push(row.competitionID)
+        } else {
+          this.expands.remove(row.competitionID)
+        }
   	  },
   	  compeStatusChange(command) {
-		this.compeData.status = command;
-		this.getData();
+				this.compeData.status = command
+				this.getData()
   	  },
   	  compeInfoSearch(select, input) {
-  	  	this.compeData.type = select;
-  	  	this.compeData.like = input;
-  	  	this.getData();
+  	  	this.compeData.type = select
+  	  	this.compeData.like = input
+  	  	this.getData()
   	  },
   	  getcompeSize(pageSize) {
-  	  	this.compeData.pageSize = pageSize;
-  	  	this.getData();
+  	  	this.compeData.pageSize = pageSize
+  	  	this.getData()
   	  },
   	  getcompePage(pageNow) {
-  	  	this.compeData.pageNow = pageNow;
-  	  	this.getData();
+  	  	this.compeData.pageNow = pageNow
+  	  	this.getData()
   	  }
   	}
   }

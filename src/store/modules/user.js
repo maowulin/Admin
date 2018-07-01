@@ -1,10 +1,11 @@
-import { login, logout, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { login, logOut, getInfo } from '@/api/login'
+import { getToken, setToken, removeToken, removeMenuSession } from '@/utils/auth'
 
 const user = {
   state: {
     token: getToken(),
     name: '',
+    id: '',
     avatar: '',
     roles: []
   },
@@ -15,6 +16,9 @@ const user = {
     },
     SET_NAME: (state, name) => {
       state.name = name
+    },
+    SET_ID: (state, id) => {
+      state.id = id
     },
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
@@ -29,11 +33,21 @@ const user = {
     Login({ commit }, userInfo) {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
-        login(username, userInfo.password).then(response => {
-          const data = response.data
-          setToken(data.token)
-          commit('SET_TOKEN', data.token)
-          resolve()
+        login(username, userInfo.password, userInfo.code).then(response => {
+          if (response.result === 1) {
+            const data = {
+              'name': response.data.uname,
+              'id': response.data.id,
+              'rols': response.data.department
+            }
+            setToken(JSON.stringify(data))
+            commit('SET_TOKEN', data)
+            commit('SET_NAME', data.name)
+            commit('SET_ID', data.id)
+            resolve({ type: 'success', message: '登陆成功' })
+          } else {
+            resolve({ type: 'error', message: response.error_message })
+          }
         }).catch(error => {
           reject(error)
         })
@@ -58,10 +72,18 @@ const user = {
     // 登出
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
+        let userId = ''
+        let type = typeof(state.token)
+        if(type === 'string') {
+          userId = JSON.parse(state.token).id
+        }else {
+          userId = state.token.id
+        }
+        logOut({'id': userId}).then(() => {
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
           removeToken()
+          removeMenuSession()
           resolve()
         }).catch(error => {
           reject(error)

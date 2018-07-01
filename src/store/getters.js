@@ -3,6 +3,8 @@ const getters = {
   token: state => state.user.token,
   avatar: state => state.user.avatar,
   name: state => state.user.name,
-  roles: state => state.user.roles
+  id: state => state.user.id,
+  roles: state => state.user.roles,
+  route: state => state.permission.routers
 }
 export default getters

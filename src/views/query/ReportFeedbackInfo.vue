@@ -15,18 +15,21 @@
 		      :data="repTableData"
 		      :columns="repColumns"
 		      :columns-schema="repColumnsSchema"
-		      :columns-props="repColumnsProps"
+					:columns-props="repColumnsProps"
+					v-loading="repload"
 		      :column-type="repColumnType">
 			  </egrid>
 		  </el-tab-pane>
 		  <el-tab-pane label="反馈">
 		  	<egrid class="egrid"
 		  		fit
+		  		show-overflow-tooltip
 		      :data="ticTableData"
 		      :columns="ticColumns"
 		      :columns-schema="ticColumnsSchema"
 		      :columns-props="ticColumnsProps"
-		      :column-type="ticColumnType">
+					:column-type="ticColumnType"
+					v-loading="ticload">
 			  </egrid>
 		  </el-tab-pane>
 		</el-tabs>
@@ -43,7 +46,9 @@
   	data() {
   		return {
   			repMessage: "用户昵称",
-  			ticMessage: "用户昵称",
+				ticMessage: "用户昵称",
+				repload: false,
+				ticload: false,
   			repTotalRecords: 0,
   			ticTotalRecords: 0,
   			isReport: true,   //
@@ -61,12 +66,12 @@
   			}],
   			
   			repRequestData: {
-  				repLike: '',
+  				like: '',
   				pageSize: 10,
   				pageNow: 0
   			},
   			ticRequestData: {
-  				ticLike: '',
+  				like: '',
   				pageSize: 10,
   				pageNow: 0
   			},
@@ -111,8 +116,9 @@
   					width: "60px"
   				},
   				'内容': {
-  					width: "700px",
-  					sortable: false
+  					'width': '700px',
+						'sortable': false,
+						'show-overflow-tooltip': true
   				}
   			},
   			
@@ -139,55 +145,66 @@
   	},
   	methods: {
   		getRepData() {
-  			getReportData(this.repRequestData).then(response => {
-  				console.log(response);
-  				this.repTotalRecords = response.recordsPerPage;
-  				this.repTableData = response.items;
+				this.repload = true
+				getReportData(this.repRequestData).then(response => {
+  				this.repload = false
+  				this.repTotalRecords = response.recordsPerPage
+  				this.repTableData = response.items
   			}).catch(error => {
-  				console.log(error);
-  			});
+  				this.$message({
+						showClose: true,
+						message: '服务器错误',
+						type: 'error'
+					})
+  			})
   		},
   		getTicData() {
+				this.ticload = true
   			getTickingData(this.ticRequestData).then(response => {
-  				this.ticTotalRecords = response.recordsPerPage;
-  				this.ticTableData = response.items;
+					this.ticload = false
+  				this.ticTotalRecords = response.recordsPerPage
+  				this.ticTableData = response.items
   			}).catch(error => {
-  				console.log(error);
-  			});
+  				this.$message({
+						showClose: true,
+						message: '服务器错误',
+						type: 'error'
+					})
+  			})
   		},
   		
   		repSearch(select, input) {
-  			this.repRequestData.repLike = input;
-  			this.getRepData();
+  			this.repRequestData.like = input
+  			this.getRepData()
   		},
   		getRepSize(pageSize) {
-  			this.repRequestData.pageSize = pageSize;
-  			this.getRepData();
+  			this.repRequestData.pageSize = pageSize
+  			this.getRepData()
   		},
   		getRepPage(pageNow) {
-  			this.repRequestData.pageNow = pageNow;
-  			this.getRepData();
+  			this.repRequestData.pageNow = pageNow
+  			this.getRepData()
   		},
   		
   		ticSearch(select, input) {
-  			this.ticRequestData.ticLike = input;
-  			this.getTicData();
+  			this.ticRequestData.like = input
+  			this.getTicData()
   		},
   		getTicSize(pageSize) {
-  			this.ticRequestData.pageSize = pageSize;
-  			this.getTicData();
+  			this.ticRequestData.pageSize = pageSize
+  			this.getTicData()
   		},
   		getTicPage(pageNow) {
-  			this.ticRequestData.pageNow = pageNow;
-  			this.getTicData();
+  			this.ticRequestData.pageNow = pageNow
+  			this.getTicData()
   		},
   		tabClick(tab, event) {
   			if(tab.label == "举报"){
-  				this.isReport = true;
-  				this.getRepData();
+  				this.isReport = true
+  				this.getRepData()
   			}else {
-  				this.isReport = false;
-  				this.getTicData();
+  				this.isReport = false
+  				this.getTicData()
   			}
   		}
   	}

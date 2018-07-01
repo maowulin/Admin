@@ -716,7 +716,7 @@ export default {
 		return tickingMap;
 	},
 	getFightData: config => {
-		//console.log(config);
+		console.log(config);
 		return fightMap;
 	}
 }

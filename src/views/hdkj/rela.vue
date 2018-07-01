@@ -1,11 +1,11 @@
 <template>
-	<div id="">
-		版本管理
-	</div>
+  <div>联系</div>
 </template>
 
 <script>
+
 </script>
 
 <style>
+
 </style>

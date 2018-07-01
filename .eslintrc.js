@@ -25,6 +25,8 @@ module.exports = {
     // add your custom rules here
     //it is base on https://github.com/vuejs/eslint-config-vue
     'rules': {
+        //官方文档 http://eslint.org/docs/rules/
+        //参数：0 关闭，1 警告，2 错误
         'accessor-pairs': 2,
         'arrow-spacing': [2, { 'before': true, 'after': true }],
         'block-spacing': [2, 'always'],
@@ -123,7 +125,8 @@ module.exports = {
         'padded-blocks': [2, 'never'],
         'quotes': [2, 'single', { 'avoidEscape': true, 'allowTemplateLiterals': true }],
         'semi': [2, 'never'],
-        'semi-spacing': [2, { 'before': false, 'after': true }],
+        'semi': [0, 'never'],
+        'semi-spacing': [0, { 'before': false, 'after': true }],
         'space-before-blocks': [2, 'always'],
         'space-before-function-paren': [2, 'never'],
         'space-in-parens': [2, 'never'],

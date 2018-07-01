@@ -1,16 +1,16 @@
 <template>
-  <el-menu class="navbar" mode="horizontal">
+  <el-menu :class="{'navbar': true, 'menu-slide': !sidebar.opened}" mode="horizontal">
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
     <breadcrumb></breadcrumb>
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
-        <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
+        <img class="user-avatar" src="/image/logo.jpg">
         <i class="el-icon-caret-bottom"></i>
       </div>
       <el-dropdown-menu class="user-dropdown" slot="dropdown">
         <router-link class="inlineBlock" to="/">
           <el-dropdown-item>
-                              首页
+            首页
           </el-dropdown-item>
         </router-link>
         <el-dropdown-item divided>
@@ -89,6 +89,19 @@ export default {
       }
     }
   }
+}
+
+.el-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 180px;
+  /* width: 100%; */
+  z-index: 999;
+}
+
+.menu-slide {
+  left: 36px;
 }
 </style>
 
